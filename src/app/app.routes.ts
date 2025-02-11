@@ -8,6 +8,7 @@ import { LayoutComponent } from './pages/layout/layout.component';
 import { DashboardProfileComponent } from './pages/dashboard-profile/dashboard-profile.component';
 import { DashboardSettingsComponent } from './pages/dashboard-settings/dashboard-settings.component';
 import { FooterComponent } from './pages/footer/footer.component';
+import { CoursesComponent } from './pages/courses/courses.component';
 
 
 
@@ -23,6 +24,7 @@ export const routes: Routes = [  // Make sure to export 'routes'
   { path: 'dashboard-profile', component: DashboardProfileComponent },
   { path: 'dashboard-settings', component: DashboardSettingsComponent },
   { path: 'footer', component: FooterComponent },
+  { path: 'courses', component: CoursesComponent },
 
 
 
