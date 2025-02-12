@@ -5,6 +5,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './pages/login/login.component';
 import { InscriptionComponent } from './pages/inscription/inscription.component';
 import { LayoutComponent } from './pages/layout/layout.component';
+import { EventsComponent } from './pages/events/events.component';
 
 
 
@@ -14,6 +15,7 @@ export const routes: Routes = [  // Make sure to export 'routes'
   { path: 'signup', component: InscriptionComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'layout', component: LayoutComponent },
+  { path: 'events', component: EventsComponent},
 
 
 ];
