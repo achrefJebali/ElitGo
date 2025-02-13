@@ -5,6 +5,19 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './pages/login/login.component';
 import { InscriptionComponent } from './pages/inscription/inscription.component';
 import { LayoutComponent } from './pages/layout/layout.component';
+<<<<<<< Updated upstream
+=======
+import { DashboardProfileComponent } from './pages/dashboard-profile/dashboard-profile.component';
+import { DashboardSettingsComponent } from './pages/dashboard-settings/dashboard-settings.component';
+import { FooterComponent } from './pages/footer/footer.component';
+import { CoursesComponent } from './pages/courses/courses.component';
+import { AnnoncementComponent } from './pages/annoncement/annoncement.component';
+import { BlogsComponent } from './pages/blogs/blogs.component';
+import { CommentComponent } from './pages/comment/comment.component';
+
+
+
+>>>>>>> Stashed changes
 
 
 
@@ -14,6 +27,21 @@ export const routes: Routes = [  // Make sure to export 'routes'
   { path: 'signup', component: InscriptionComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'layout', component: LayoutComponent },
+<<<<<<< Updated upstream
+=======
+  { path: 'dashboard-profile', component: DashboardProfileComponent },
+  { path: 'dashboard-profile', component: DashboardProfileComponent },
+  { path: 'dashboard-settings', component: DashboardSettingsComponent },
+  { path: 'footer', component: FooterComponent },
+  { path: 'courses', component: CoursesComponent },
+  { path: 'annoncement', component: AnnoncementComponent },
+  { path: 'blogs', component: BlogsComponent }, 
+  { path: 'comment', component: CommentComponent },
+  
+
+
+
+>>>>>>> Stashed changes
 
 
 ];
