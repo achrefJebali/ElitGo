@@ -19,5 +19,18 @@ LayoutComponent,FooterComponent
   styleUrl: './annoncement.component.css'
 })
 export class AnnoncementComponent {
+  isLiked = false;
+isDisliked = false;
+
+toggleLike() {
+  this.isLiked = !this.isLiked;
+  if (this.isLiked) this.isDisliked = false;
+}
+
+toggleDislike() {
+  this.isDisliked = !this.isDisliked;
+  if (this.isDisliked) this.isLiked = false;
+}
+
 
 }

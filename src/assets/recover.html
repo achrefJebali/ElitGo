@@ -1,9 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="author" content="TechyDevs">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  
-  <!--======================================
+    <title>Aduca -  Education HTML Template</title>
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" sizes="16x16" href="images/favicon.png">
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/line-awesome.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="css/fancybox.css">
+    <link rel="stylesheet" href="css/tooltipster.bundle.css">
+    <link rel="stylesheet" href="css/leaflet.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- end inject -->
+</head>
+<body>
+
+<!-- start cssload-loader -->
+<div class="preloader">
+    <div class="loader">
+        <svg class="spinner" viewBox="0 0 50 50">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+        </svg>
+    </div>
+</div>
+<!-- end cssload-loader -->
+
+<!--======================================
         START HEADER AREA
     ======================================-->
-  <header class="header-menu-area bg-white">
+<header class="header-menu-area bg-white">
     <div class="header-top pr-150px pl-150px border-bottom border-bottom-gray py-1">
         <div class="container-fluid">
             <div class="row align-items-center">
@@ -11,7 +50,7 @@
                     <div class="header-widget">
                         <ul class="generic-list-item d-flex flex-wrap align-items-center fs-14">
                             <li class="d-flex align-items-center pr-3 mr-3 border-right border-right-gray"><i class="la la-phone mr-1"></i><a href="tel:00123456789"> (00) 123 456 789</a></li>
-                            <li class="d-flex align-items-center"><i class="la la-envelope-o mr-1"></i><a href="mailto:contact@aduca.com"> Contact&#64;ElitGo.com</a></li>
+                            <li class="d-flex align-items-center"><i class="la la-envelope-o mr-1"></i><a href="mailto:contact@aduca.com"> contact@aduca.com</a></li>
                         </ul>
                     </div><!-- end header-widget -->
                 </div><!-- end col-lg-6 -->
@@ -38,8 +77,8 @@
                             </button>
                         </div>
                         <ul class="generic-list-item d-flex flex-wrap align-items-center fs-14 border-left border-left-gray pl-3 ml-3">
-                            <li class="d-flex align-items-center pr-3 mr-3 border-right border-right-gray"><i class="la la-sign-in mr-1"></i><a href="login"> Login</a></li>
-                            <li class="d-flex align-items-center"><i class="la la-user mr-1"></i><a href="signup"> Register</a></li>
+                            <li class="d-flex align-items-center pr-3 mr-3 border-right border-right-gray"><i class="la la-sign-in mr-1"></i><a href="login.html"> Login</a></li>
+                            <li class="d-flex align-items-center"><i class="la la-user mr-1"></i><a href="sign-up.html"> Register</a></li>
                         </ul>
                     </div><!-- end header-widget -->
                 </div><!-- end col-lg-6 -->
@@ -53,7 +92,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-2">
                         <div class="logo-box">
-                            <a href="index.html" class="logo"><img src="assets/images/logo.png" alt="logo" style="max-height: 135px; width: auto;" ></a>
+                            <a href="index.html" class="logo"><img src="images/logo.png" alt="logo"></a>
                             <div class="user-btn-action">
                                 <div class="search-menu-toggle icon-element icon-element-sm shadow-sm mr-2" data-toggle="tooltip" data-placement="top" title="Search">
                                     <i class="la la-search"></i>
@@ -278,72 +317,65 @@
                                                             <h4 class="fs-20 font-weight-bold pb-3 text-white">30 days free trail for new users</h4>
                                                             <a href="sign-up.html" class="btn theme-btn theme-btn-sm theme-btn-white">Start Learning <i class="la la-arrow-right icon ml-1"></i></a>
                                                         </div>
-                                                        <img src="assets/images/menu-banner-img.jpg" alt="menu banner image" class="w-100 h-100 rounded-rounded">
+                                                        <img src="images/menu-banner-img.jpg" alt="menu banner image" class="w-100 h-100 rounded-rounded">
                                                     </div>
                                                 </li>
                                             </ul>
                                         </div>
                                     </li>
                                     <li>
-                                        <a href="annoncement">blog </a>
-                                        
+                                        <a href="#">blog <i class="la la-angle-down fs-12"></i></a>
+                                        <ul class="dropdown-menu-item">
+                                            <li><a href="blog-full-width.html">blog full width </a></li>
+                                            <li><a href="blog-no-sidebar.html">blog no sidebar</a></li>
+                                            <li><a href="blog-left-sidebar.html">blog left sidebar</a></li>
+                                            <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
+                                            <li><a href="blog-single.html">blog detail</a></li>
+                                        </ul>
                                     </li>
-                                    
                                 </ul><!-- end ul -->
-                                
                             </nav><!-- end main-menu -->
-                            
                             <div class="shop-cart mr-4">
-                               
-<!-- Icône de notification avec badge -->
-<li class="nav-item dropdown">
-    <a href="#" class="nav-link notification-icon" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="la la-bell"></i>
-        <span class="badge badge-danger notification-count">3</span>
-    </a>
-
-    <!-- Menu déroulant des notifications -->
-    <ul class="dropdown-menu notification-dropdown-menu dropdown-menu-right" aria-labelledby="notificationDropdown">
-        <li class="menu-heading-block d-flex align-items-center justify-content-between">
-            <h4>Notifications</h4>
-            <span class="ribbon fs-14 notification-count">3</span>
-        </li>
-        <li>
-            <div class="notification-body">
-                <a href="notification" class="media media-card align-items-center">
-                    <div class="icon-element icon-element-sm flex-shrink-0 bg-1 mr-3 text-white">
-                        <i class="la la-bolt"></i>
-                    </div>
-                    <div class="media-body">
-                        <h5>NEW ANNOUCEMENT</h5>
-                        <span class="d-block lh-18 pt-1 text-gray fs-13">1 heure</span>
-                    </div>
-                </a>
-                <a href="notification" class="media media-card align-items-center">
-                    <div class="icon-element icon-element-sm flex-shrink-0 bg-2 mr-3 text-white">
-                        <i class="la la-lock"></i>
-                    </div>
-                    <div class="media-body">
-                        <h5>NEW COMMENT</h5>
-                        <span class="d-block lh-18 pt-1 text-gray fs-13">12 novembre 2019</span>
-                    </div>
-                </a>
-                <a href="notification" class="media media-card align-items-center">
-                    <div class="icon-element icon-element-sm flex-shrink-0 bg-3 mr-3 text-white">
-                        <i class="la la-user"></i>
-                    </div>
-                    <div class="media-body">
-                        <h5>NEW LIKE</h5>
-                        <span class="d-block lh-18 pt-1 text-gray fs-13">12 novembre 2019</span>
-                    </div>
-                </a>
-            </div>
-        </li>
-        <li class="menu-heading-block">
-            <a href="notification" class="btn theme-btn w-100">VIEW ALL NOTIFICATION<i class="la la-arrow-right icon ml-1"></i></a>
-        </li>
-    </ul>
-</li>                            <div class="nav-right-button">
+                                <ul>
+                                    <li>
+                                        <p class="shop-cart-btn d-flex align-items-center">
+                                            <i class="la la-shopping-cart"></i>
+                                            <span class="product-count">2</span>
+                                        </p>
+                                        <ul class="cart-dropdown-menu">
+                                            <li class="media media-card">
+                                                <a href="shopping-cart.html" class="media-img">
+                                                    <img src="images/small-img.jpg" alt="Cart image">
+                                                </a>
+                                                <div class="media-body">
+                                                    <h5><a href="course-details.html">The Complete JavaScript Course 2021: From Zero to Expert!</a></h5>
+                                                    <span class="d-block lh-18 py-1">Kamran Ahmed</span>
+                                                    <p class="text-black font-weight-semi-bold lh-18">$12.99 <span class="before-price fs-14">$129.99</span></p>
+                                                </div>
+                                            </li>
+                                            <li class="media media-card">
+                                                <a href="shopping-cart.html" class="media-img">
+                                                    <img src="images/small-img.jpg" alt="Cart image">
+                                                </a>
+                                                <div class="media-body">
+                                                    <h5><a href="course-details.html">The Complete JavaScript Course 2021: From Zero to Expert!</a></h5>
+                                                    <span class="d-block lh-18 py-1">Kamran Ahmed</span>
+                                                    <p class="text-black font-weight-semi-bold lh-18">$12.99 <span class="before-price fs-14">$129.99</span></p>
+                                                </div>
+                                            </li>
+                                            <li class="media media-card">
+                                                <div class="media-body fs-16">
+                                                    <p class="text-black font-weight-semi-bold lh-18">Total: <span class="cart-total">$12.99</span> <span class="before-price fs-14">$129.99</span></p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <a href="shopping-cart.html" class="btn theme-btn w-100">Got to cart <i class="la la-arrow-right icon ml-1"></i></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div><!-- end shop-cart -->
+                            <div class="nav-right-button">
                                 <a href="admission.html" class="btn theme-btn d-none d-lg-inline-block"><i class="la la-user-plus mr-1"></i> Admission</a>
                             </div><!-- end nav-right-button -->
                         </div><!-- end menu-wrapper -->
@@ -420,7 +452,16 @@
                     <li><a href="error.html">page 404</a></li>
                 </ul>
             </li>
-           
+            <li>
+                <a href="#">blog</a>
+                <ul class="sub-menu">
+                    <li><a href="blog-full-width.html">blog full width </a></li>
+                    <li><a href="blog-no-sidebar.html">blog no sidebar</a></li>
+                    <li><a href="blog-left-sidebar.html">blog left sidebar</a></li>
+                    <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
+                    <li><a href="blog-single.html">blog detail</a></li>
+                </ul>
+            </li>
         </ul>
     </div><!-- end off-canvas-menu -->
     <div class="off-canvas-menu custom-scrollbar-styled category-off-canvas-menu">
@@ -560,7 +601,203 @@
         </div>
     </div><!-- end mobile-search-form -->
     <div class="body-overlay"></div>
-  <!-- end header-menu-area -->
-  <!--======================================
+</header><!-- end header-menu-area -->
+<!--======================================
         END HEADER AREA
-  ======================================-->
+======================================-->
+
+<!-- ================================
+    START BREADCRUMB AREA
+================================= -->
+<section class="breadcrumb-area section-padding img-bg-2">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="breadcrumb-content d-flex flex-wrap align-items-center justify-content-between">
+            <div class="section-heading">
+                <h2 class="section__title text-white">Recover Password</h2>
+            </div>
+            <ul class="generic-list-item generic-list-item-white generic-list-item-arrow d-flex flex-wrap align-items-center">
+                <li><a href="index.html">Home</a></li>
+                <li>Pages</li>
+                <li>Recover Password</li>
+            </ul>
+        </div><!-- end breadcrumb-content -->
+    </div><!-- end container -->
+</section><!-- end breadcrumb-area -->
+<!-- ================================
+    END BREADCRUMB AREA
+================================= -->
+
+<!-- ================================
+       START CONTACT AREA
+================================= -->
+<section class="contact-area section--padding position-relative">
+    <span class="ring-shape ring-shape-1"></span>
+    <span class="ring-shape ring-shape-2"></span>
+    <span class="ring-shape ring-shape-3"></span>
+    <span class="ring-shape ring-shape-4"></span>
+    <span class="ring-shape ring-shape-5"></span>
+    <span class="ring-shape ring-shape-6"></span>
+    <span class="ring-shape ring-shape-7"></span>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 mx-auto">
+                <div class="card card-item">
+                    <div class="card-body">
+                        <h3 class="card-title fs-24 lh-35 pb-2">Reset Password!</h3>
+                        <p class="fs-15 lh-24 pb-3">Enter the email of your account to reset password. Then you will
+                            receive a link to email to reset the password.If you have any issue about reset password <a href="contact.html" class="text-color hover-underline">contact us</a></p>
+                        <div class="section-block"></div>
+                        <form method="post" class="pt-4">
+                            <div class="input-box">
+                                <label class="label-text">Email Address</label>
+                                <div class="form-group">
+                                    <input class="form-control form--control" type="text" name="name" placeholder="Enter email Address">
+                                    <span class="la la-user input-icon"></span>
+                                </div>
+                            </div><!-- end input-box -->
+                            <div class="btn-box">
+                                <button class="btn theme-btn" type="submit">Reset Password <i class="la la-arrow-right icon ml-1"></i></button>
+                                <div class="d-flex align-items-center justify-content-between fs-14 pt-2">
+                                    <a href="login.html" class="text-color hover-underline">Login</a>
+                                    <p>Not a member? <a href="sign-up.html" class="text-color hover-underline">Register</a></p>
+                                </div>
+                            </div><!-- end btn-box -->
+                        </form>
+                    </div><!-- end card-body -->
+                </div><!-- end card -->
+            </div><!-- end col-lg-7 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end contact-area -->
+<!-- ================================
+       END CONTACT AREA
+================================= -->
+
+<!-- ================================
+         END FOOTER AREA
+================================= -->
+<section class="footer-area pt-100px bg-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 responsive-column-half">
+                <div class="footer-item">
+                    <h3 class="fs-20 font-weight-semi-bold pb-2">Company</h3>
+                    <div class="divider border-bottom-0"><span></span></div>
+                    <ul class="generic-list-item">
+                        <li><a href="#">About us</a></li>
+                        <li><a href="#">Contact us</a></li>
+                        <li><a href="#">Become a Teacher</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div><!-- end footer-item -->
+            </div><!-- end col-lg-3 -->
+            <div class="col-lg-3 responsive-column-half">
+                <div class="footer-item">
+                    <h3 class="fs-20 font-weight-semi-bold pb-2">Courses</h3>
+                    <div class="divider border-bottom-0"><span></span></div>
+                    <ul class="generic-list-item">
+                        <li><a href="#">Web Development</a></li>
+                        <li><a href="#">Hacking</a></li>
+                        <li><a href="#">PHP Learning</a></li>
+                        <li><a href="#">Spoken English</a></li>
+                        <li><a href="#">Self-Driving Car</a></li>
+                        <li><a href="#">Garbage Collectors</a></li>
+                    </ul>
+                </div><!-- end footer-item -->
+            </div><!-- end col-lg-3 -->
+            <div class="col-lg-3 responsive-column-half">
+                <div class="footer-item">
+                    <h3 class="fs-20 font-weight-semi-bold pb-2">Download App</h3>
+                    <div class="divider border-bottom-0"><span></span></div>
+                    <div class="mobile-app">
+                        <p class="pb-3 lh-24">Download our mobile app and learn on the go.</p>
+                        <a href="#" class="d-block mb-2 hover-s"><img src="images/appstore.png" alt="App store" class="img-fluid"></a>
+                        <a href="#" class="d-block hover-s"><img src="images/googleplay.png" alt="Google play store" class="img-fluid"></a>
+                    </div>
+                </div><!-- end footer-item -->
+            </div><!-- end col-lg-3 -->
+            <div class="col-lg-3 responsive-column-half">
+                <div class="footer-item">
+                    <h3 class="fs-20 font-weight-semi-bold pb-2">Newsletter</h3>
+                    <div class="divider border-bottom-0"><span></span></div>
+                    <form method="post" class="subscriber-form">
+                        <p class="pb-3 lh-24">Want us to email you about special offers & updates?</p>
+                        <div class="form-group">
+                            <input type="email" name="email" class="form-control form--control pl-3" placeholder="Enter email address">
+                            <button class="btn theme-btn w-100 mt-3" type="button">Subscribe <i class="la la-arrow-right icon ml-1"></i></button>
+                        </div>
+                    </form>
+                </div><!-- end footer-item -->
+            </div><!-- end col-lg-3 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+    <div class="section-block"></div>
+    <div class="copyright-content py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="d-flex flex-wrap align-items-center">
+                        <a href="index.html" class="pr-4">
+                            <img src="images/logo.png" alt="footer logo" class="footer__logo">
+                        </a>
+                        <p class="copy-desc">Copyright &copy; 2021 <a href="https://techydevs.com/">TechyDevs</a> Inc.</p>
+                    </div>
+                </div><!-- end col-lg-6 -->
+                <div class="col-lg-6">
+                    <div class="d-flex flex-wrap align-items-center justify-content-end">
+                        <ul class="generic-list-item d-flex flex-wrap align-items-center fs-14">
+                            <li class="mr-3"><a href="terms-and-conditions.html">Terms & Conditions</a></li>
+                            <li class="mr-3"><a href="privacy-policy.html">Privacy Policy</a></li>
+                        </ul>
+                        <div class="select-container select-container-sm">
+                            <select class="select-container-select">
+                                <option value="1">English</option>
+                                <option value="2">Deutsch</option>
+                                <option value="3">Español</option>
+                                <option value="4">Français</option>
+                                <option value="5">Bahasa Indonesia</option>
+                                <option value="6">Bangla</option>
+                                <option value="7">日本語</option>
+                                <option value="8">한국어</option>
+                                <option value="9">Nederlands</option>
+                                <option value="10">Polski</option>
+                                <option value="11">Português</option>
+                                <option value="12">Română</option>
+                                <option value="13">Русский</option>
+                                <option value="14">ภาษาไทย</option>
+                                <option value="15">Türkçe</option>
+                                <option value="16">中文(简体)</option>
+                                <option value="17">中文(繁體)</option>
+                                <option value="17">Hindi</option>
+                            </select>
+                        </div>
+                    </div>
+                </div><!-- end col-lg-6 -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end copyright-content -->
+</section><!-- end footer-area -->
+<!-- ================================
+          END FOOTER AREA
+================================= -->
+
+<!-- start scroll top -->
+<div id="scroll-top">
+    <i class="la la-arrow-up" title="Go top"></i>
+</div>
+<!-- end scroll top -->
+
+<!-- template js files -->
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/bootstrap-select.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/isotope.js"></script>
+<script src="js/waypoint.min.js"></script>
+<script src="js/jquery.counterup.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

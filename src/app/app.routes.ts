@@ -5,19 +5,25 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './pages/login/login.component';
 import { InscriptionComponent } from './pages/inscription/inscription.component';
 import { LayoutComponent } from './pages/layout/layout.component';
-<<<<<<< Updated upstream
-=======
+
 import { DashboardProfileComponent } from './pages/dashboard-profile/dashboard-profile.component';
 import { DashboardSettingsComponent } from './pages/dashboard-settings/dashboard-settings.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { CoursesComponent } from './pages/courses/courses.component';
+
 import { AnnoncementComponent } from './pages/annoncement/annoncement.component';
 import { BlogsComponent } from './pages/blogs/blogs.component';
 import { CommentComponent } from './pages/comment/comment.component';
 
 
 
->>>>>>> Stashed changes
+
+import { RecoverComponent } from './pages/recover/recover.component';
+import { DashboardAdminComponent } from './pages/dashboard-admin/dashboard-admin.component';
+import { NotificationComponent } from './pages/notification/notification.component';
+import { DashboardAnnoncementComponent } from './pages/dashboard-annoncement/dashboard-annoncement.component';
+import { DashboardNotifComponent } from './pages/dashboard-notif/dashboard-notif.component';
+
 
 
 
@@ -27,13 +33,13 @@ export const routes: Routes = [  // Make sure to export 'routes'
   { path: 'signup', component: InscriptionComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'layout', component: LayoutComponent },
-<<<<<<< Updated upstream
-=======
+
   { path: 'dashboard-profile', component: DashboardProfileComponent },
   { path: 'dashboard-profile', component: DashboardProfileComponent },
   { path: 'dashboard-settings', component: DashboardSettingsComponent },
   { path: 'footer', component: FooterComponent },
   { path: 'courses', component: CoursesComponent },
+
   { path: 'annoncement', component: AnnoncementComponent },
   { path: 'blogs', component: BlogsComponent }, 
   { path: 'comment', component: CommentComponent },
@@ -41,7 +47,16 @@ export const routes: Routes = [  // Make sure to export 'routes'
 
 
 
->>>>>>> Stashed changes
+  { path: 'recover', component: RecoverComponent },
+  { path: 'dashboard-admin', component: DashboardAdminComponent },
+
+  { path: 'notification', component: NotificationComponent },
+
+  { path: 'dashboardAnnoncement', component: DashboardAnnoncementComponent },
+
+  { path: 'dashboardNotif', component: DashboardNotifComponent },
+
+  
 
 
 ];
