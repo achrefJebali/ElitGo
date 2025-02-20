@@ -11,6 +11,7 @@ import { FooterComponent } from './pages/footer/footer.component';
 import { CoursesComponent } from './pages/courses/courses.component';
 import { RecoverComponent } from './pages/recover/recover.component';
 import { DashboardAdminComponent } from './pages/dashboard-admin/dashboard-admin.component';
+import { QuizComponent } from './pages/quiz/quiz.component';
 
 
 
@@ -29,7 +30,7 @@ export const routes: Routes = [  // Make sure to export 'routes'
   { path: 'courses', component: CoursesComponent },
   { path: 'recover', component: RecoverComponent },
   { path: 'dashboard-admin', component: DashboardAdminComponent },
-
+  { path: 'quiz', component: QuizComponent },
 
 
 
