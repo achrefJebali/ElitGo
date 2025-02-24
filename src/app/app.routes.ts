@@ -9,6 +9,7 @@ import { DashboardProfileComponent } from './pages/dashboard-profile/dashboard-p
 import { DashboardSettingsComponent } from './pages/dashboard-settings/dashboard-settings.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { CoursesComponent } from './pages/courses/courses.component';
+import { ChatroomComponent } from './pages/chatroom/chatroom.component';
 import { RecoverComponent } from './pages/recover/recover.component';
 import { DashboardAdminComponent } from './pages/dashboard-admin/dashboard-admin.component';
 
@@ -19,6 +20,7 @@ import { DashboardAdminComponent } from './pages/dashboard-admin/dashboard-admin
 export const routes: Routes = [  // Make sure to export 'routes'
   { path: '', component: HomeComponent }, // Default route
   { path: 'login', component: LoginComponent },
+  { path: 'chatroom', component: ChatroomComponent },
   { path: 'signup', component: InscriptionComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'layout', component: LayoutComponent },
