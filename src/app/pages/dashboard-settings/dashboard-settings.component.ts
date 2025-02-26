@@ -9,6 +9,6 @@ import { DashboardHeaderComponent } from '../dashboard/dashboard-header/dashboar
   templateUrl: './dashboard-settings.component.html',
   styleUrl: './dashboard-settings.component.css'
 })
-export class DashboardSettingsComponent {
+export class DashboardSettingsComponent  {
 
 }

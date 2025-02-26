@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DashboardHeaderComponent } from '../dashboard/dashboard-header/dashboard-header.component';
 
 @Component({
@@ -8,6 +8,9 @@ import { DashboardHeaderComponent } from '../dashboard/dashboard-header/dashboar
   templateUrl: './dashboard-admin.component.html',
   styleUrl: './dashboard-admin.component.css'
 })
-export class DashboardAdminComponent {
-
+export class DashboardAdminComponent implements OnInit {
+  
+  ngOnInit() {
+    console.log('Dashboard Admin Loaded');
+  }
 }
