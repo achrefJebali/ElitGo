@@ -1,0 +1,149 @@
+/* annoncement.component.css */
+/* Style général */
+.e-learning-card {
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: none;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.e-learning-card:hover {
+    transform: translateY(-5px);
+}
+
+.e-learning-header {
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    padding: 1.5rem;
+    border-bottom: 3px solid #2980b9;
+}
+
+/* Champs de formulaire */
+.form-floating {
+    margin-bottom: 1.5rem;
+}
+
+.form-floating label {
+    padding-left: 2.5rem;
+    color: #7f8c8d;
+}
+
+.form-control {
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    border: 2px solid #ecf0f1;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52,152,219,0.2);
+}
+
+/* Upload d'image */
+.file-upload-card {
+    margin-bottom: 2rem;
+}
+
+.drag-drop-area {
+    border: 2px dashed #bdc3c7;
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drag-drop-area:hover {
+    border-color: #3498db;
+    background-color: #f8f9fa;
+}
+
+.upload-instructions {
+    color: #7f8c8d;
+}
+
+.preview-image {
+    max-height: 180px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Cartes des annonces */
+.e-learning-announcement-card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.e-learning-announcement-card:hover {
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.card-img-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.card-img-wrapper:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.card-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.e-learning-announcement-card:hover .card-actions {
+    opacity: 1;
+}
+
+.e-learning-section-title {
+    color: #2c3e50;
+    padding: 1rem 0;
+    border-bottom: 3px solid #3498db;
+    margin-top: 3rem;
+}
+
+/* Boutons */
+.btn-primary {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.btn-outline-secondary {
+    border: 2px solid #bdc3c7;
+    color: #7f8c8d;
+}
+
+/* Icônes */
+.fas {
+    margin-right: 8px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate__animated {
+    animation-duration: 0.5s;
+}

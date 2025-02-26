@@ -23,6 +23,7 @@ import { DashboardAdminComponent } from './pages/dashboard-admin/dashboard-admin
 import { NotificationComponent } from './pages/notification/notification.component';
 import { DashboardAnnoncementComponent } from './pages/dashboard-annoncement/dashboard-annoncement.component';
 import { DashboardNotifComponent } from './pages/dashboard-notif/dashboard-notif.component';
+import { FeedbackComponent } from './pages/feedback/feedback.component';
 
 
 
@@ -55,7 +56,7 @@ export const routes: Routes = [  // Make sure to export 'routes'
   { path: 'dashboardAnnoncement', component: DashboardAnnoncementComponent },
 
   { path: 'dashboardNotif', component: DashboardNotifComponent },
-
+  { path: 'feedback', component: FeedbackComponent },
   
 
 

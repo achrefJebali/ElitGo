@@ -1,0 +1,23 @@
+<div class="feedback-container">
+    <h2>Feedbacks</h2>
+  
+    <!-- Formulaire pour ajouter un feedback -->
+    <form (ngSubmit)="addFeedback()">
+      <label for="like">Likes :</label>
+      <input id="like" type="number" [(ngModel)]="newFeedback.like" name="like" required>
+  
+      <label for="dislike">Dislikes :</label>
+      <input id="dislike" type="number" [(ngModel)]="newFeedback.dislike" name="dislike" required>
+  
+      <button type="submit">Ajouter Feedback</button>
+    </form>
+  
+    <!-- Liste des feedbacks -->
+    <ul class="feedback-list">
+      <li *ngFor="let feedback of feedbacks">
+        <span>👍 {{ feedback.like }} | 👎 {{ feedback.dislike }}</span>
+        <button (click)="deleteFeedback(feedback.id!)">Supprimer</button>
+      </li>
+    </ul>
+  </div>
+  
