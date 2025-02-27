@@ -24,7 +24,7 @@ export class InscriptionComponent {
     phone: '',
     address: '',
     photo: '',
-    status: '',
+    status: 'ACTIVE',
     balance: 0,
     role: 'STUDENT',
     token: '',

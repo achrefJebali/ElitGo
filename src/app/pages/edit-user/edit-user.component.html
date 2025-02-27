@@ -1,0 +1,17 @@
+<h2>Edit User</h2>
+<form (ngSubmit)="dialogRef.close(user)">
+  <label>Username:</label>
+  <input [(ngModel)]="user.username" name="username" required />
+
+  <label>Email:</label>
+  <input [(ngModel)]="user.email" name="email" required />
+
+  <label>Role:</label>
+  <select [(ngModel)]="user.role" name="role">
+    <option value="admin">Admin</option>
+    <option value="user">User</option>
+  </select>
+
+  <button type="submit">Save</button>
+  <button type="button" (click)="onCancel()">Cancel</button>
+</form>

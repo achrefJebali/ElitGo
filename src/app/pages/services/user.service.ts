@@ -24,7 +24,7 @@ export class UserService {
     return this.http.post<{ token: string }>(`${this.authUrl}/login`, { username, password }, { headers });
   }
   // GET: Retrieve all users
-  getUsers(): Observable<User[]> {
+  getUser(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/retrieve-all-users`);
   }
 
@@ -45,7 +45,23 @@ export class UserService {
   // 🔹 Déconnexion de l'utilisateur
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('username'); // ✅ Supprimer aussi le username
+
+    
   }
+
+  getUserByUsername(username: string): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/get-user/${username}`);
+  }
+  // Add this method for password change
+  changePassword(username: string, currentPassword: string, newPassword: string): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/change-password`, 
+      { username, currentPassword, newPassword }, 
+      { responseType: 'json' } // ✅ Expect JSON response
+    );
+  }
+  
+  
   
 
   }

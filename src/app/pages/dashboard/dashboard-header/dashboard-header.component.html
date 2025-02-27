@@ -212,9 +212,10 @@
                                                                 <img class="rounded-full img-fluid" src="../../../../assets/images/small-avatar-1.jpg" alt="Avatar image">
                                                             </a>
                                                             <div class="ml-2">
-                                                                <h4><a href="teacher-detail.html" class="text-black">Alex Smith</a></h4>
-                                                                <span class="d-block fs-14 lh-20">alexsmith&#64;example.com</span>
+                                                                <h4><a href="teacher-detail.html" class="text-black">{{ username }}</a></h4>
+                                                                <span class="d-block fs-14 lh-20">{{ email }}</span>
                                                             </div>
+                                                            
                                                         </li>
                                                         <li>
                                                             <div class="theme-picker d-flex align-items-center justify-content-center lh-40">
@@ -298,11 +299,13 @@
                                                                         <i class="la la-question mr-1"></i> Help
                                                                     </a>
                                                                 </li>
-                                                                <li>
-                                                                    <a href="index.html">
+                                                                <li (click)="logout()">
+                                                                    <a href="#">
                                                                         <i class="la la-power-off mr-1"></i> Logout
                                                                     </a>
                                                                 </li>
+                                                                
+                                                                
                                                                 <li><div class="section-block"></div></li>
                                                                 <li>
                                                                     <a href="#" class="position-relative">

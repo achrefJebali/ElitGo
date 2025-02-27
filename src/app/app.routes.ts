@@ -12,6 +12,9 @@ import { CoursesComponent } from './pages/courses/courses.component';
 import { RecoverComponent } from './pages/recover/recover.component';
 import { DashboardAdminComponent } from './pages/dashboard-admin/dashboard-admin.component';
 import { AuthGuard } from './guards/auth.guard'; // Ajout du guard d'authentification
+import { AdminProfileComponent } from './pages/admin-profile/admin-profile.component';
+import { AllUsersComponent } from './pages/all-users/all-users.component';
+import { AdminSettingsComponent } from './pages/admin-settings/admin-settings.component';
 
 
 
@@ -30,6 +33,9 @@ export const routes: Routes = [  // Make sure to export 'routes'
   { path: 'footer', component: FooterComponent },
   { path: 'courses', component: CoursesComponent },
   { path: 'recover', component: RecoverComponent },
+  { path: 'admin-profile', component: AdminProfileComponent },
+  { path: 'all-users', component: AllUsersComponent },
+  { path: 'admin-settings', component: AdminSettingsComponent },
   { path: 'dashboard-admin', component: DashboardAdminComponent, canActivate: [AuthGuard] },
 
 

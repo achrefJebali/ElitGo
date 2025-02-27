@@ -1,0 +1,35 @@
+.dashboard-container {
+    display: flex; /* Ensures sidebar and content are side by side */
+}
+
+.sidebar {
+    width: 250px; /* Adjust sidebar width */
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+.content {
+    flex: 1; /* Takes remaining space */
+    padding: 20px;
+    overflow-x: auto; /* Prevents table from breaking layout */
+}
+
+.table-container {
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+button {
+    margin: 5px;
+}

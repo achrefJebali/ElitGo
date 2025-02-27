@@ -15,9 +15,10 @@ export class AuthGuard implements CanActivate {
 
     if (!token || this.jwtHelper.isTokenExpired(token)) {
       console.warn('AuthGuard: Token invalid or expired! Redirecting...');
-      this.router.navigate(['/login']);
+      setTimeout(() => this.router.navigate(['/login']), 0); // ✅ Delayed navigation to avoid loops
       return false;
     }
+    
 
     console.log('AuthGuard: Access granted');
     return true;

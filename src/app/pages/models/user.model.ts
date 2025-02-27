@@ -1,4 +1,4 @@
-// src/app/models/user.model.ts
+//./models/user.model.ts
 export interface User {
     name: string;
     username: string;
