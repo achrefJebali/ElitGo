@@ -1,0 +1,22 @@
+.modern-button {
+    background-color: #007bff;
+    /* Blue background */
+    color: white;
+    /* White text */
+    border: none;
+    /* Remove default border */
+    padding: 10px 20px;
+    /* Add padding */
+    border-radius: 5px;
+    /* Rounded corners */
+    font-size: 16px;
+    /* Font size */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    /* Smooth transitions */
+    display: inline-flex;
+    /* Align icon and text */
+    align-items: center;
+    /* Center items vertically */
+}

@@ -1,0 +1,79 @@
+<app-dashboard-header></app-dashboard-header>
+
+<div class="container-fluid">
+    <div class="breadcrumb-content d-flex flex-wrap align-items-center justify-content-between mb-5">
+        <div class="section-block mb-5"></div>
+        <div class="dashboard-heading mb-5">
+            <h3 class="fs-22 font-weight-semi-bold">Submit Course</h3>
+        </div>
+        <!-- Add Back Button Here -->
+        <button (click)="goBack()" class="modern-back-button">
+            <i class="la la-arrow-left mr-2"></i>Back
+        </button>
+    </div>
+
+    <form (ngSubmit)="onSubmit()">
+        <div class="card card-item">
+            <div class="card-body">
+                <h3 class="fs-22 font-weight-semi-bold pb-2">Basic info</h3>
+                <div class="divider"><span></span></div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="label-text">Formation Title</label>
+                            <input class="form-control form--control pl-3" type="text" [(ngModel)]="formation.title"
+                                name="title" required>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="label-text">Formation Label</label>
+                            <input class="form-control form--control pl-3" type="text" [(ngModel)]="formation.label"
+                                name="label" required>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="label-text">Duration (hours)</label>
+                            <input class="form-control form--control pl-3" type="number"
+                                [(ngModel)]="formation.duration" name="duration" required>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="label-text">Price ($)</label>
+                            <input class="form-control form--control pl-3" type="number" [(ngModel)]="formation.price"
+                                name="price" required>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="label-text">Description</label>
+                            <textarea class="form-control form--control pl-3" [(ngModel)]="formation.description"
+                                name="description" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="label-text">Image URL</label>
+                            <input class="form-control form--control pl-3" type="text" [(ngModel)]="formation.image"
+                                name="image" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select class="form-control" id="category" [(ngModel)]="formation.categoryName"
+                            name="categoryName" required>
+                            <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="course-submit-btn-box pb-4">
+            <button class="btn theme-btn" type="submit">Create Formation</button>
+        </div>
+    </form>
+</div>

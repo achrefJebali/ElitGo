@@ -1,0 +1,54 @@
+.modern-button {
+    background-color: #007bff;
+    /* Blue background */
+    color: white;
+    /* White text */
+    border: none;
+    /* Remove default border */
+    padding: 10px 20px;
+    /* Add padding */
+    border-radius: 5px;
+    /* Rounded corners */
+    font-size: 16px;
+    /* Font size */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    /* Smooth transitions */
+    display: inline-flex;
+    /* Align icon and text */
+    align-items: center;
+    /* Center items vertically */
+}
+
+.modern-button:hover {
+    background-color: #0056b3;
+    /* Darker blue on hover */
+    transform: translateY(-2px);
+    /* Slight lift effect */
+}
+
+.modern-button:active {
+    background-color: #004080;
+    /* Even darker blue on click */
+    transform: translateY(0);
+    /* Reset lift effect */
+}
+
+.modern-button i {
+    margin-right: 8px;
+    /* Space between icon and text */
+}
+
+.modal-content {
+    border-radius: 10px;
+}
+
+.modal-body input,
+.modal-body textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
