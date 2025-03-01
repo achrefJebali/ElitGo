@@ -6,28 +6,18 @@
 <section class="breadcrumb-area section-padding img-bg-2">
   <div class="overlay"></div>
   <div class="container">
-    <div
-      class="breadcrumb-content d-flex flex-wrap align-items-center justify-content-between"
-    >
+    <div class="breadcrumb-content d-flex flex-wrap align-items-center justify-content-between">
       <div class="section-heading">
         <h2 class="section__title text-white">Sign Up</h2>
       </div>
-      <ul
-        class="generic-list-item generic-list-item-white generic-list-item-arrow d-flex flex-wrap align-items-center"
-      >
+      <ul class="generic-list-item generic-list-item-white generic-list-item-arrow d-flex flex-wrap align-items-center">
         <li><a href="index.html">Home</a></li>
         <li>Pages</li>
         <li>Sign Up</li>
       </ul>
     </div>
-    <!-- end breadcrumb-content -->
   </div>
-  <!-- end container -->
 </section>
-<!-- end breadcrumb-area -->
-<!-- ================================
-    END BREADCRUMB AREA
-================================= -->
 
 <!-- ================================
        START CONTACT AREA
@@ -50,136 +40,156 @@
               Start Learning!
             </h3>
             <div class="section-block"></div>
-            <form
-  (ngSubmit)="onSubmit()"
-  #userForm="ngForm"
-  method="post"
-  class="pt-4"
->
-  <!-- First Name -->
-  <div class="input-box">
-    <label class="label-text">First Name</label>
-    <div class="form-group">
-      <input
-        [(ngModel)]="user.name"
-        name="name"
-        class="form-control form--control"
-        type="text"
-        placeholder="First name"
-        required
-      />
-      <span class="la la-user input-icon"></span>
-    </div>
-  </div>
+            <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="pt-4">
+              <!-- First Name -->
+              <div class="input-box">
+                <label class="label-text">First Name</label>
+                <div class="form-group">
+                  <input
+                    formControlName="name"
+                    class="form-control form--control"
+                    [class.is-invalid]="(submitted || f['name'].touched) && f['name'].errors"
+                    type="text"
+                    placeholder="First name"
+                  />
+                  <span class="la la-user input-icon"></span>
+                  <div class="invalid-feedback" *ngIf="(submitted || f['name'].touched) && f['name'].errors">
+                    {{ getErrorMessage('name') }}
+                  </div>
+                </div>
+              </div>
 
-  <!-- Last Name -->
-  <div class="input-box">
-    <label class="label-text">Username</label>
-    <div class="form-group">
-      <input
-        [(ngModel)]="user.username"
-        name="username"
-        class="form-control form--control"
-        type="text"
-        placeholder="Username"
-        required
-      />
-      <span class="la la-user input-icon"></span>
-    </div>
-  </div>
+              <!-- Username -->
+              <div class="input-box">
+                <label class="label-text">Username</label>
+                <div class="form-group">
+                  <input
+                    formControlName="username"
+                    class="form-control form--control"
+                    [class.is-invalid]="(submitted || f['username'].touched) && f['username'].errors"
+                    type="text"
+                    placeholder="Username"
+                  />
+                  <span class="la la-user input-icon"></span>
+                  <div class="invalid-feedback" *ngIf="(submitted || f['username'].touched) && f['username'].errors">
+                    {{ getErrorMessage('username') }}
+                  </div>
+                </div>
+              </div>
 
-  <!-- Email Address -->
-  <div class="input-box">
-    <label class="label-text">Email Address</label>
-    <div class="form-group">
-      <input
-        [(ngModel)]="user.email"
-        name="email"
-        class="form-control form--control"
-        type="email"
-        placeholder="Enter email address"
-        required
-      />
-      <span class="la la-envelope input-icon"></span>
-    </div>
-  </div>
+              <!-- Email Address -->
+              <div class="input-box">
+                <label class="label-text">Email Address</label>
+                <div class="form-group">
+                  <input
+                    formControlName="email"
+                    class="form-control form--control"
+                    [class.is-invalid]="(submitted || f['email'].touched) && f['email'].errors"
+                    type="email"
+                    placeholder="Enter email address"
+                  />
+                  <span class="la la-envelope input-icon"></span>
+                  <div class="invalid-feedback" *ngIf="(submitted || f['email'].touched) && f['email'].errors">
+                    {{ getErrorMessage('email') }}
+                  </div>
+                </div>
+              </div>
 
-  <!-- Phone Number -->
-  <div class="input-box">
-    <label class="label-text">Phone</label>
-    <div class="form-group">
-      <input
-        [(ngModel)]="user.phone"
-        name="phone"
-        class="form-control form--control"
-        type="text"
-        placeholder="Phone number"
-        required
-      />
-      <span class="la la-phone input-icon"></span>
-    </div>
-  </div>
+              <!-- Phone Number -->
+              <div class="input-box">
+                <label class="label-text">Phone</label>
+                <div class="form-group">
+                  <input
+                    formControlName="phone"
+                    class="form-control form--control"
+                    [class.is-invalid]="(submitted || f['phone'].touched) && f['phone'].errors"
+                    type="text"
+                    placeholder="Phone number"
+                  />
+                  <span class="la la-phone input-icon"></span>
+                  <div class="invalid-feedback" *ngIf="(submitted || f['phone'].touched) && f['phone'].errors">
+                    {{ getErrorMessage('phone') }}
+                  </div>
+                </div>
+              </div>
 
-  <!-- Address -->
-  <div class="input-box">
-    <label class="label-text">Address</label>
-    <div class="form-group">
-      <input
-        [(ngModel)]="user.address"
-        name="address"
-        class="form-control form--control"
-        type="text"
-        placeholder="Address"
-        required
-      />
-      <span class="la la-home input-icon"></span>
-    </div>
-  </div>
+              <!-- Address -->
+              <div class="input-box">
+                <label class="label-text">Address</label>
+                <div class="form-group">
+                  <input
+                    formControlName="address"
+                    class="form-control form--control"
+                    [class.is-invalid]="(submitted || f['address'].touched) && f['address'].errors"
+                    type="text"
+                    placeholder="Address"
+                  />
+                  <span class="la la-home input-icon"></span>
+                  <div class="invalid-feedback" *ngIf="(submitted || f['address'].touched) && f['address'].errors">
+                    {{ getErrorMessage('address') }}
+                  </div>
+                </div>
+              </div>
 
-  <!-- Password -->
-  <div class="input-box">
-    <label class="label-text">Password</label>
-    <div class="input-group mb-3">
-      <span class="la la-lock input-icon"></span>
-      <input
-        [(ngModel)]="user.password"
-        name="password"
-        class="form-control form--control"
-        type="password"
-        placeholder="Password"
-        required
-      />
-    </div>
-  </div>
+              <!-- Password -->
+              <div class="input-box">
+                <label class="label-text">Password</label>
+                <div class="form-group">
+                  <div class="input-group">
+                    <input
+                      formControlName="password"
+                      class="form-control form--control"
+                      [class.is-invalid]="(submitted || f['password'].touched) && f['password'].errors"
+                      [type]="showPassword ? 'text' : 'password'"
+                      placeholder="Password"
+                    />
+                    <span class="la la-lock input-icon"></span>
+                    <button type="button" class="btn btn-link password-toggle" (click)="togglePasswordVisibility('password')">
+                      <i [class]="showPassword ? 'la la-eye-slash' : 'la la-eye'"></i>
+                    </button>
+                  </div>
+                  <div class="invalid-feedback" *ngIf="(submitted || f['password'].touched) && f['password'].errors">
+                    {{ getErrorMessage('password') }}
+                  </div>
+                </div>
+              </div>
 
+              <!-- Confirm Password -->
+              <div class="input-box">
+                <label class="label-text">Confirm Password</label>
+                <div class="form-group">
+                  <div class="input-group">
+                    <input
+                      formControlName="confirmPassword"
+                      class="form-control form--control"
+                      [class.is-invalid]="(submitted || f['confirmPassword'].touched) && 
+                        (f['confirmPassword'].errors || registrationForm.errors?.['passwordMismatch'])"
+                      [type]="showConfirmPassword ? 'text' : 'password'"
+                      placeholder="Confirm password"
+                    />
+                    <span class="la la-lock input-icon"></span>
+                    <button type="button" class="btn btn-link password-toggle" (click)="togglePasswordVisibility('confirmPassword')">
+                      <i [class]="showConfirmPassword ? 'la la-eye-slash' : 'la la-eye'"></i>
+                    </button>
+                  </div>
+                  <div class="invalid-feedback" *ngIf="(submitted || f['confirmPassword'].touched) && 
+                    (f['confirmPassword'].errors || registrationForm.errors?.['passwordMismatch'])">
+                    {{ f['confirmPassword'].errors ? getErrorMessage('confirmPassword') : 'Passwords do not match' }}
+                  </div>
+                </div>
+              </div>
 
-
-  
- 
-
-  
-
-  <!-- Submit Button -->
-  <div class="btn-box">
-    <button
-      class="btn theme-btn"
-      type="submit"
-      [disabled]="!userForm.form.valid"
-    >
-      Register Account
-    </button>
-  </div>
-</form>
-
+              <!-- Submit Button -->
+              <div class="btn-box">
+                <button class="btn theme-btn" type="submit">
+                  Register Account
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- end container -->
 </section>
-<!-- end contact-area -->
-<!-- ================================
-       END CONTACT AREA
-================================= -->
 <app-footer></app-footer>

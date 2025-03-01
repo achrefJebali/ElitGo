@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
+import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8085/ElitGo/User'; // Spring Boot backend URL
-  private authUrl = 'http://localhost:8085/ElitGo/api/auth'; // URL pour l'authentification
+  private apiUrl = 'http://localhost:8085/ElitGo/User';
+  private authUrl = 'http://localhost:8085/ElitGo/api/auth';
 
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   // POST method to add a new user
   addUser(user: User): Observable<User> {
@@ -46,8 +46,7 @@ export class UserService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('username'); // ✅ Supprimer aussi le username
-
-    
+    this.router.navigate(['/']); // Navigate to home page
   }
 
   getUserByUsername(username: string): Observable<User> {
@@ -60,9 +59,12 @@ export class UserService {
       { responseType: 'json' } // ✅ Expect JSON response
     );
   }
-  
-  
-  
 
+  checkEmailExists(email: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/check-email/${email}`);
   }
 
+  checkUsernameExists(username: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/check-username/${username}`);
+  }
+}

@@ -1,0 +1,38 @@
+// Add any custom styles here if needed
+.container {
+  min-height: calc(100vh - 64px - 80px); // Adjust based on your header and footer heights
+}
+
+// Custom table styles
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  
+  th, td {
+    &:first-child {
+      padding-left: 1.5rem;
+    }
+    &:last-child {
+      padding-right: 1.5rem;
+    }
+  }
+}
+
+// Form styles
+form {
+  input, select {
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    }
+  }
+}
+
+// Status badge animations
+.status-badge {
+  transition: all 0.2s ease-in-out;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}

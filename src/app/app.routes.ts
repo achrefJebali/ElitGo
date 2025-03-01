@@ -15,6 +15,7 @@ import { AuthGuard } from './guards/auth.guard'; // Ajout du guard d'authentific
 import { AdminProfileComponent } from './pages/admin-profile/admin-profile.component';
 import { AllUsersComponent } from './pages/all-users/all-users.component';
 import { AdminSettingsComponent } from './pages/admin-settings/admin-settings.component';
+import { InterviewComponent } from './pages/interview/interview.component';
 
 
 
@@ -36,6 +37,7 @@ export const routes: Routes = [  // Make sure to export 'routes'
   { path: 'admin-profile', component: AdminProfileComponent },
   { path: 'all-users', component: AllUsersComponent },
   { path: 'admin-settings', component: AdminSettingsComponent },
+  { path: 'interview', component: InterviewComponent},
   { path: 'dashboard-admin', component: DashboardAdminComponent, canActivate: [AuthGuard] },
 
 

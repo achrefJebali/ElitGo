@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { DashboardHeaderComponent } from '../dashboard/dashboard-header/dashboard-header.component';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-settings',
   standalone: true,
-  imports: [DashboardHeaderComponent, FormsModule,CommonModule], // Ensure FormsModule is imported
+  imports: [DashboardHeaderComponent, FormsModule, CommonModule],
   templateUrl: './admin-settings.component.html',
   styleUrls: ['./admin-settings.component.css']
 })
@@ -20,8 +21,13 @@ export class AdminSettingsComponent implements OnInit {
     confirmPassword: ''
   };
   passwordError: string = '';
+  deleteAccountPassword: string = '';
+  deleteAccountError: string = '';
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadUserData();
@@ -89,10 +95,33 @@ export class AdminSettingsComponent implements OnInit {
         }
       );
   }
-  
-      
+
+  deleteAccount(): void {
+    this.deleteAccountError = '';
+
+    if (!this.deleteAccountPassword) {
+      this.deleteAccountError = "Please enter your password to confirm account deletion";
+      return;
+    }
+
+    if (!this.user.id) {
+      this.deleteAccountError = "User not found!";
+      return;
+    }
+
+    const confirmDelete = confirm('Are you sure you want to delete your account? This action cannot be undone.');
+    
+    if (confirmDelete) {
+      this.userService.removeUser(this.user.id).subscribe(
+        () => {
+          alert('Your account has been successfully deleted.');
+          this.userService.logout(); // This will now handle both cleanup and navigation
+        },
+        (error) => {
+          console.error('Error deleting account:', error);
+          alert('Failed to delete account. Please try again.');
+        }
+      );
+    }
   }
-  
-   
-
-
+}
