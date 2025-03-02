@@ -43,8 +43,13 @@ export class AdminProfileComponent implements OnInit {
     
     this.userService.getUserByUsername(username).subscribe({
       next: (user) => {
-        this.user = user;
-        this.loading = false;
+        if (user) {
+          this.user = user;
+          this.loading = false;
+        } else {
+          this.error = 'User not found';
+          this.loading = false;
+        }
       },
       error: (err) => {
         this.error = 'Erreur lors de la récupération de l\'utilisateur';
@@ -55,7 +60,7 @@ export class AdminProfileComponent implements OnInit {
   }
 
   getPhotoUrl(photo: string | undefined): string {
-    return photo || 'images/small-avatar-1.jpg';
+    return photo || 'assets/images/small-avatar-1.jpg';
   }
 
   logout(): void {

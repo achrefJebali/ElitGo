@@ -71,15 +71,22 @@ export class AllUsersComponent implements OnInit {
   updateRole(user: User, newRole: Role): void {
     if (!user.id) return;
     
+    this.loading = true;
+    this.error = '';
+    
     this.userService.updateUserRole(user.id, newRole).subscribe({
       next: (updatedUser) => {
+        // Update user in the list with new role
         const index = this.users.findIndex(u => u.id === user.id);
         if (index !== -1) {
           this.users[index] = updatedUser;
         }
+        this.loading = false;
       },
       error: (error) => {
         console.error('Error updating user role:', error);
+        this.error = 'Failed to update user role. Please try again.';
+        this.loading = false;
       }
     });
   }

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap, switchMap } from 'rxjs';
 import { User, Role } from '../models/user.model';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,71 +14,74 @@ export class UserService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  private getAuthHeaders(includeContentType: boolean = true): HttpHeaders {
-    const token = localStorage.getItem('token');
-    let headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    if (includeContentType) {
-      headers = headers.set('Content-Type', 'application/json');
-    }
-    return headers;
-  }
-
   // POST method to add a new user
   addUser(user: User): Observable<User> {
-    return this.http.post<User>(`${this.apiUrl}/add-user`, user, {
-      headers: this.getAuthHeaders()
-    });
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json');
+    return this.http.post<User>(`${this.apiUrl}/add-user`, user, { headers });
   }
 
   // Méthode de connexion
   login(username: string, password: string): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(`${this.authUrl}/login`, { username, password }, {
-      headers: this.getAuthHeaders()
-    });
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post<{ token: string }>(`${this.authUrl}/login`, { username, password }, { headers }).pipe(
+      map(response => {
+        if (response && response.token) {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('username', username);
+        }
+        return response;
+      })
+    );
   }
 
   // GET: Retrieve all users
   getUser(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/retrieve-all-users`, {
-      headers: this.getAuthHeaders(false)
-    });
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<User[]>(`${this.apiUrl}/retrieve-all-users`, { headers });
   }
 
   // GET: Retrieve all students
   getStudents(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/students`, {
-      headers: this.getAuthHeaders(false)
-    });
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<User[]>(`${this.apiUrl}/students`, { headers });
   }
 
   // GET: Retrieve all teachers
   getTeachers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/teachers`, {
-      headers: this.getAuthHeaders(false)
-    });
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<User[]>(`${this.apiUrl}/teachers`, { headers });
   }
 
   // DELETE: Remove a user by ID
   removeUser(userId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/users/${userId}`, {
-      headers: this.getAuthHeaders(false)
-    });
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.delete<void>(`${this.apiUrl}/users/${userId}`, { headers });
   }
 
   // PUT: Modify an existing user
   modifyUser(user: User): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}/modify-user`, user, {
-      headers: this.getAuthHeaders()
-    });
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json');
+    return this.http.put<User>(`${this.apiUrl}/modify-user`, user, { headers });
   }
 
   // PUT: Update user role
   updateUserRole(userId: number, role: Role): Observable<User> {
-    return this.http.patch<User>(`${this.apiUrl}/users/${userId}/role`, { role }, {
-      headers: this.getAuthHeaders()
-    });
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json');
+
+    return this.http.put<User>(`${this.apiUrl}/update-role/${userId}`, { role }, { headers });
   }
 
   // 🔹 Vérifier si l'utilisateur est connecté
@@ -93,48 +97,46 @@ export class UserService {
   }
 
   getUserByUsername(username: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/get-user/${username}`, {
-      headers: this.getAuthHeaders(false)
-    });
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<User>(`${this.apiUrl}/get-user/${username}`, { headers });
   }
 
   getUserById(userId: number): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/users/${userId}`, {
-      headers: this.getAuthHeaders(false)
-    });
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<User>(`${this.apiUrl}/users/${userId}`, { headers });
   }
 
- 
-
   changePassword(username: string, currentPassword: string, newPassword: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json');
     return this.http.post(`${this.apiUrl}/users/change-password`, {
       username,
       currentPassword,
       newPassword
-    }, {
-      headers: this.getAuthHeaders()
-    });
+    }, { headers });
   }
 
   checkEmailExists(email: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/check-email/${email}`, {
-      headers: this.getAuthHeaders(false)
-    });
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<boolean>(`${this.apiUrl}/check-email/${email}`, { headers });
   }
 
   checkUsernameExists(username: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/check-username/${username}`, {
-      headers: this.getAuthHeaders(false)
-    });
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<boolean>(`${this.apiUrl}/check-username/${username}`, { headers });
   }
 
   uploadPhoto(userId: number, photo: File): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const formData = new FormData();
     formData.append('photo', photo);
-    // Don't include Content-Type header for FormData
-    const headers = this.getAuthHeaders(false);
-    return this.http.post(`${this.apiUrl}/${userId}/upload-photo`, formData, {
-      headers: headers
-    });
+    return this.http.post(`${this.apiUrl}/${userId}/upload-photo`, formData, { headers });
   }
 }
