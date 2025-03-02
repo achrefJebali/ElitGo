@@ -27,7 +27,7 @@
                 <a href="admin-profile">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none"/>
-                        <path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/>
+                        <path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2H5.9V17c0-.64 3.13-2 6.1-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                     </svg>
                     My Profile
                 </a>
@@ -136,7 +136,7 @@
                 <a href="index.html">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none"/>
-                        <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5-5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                        <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5-5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V5z"/>
                     </svg>
                     Logout
                 </a>
@@ -151,7 +151,7 @@
             <div class="breadcrumb-content d-flex flex-wrap align-items-center justify-content-between mb-5">
                 <div class="media media-card align-items-center">
                     <div class="media-img media--img media-img-md rounded-full">
-                        <img class="rounded-full" src="images/small-avatar-1.jpg" alt="Student thumbnail image">
+                        <img class="rounded-full" [src]="getPhotoUrl(user?.photo)" alt="Profile photo">
                     </div>
                     <div class="media-body">
                         <h2 class="section__title fs-30">{{user?.username}}</h2>
@@ -162,13 +162,11 @@
                                 <span class="la la-star"></span>
                                 <span class="la la-star"></span>
                                 <span class="la la-star"></span>
-                                <span class="la la-star-o"></span>
+                                <span class="la la-star"></span>
                             </div>
-                            <span class="rating-total pl-1">(20,230)</span>
-                        </div><!-- end rating-wrap -->
-                    </div><!-- end media-body -->
-                </div><!-- end media -->
-                
+                        </div>
+                    </div>
+                </div>
             </div><!-- end breadcrumb-content -->
             <div class="section-block mb-5"></div>
             <div class="dashboard-heading mb-5">
@@ -177,6 +175,7 @@
             <div class="profile-detail mb-5">
                 <div *ngIf="user; else loading">
                     <ul class="generic-list-item generic-list-item-flash">
+                        
                         <li><span class="profile-name">First Name:</span> <span class="profile-desc">{{ user?.name }}</span></li>
                         <li><span class="profile-name">User Name:</span> <span class="profile-desc">{{ user?.username }}</span></li>
                         <li><span class="profile-name">Address:</span> <span class="profile-desc">{{ user?.address }}</span></li>

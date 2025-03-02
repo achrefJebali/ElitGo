@@ -6,43 +6,46 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from '../services/user.service';
 import { LayoutComponent } from '../layout/layout.component';
 import { FooterComponent } from '../footer/footer.component';
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule, CommonModule, HttpClientModule, LayoutComponent, FooterComponent],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   username: string = '';
   password: string = '';
   errorMessage: string = '';
 
-  private userService = inject(UserService); 
-  private router = inject(Router); 
-  private jwtHelper = inject(JwtHelperService); 
+  private userService = inject(UserService);
+  private router = inject(Router);
 
   login(): void {
-    this.userService.login(this.username, this.password).subscribe(
-      (response) => {
-        localStorage.setItem('token', response.token);
+    if (!this.username || !this.password) {
+      this.errorMessage = 'Please enter both username and password';
+      return;
+    }
 
-        // ✅ Décoder le token pour récupérer les informations de l'utilisateur
-        const decodedToken: any = this.jwtHelper.decodeToken(response.token);
-        console.log("Decoded Token:", decodedToken);
-
-        // ✅ Stocker le nom et l'email de l'utilisateur
-        localStorage.setItem('username', decodedToken.sub); 
-        localStorage.setItem('email', decodedToken.email || ""); 
-
-        // ✅ Redirection sans rechargement forcé
-        this.router.navigateByUrl('/dashboard-admin');
+    this.userService.login(this.username, this.password).subscribe({
+      next: (response) => {
+        if (response && response.token) {
+          localStorage.setItem('token', response.token);
+          // Always redirect to dashboard-admin after successful login
+          setTimeout(() => {
+            this.router.navigate(['/dashboard-admin']).then(() => {
+              console.log('Navigation complete');
+            }).catch(err => {
+              console.error('Navigation error:', err);
+            });
+          }, 100);
+        }
       },
-      (error) => {
+      error: (error) => {
+        console.error('Login error:', error);
         this.errorMessage = 'Invalid credentials, please try again!';
       }
-    );
+    });
   }
 }

@@ -1,6 +1,4 @@
-<!-- ================================
-    START DASHBOARD AREA
-================================= -->
+<app-dashboard-header></app-dashboard-header>
 <section class="dashboard-area">
     <div class="off-canvas-menu dashboard-off-canvas-menu off--canvas-menu custom-scrollbar-styled pt-20px">
         <div class="off-canvas-menu-close dashboard-menu-close icon-element icon-element-sm shadow-sm" data-toggle="tooltip" data-placement="left" title="Close menu">
@@ -9,7 +7,6 @@
         <div class="logo-box px-4">
             <a href="index.html" class="logo"><img src="./assets/images/logo.png" alt="logo" style="max-height: 135px; width: auto;"></a>
         </div>
-      
         <ul class="generic-list-item off-canvas-menu-list off--canvas-menu-list pt-35px">
             <!-- Admin Dashboard -->
             <li>
@@ -26,7 +23,7 @@
                 <a href="admin-profile">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none"/>
-                        <path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 10c2.97 0 6.1 1.46 6.1 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        <path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 10c2.97 0 6.1 1.46 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                     </svg>
                     My Profile
                 </a>
@@ -36,7 +33,7 @@
                 <a href="interview">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none"/>
-                        <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17l-.59.59-.58.58V4h16v12z"/>
+                        <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2h-1V2h-2zm3 18H5V9h14v11z"/>
                     </svg>
                     Interview Management
                 </a>
@@ -52,11 +49,11 @@
                 </a>
             </li>
             <!-- Manage all users -->
-            <li class="page-active">
+            <li class="all-users">
                 <a href="all-users">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none"/>
-                        <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        <path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 10c2.97 0 6.1 1.46 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                     </svg>
                     Manage All Users
                 </a>
@@ -73,7 +70,7 @@
             </li>
             <!-- Manage Teachers -->
             <li>
-                <a href="all-teachers">
+                <a href="page-active">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none"/>
                         <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
@@ -152,7 +149,7 @@
                         <img class="rounded-full" src="./assets/images/small-avatar-1.jpg" alt="Admin thumbnail image">
                     </div>
                     <div class="media-body">
-                        <h2 class="section__title fs-30">Manage All Users</h2>
+                        <h2 class="section__title fs-30">Manage Teachers</h2>
                     </div>
                 </div>
             </div>
@@ -160,36 +157,32 @@
                 <div class="col-lg-12">
                     <div class="card-box-shared">
                         <div class="card-box-shared-title">
-                            <h3 class="widget-title">Users List</h3>
+                            <h3 class="widget-title">Teachers List</h3>
                         </div>
                         <div class="card-box-shared-body">
-                            <div class="table-responsive">
+                            <div class="statement-table purchase-table table-responsive mb-5">
+                                <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+                                <div *ngIf="loading" class="text-center">
+                                    <div class="spinner-border" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Username</th>
                                             <th>Name</th>
+                                            <th>Email</th>
+                                            
                                             <th>Role</th>
-                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let user of users">
-                                            <td>{{user.id}}</td>
-                                            <td>{{user.username}}</td>
-                                            <td>{{user.name}}</td>
-                                            <td>
-                                                <select [(ngModel)]="user.role" (change)="updateRole(user, user.role)" class="form-control">
-                                                    <option [value]="userRoles.STUDENT">Student</option>
-                                                    <option [value]="userRoles.TEACHER">Teacher</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-danger btn-sm mr-2" (click)="viewProfile(user)">
-                                                    View Profile
-                                                </button>
-                                            </td>
+                                        <tr *ngFor="let teacher of teachers">
+                                            <td>{{ teacher.name }}</td>
+                                            <td>{{ teacher.email }}</td>
+    
+                                            <td><span class="badge bg-warning text-dark">{{ teacher.role }}</span></td>
+
                                         </tr>
                                     </tbody>
                                 </table>
@@ -206,20 +199,3 @@
         </div>
     </div>
 </section>
-<!-- template js files -->
-<script src="../../../assets/js/jquery-3.4.1.min.js"></script>
-<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
-<script src="../../../assets/js/bootstrap-select.min.js"></script>
-<script src="../../../assets/js/owl.carousel.min.js"></script>
-<script src="../../../assets/js/isotope.js"></script>
-<script src="../../../assets/js/jquery.counterup.min.js"></script>
-<script src="../../../assets/js/fancybox.js"></script>
-<script src="../../../assets/js/chart.js"></script>
-<script src="../../../assets/js/doughnut-chart.js"></script>
-<script src="../../../assets/js/bar-chart.js"></script>
-<script src="../../../assets/js/line-chart.js"></script>
-<script src="../../../assets/js/datedropper.min.js"></script>
-<script src="../../../assets/js/emojionearea.min.js"></script>
-<script src="../../../assets/js/animated-skills.js"></script>
-<script src="../../../assets/js/jquery.MultiFile.min.js"></script>
-<script src="../../../assets/js/main.js"></script>

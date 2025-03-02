@@ -1,34 +1,64 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // ✅ Import du CommonModule
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { DashboardHeaderComponent } from '../dashboard/dashboard-header/dashboard-header.component';
+import { CommonModule } from '@angular/common';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
+import { LayoutComponent } from '../layout/layout.component';
+import { FooterComponent } from '../footer/footer.component';
+import { DashboardHeaderComponent } from '../dashboard/dashboard-header/dashboard-header.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin-profile',
   standalone: true,
-  imports: [CommonModule, DashboardHeaderComponent], // ✅ Ajouter CommonModule
+  imports: [
+    CommonModule,
+    LayoutComponent,
+    FooterComponent,
+    DashboardHeaderComponent,
+    RouterModule
+  ],
   templateUrl: './admin-profile.component.html',
-  styleUrl: './admin-profile.component.css'
+  styleUrls: ['./admin-profile.component.scss']
 })
 export class AdminProfileComponent implements OnInit {
-  user: User | null = null; // ✅ Déclaration correcte
+  user: User | null = null;
+  loading = false;
+  error = '';
 
-  constructor(private userService: UserService, private jwtHelper: JwtHelperService) {}
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const decodedToken = this.jwtHelper.decodeToken(token);
-      const username = decodedToken?.sub;
+    this.loadUserProfile();
+  }
 
-      if (username) {
-        this.userService.getUserByUsername(username).subscribe(
-          (data) => this.user = data,
-          (error) => console.error('Error fetching user data:', error)
-        );
-      }
+  loadUserProfile(): void {
+    const username = localStorage.getItem('username');
+    if (!username) {
+      this.error = 'No user logged in';
+      return;
     }
+
+    this.loading = true;
+    this.error = ''; // Reset error before new request
+    
+    this.userService.getUserByUsername(username).subscribe({
+      next: (user) => {
+        this.user = user;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = 'Erreur lors de la récupération de l\'utilisateur';
+        this.loading = false;
+        console.error('Error loading profile:', err);
+      }
+    });
+  }
+
+  getPhotoUrl(photo: string | undefined): string {
+    return photo || 'images/small-avatar-1.jpg';
+  }
+
+  logout(): void {
+    this.userService.logout();
   }
 }

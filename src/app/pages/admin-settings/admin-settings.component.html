@@ -67,7 +67,7 @@
         
             <!-- Manage Students -->
             <li>
-                <a href="dashboard-students.html">
+                <a href="all-students">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none"/>
                         <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
@@ -78,10 +78,10 @@
         
             <!-- Manage Teachers -->
             <li>
-                <a href="dashboard-teachers.html">
+                <a href="all-teachers">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none"/>
-                        <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                     </svg>
                     Manage Teachers
                 </a>
@@ -152,7 +152,7 @@
             <div class="breadcrumb-content d-flex flex-wrap align-items-center justify-content-between mb-5">
                 <div class="media media-card align-items-center">
                     <div class="media-img media--img media-img-md rounded-full">
-                        <img class="rounded-full" src="images/small-avatar-1.jpg" alt="Student thumbnail image">
+                        <img class="rounded-full" src="images/small-avatar-1.jpg" alt="Profile photo">
                     </div>
                     <div class="media-body">
                         <h2 class="section__title fs-30">{{user.username}}</h2>
@@ -197,19 +197,24 @@
                 <div class="tab-pane fade show active" id="edit-profile" role="tabpanel" aria-labelledby="edit-profile-tab">
                     <div class="setting-body">
                         <h3 class="fs-17 font-weight-semi-bold pb-4">Edit Profile</h3>
-                        <div class="media media-card align-items-center">
-                            <div class="media-img media-img-lg mr-4 bg-gray">
-                                <img class="mr-3" src="images/team11.jpg" alt="avatar image">
-                            </div>
-                            <div class="media-body">
-                                <div class="file-upload-wrap file-upload-wrap-2">
-                                    <input type="file" name="files[]" class="multi file-upload-input with-preview" multiple>
-                                    <span class="file-upload-text"><i class="la la-photo mr-2"></i>Upload a Photo</span>
-                                </div><!-- file-upload-wrap -->
-                                <p class="fs-14">Max file size is 5MB, Minimum dimension: 200x200 And Suitable files are .jpg & .png</p>
-                            </div>
-                        </div><!-- end media -->
-                        <form (ngSubmit)="saveChanges()" #adminForm="ngForm" class="row pt-40px">
+                        <div class="media-img media--img media-img-lg mr-4 mb-4">
+                            <img [src]="user.photo || 'images/small-avatar-1.jpg'" alt="Profile photo" class="profile-img rounded-full" style="width: 150px; height: 150px; object-fit: cover;">
+                        </div>
+
+                        <div class="file-upload-wrap mb-4">
+                            <input type="file" class="file-upload-input" (change)="onPhotoSelected($event)" accept="image/*">
+                            <span class="file-upload-text"><i class="la la-upload mr-2"></i>Upload Photo</span>
+                        </div>
+
+                        <div *ngIf="photoError" class="alert alert-danger mt-2 mb-4">
+                            {{photoError}}
+                        </div>
+
+                        <button *ngIf="selectedPhoto" (click)="uploadPhoto()" class="theme-btn mb-4">
+                            Save Photo
+                        </button>
+
+                        <form (ngSubmit)="saveChanges()" #editProfileForm="ngForm" class="row pt-40px">
                             <div class="input-box col-lg-6">
                                 <label class="label-text">First Name</label>
                                 <div class="form-group">
@@ -243,7 +248,7 @@
                             </div>
                         
                             <div class="input-box col-lg-12 py-2">
-                                <button class="btn theme-btn" type="submit" [disabled]="adminForm.invalid">Save Changes</button>
+                                <button class="btn theme-btn" type="submit" [disabled]="editProfileForm.invalid">Save Changes</button>
                             </div>
                         </form>
                         
@@ -336,7 +341,6 @@
                         <h3 class="fs-17 font-weight-semi-bold pb-4">My Account</h3>
                         
                         <div class="section-block"></div>
-                        
                         <div class="delete-account-info">
                             <h3 class="fs-17 font-weight-semi-bold text-danger pb-3 pt-4">Delete Account</h3>
                             <p class="pb-3">Warning: Once you delete your account, there is no going back. Please be certain.</p>
@@ -345,15 +349,15 @@
                                 <div class="input-box col-lg-12">
                                     <label class="label-text">Enter Your Password to Confirm</label>
                                     <div class="form-group">
-                                        <input class="form-control form--control" type="password" 
+                                        <input class="form-control form--control " type="password" 
                                                name="deleteAccountPassword" 
                                                [(ngModel)]="deleteAccountPassword" 
                                                placeholder="Enter your current password">
-                                        <span class="text-danger" *ngIf="deleteAccountError">{{ deleteAccountError }}</span>
+                                        <span class="text-danger " *ngIf="deleteAccountError">{{ deleteAccountError }}</span>
                                     </div>
                                 </div>
                                 <div class="input-box col-lg-12 py-2">
-                                    <button class="btn theme-btn-danger" type="submit">
+                                    <button class="btn theme-btn-danger btn theme-btn" type="submit">
                                         Delete My Account
                                     </button>
                                 </div>

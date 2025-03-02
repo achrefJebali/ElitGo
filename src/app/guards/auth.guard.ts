@@ -11,16 +11,12 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): boolean {
     const token = localStorage.getItem('token');
-    console.log('AuthGuard: Token found:', token); // ✅ Debugging Log
-
+    
     if (!token || this.jwtHelper.isTokenExpired(token)) {
-      console.warn('AuthGuard: Token invalid or expired! Redirecting...');
-      setTimeout(() => this.router.navigate(['/login']), 0); // ✅ Delayed navigation to avoid loops
+      this.router.navigate(['/login']);
       return false;
     }
-    
 
-    console.log('AuthGuard: Access granted');
     return true;
   }
 }

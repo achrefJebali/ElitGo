@@ -1,1 +1,76 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Material Dialog Styles */
+.cdk-overlay-container {
+  z-index: 9999 !important;
+}
+
+.mat-dialog-container {
+  position: relative !important;
+  z-index: 10000 !important;
+}
+
+.cdk-global-overlay-wrapper {
+  z-index: 10000 !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  padding-top: 50px !important;
+}
+
+/* Center dialog styles */
+.centered-dialog {
+  margin-left: 120px !important; /* Half of the sidebar width */
+}
+
+.centered-dialog .mat-dialog-container {
+  padding: 0 !important;
+  overflow: hidden !important;
+  border-radius: 12px !important;
+}
+
+.cdk-overlay-pane {
+  margin: auto !important;
+  max-width: 90vw !important;
+  max-height: 90vh !important;
+}
+
+/* Ensure dialog is above sidebar */
+.cdk-overlay-backdrop {
+  z-index: 9998 !important;
+}
+
+/* Dialog animation */
+.mat-dialog-container {
+  animation: dialogFadeIn 0.2s ease-out !important;
+}
+
+@keyframes dialogFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Add this to your global styles */
+.centered-dialog .mat-mdc-dialog-container {
+  position: relative !important;
+  margin: auto;
+}
+
+.user-details-dialog {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+/* Override Material Dialog styles for centering */
+.mat-mdc-dialog-container {
+  padding: 0 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}

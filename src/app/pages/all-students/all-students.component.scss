@@ -1,0 +1,24 @@
+.statement-table {
+    .table {
+        thead {
+            tr {
+                th {
+                    font-size: 15px;
+                    font-weight: 500;
+                    color: #233d63;
+                    padding: 15px 30px;
+                    background-color: rgba(128, 137, 150, 0.1);
+                }
+            }
+        }
+        tbody {
+            tr {
+                td {
+                    padding: 15px 30px;
+                    font-size: 15px;
+                    color: #233d63;
+                }
+            }
+        }
+    }
+}

@@ -16,19 +16,15 @@ import { AdminProfileComponent } from './pages/admin-profile/admin-profile.compo
 import { AllUsersComponent } from './pages/all-users/all-users.component';
 import { AdminSettingsComponent } from './pages/admin-settings/admin-settings.component';
 import { InterviewComponent } from './pages/interview/interview.component';
-
-
-
-
-
+import { AllStudentsComponent } from './pages/all-students/all-students.component';
+import { AllTeachersComponent } from './pages/all-teachers/all-teachers.component';
 
 export const routes: Routes = [  // Make sure to export 'routes'
-  { path: '', component: HomeComponent }, // Default route
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: InscriptionComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'layout', component: LayoutComponent },
-  { path: 'dashboard-profile', component: DashboardProfileComponent },
   { path: 'dashboard-profile', component: DashboardProfileComponent },
   { path: 'dashboard-settings', component: DashboardSettingsComponent },
   { path: 'footer', component: FooterComponent },
@@ -37,13 +33,8 @@ export const routes: Routes = [  // Make sure to export 'routes'
   { path: 'admin-profile', component: AdminProfileComponent },
   { path: 'all-users', component: AllUsersComponent },
   { path: 'admin-settings', component: AdminSettingsComponent },
-  { path: 'interview', component: InterviewComponent},
-  { path: 'dashboard-admin', component: DashboardAdminComponent, canActivate: [AuthGuard] },
-
-
-
-
-
-
-
+  { path: 'interview', component: InterviewComponent },
+  { path: 'all-students', component: AllStudentsComponent },
+  { path: 'all-teachers', component: AllTeachersComponent },
+  { path: 'dashboard-admin', component: DashboardAdminComponent }
 ];

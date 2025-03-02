@@ -1,18 +1,19 @@
 //./models/user.model.ts
+export enum Role {
+  STUDENT = 'STUDENT',
+  TEACHER = 'TEACHER',
+  ADMIN_CLUB = 'ADMIN CLUB',
+  ADMIN = 'ADMIN'
+}
+
 export interface User {
-    id?: number;
-    name: string;
-    username: string;
-    password: string;
-    email: string;
-    phone: string;
-    address: string;
-    photo: string;
-    status: string;
-    balance: number;
-    role: string;
-    token: string;
-    isPaid: boolean;
-    weeklyInterviews: number;
-  }
-  
+  id?: number;
+  username: string;
+  email: string;
+  password?: string;
+  role: Role;
+  name?: string;
+  phone?: string;
+  address?: string;
+  photo?: string; // URL to the stored photo
+}
