@@ -21,18 +21,20 @@
         </div>
         <div class="row">
             <div class="col-lg-4 responsive-column-half" *ngFor="let formation of formations">
-                <div class="card card-item card-preview">
+                <div class="card card-item card-preview" style="cursor: pointer"
+                    (click)="navigateToDetails(formation.id)">
                     <div class="card-image">
-                        <a href="course-details.html" class="d-block">
-                            <img [src]="formation.image" alt="formation Image">
-                        </a>
-                        <div class="course-badge-labels" *ngIf="formation.highestRated">
-                            <div class="course-badge sky-blue">Highest rated</div>
-                        </div>
+                        <img *ngIf="formation.image" [src]="imageUrls[formation.id] | async"
+                            (error)="onImageError($event)" [alt]="formation.title" class="card-img-top">
+                    </div>
+                    <div class="course-badge-labels" *ngIf="formation.highestRated">
+                        <div class="course-badge sky-blue">Highest rated</div>
                     </div>
                     <div class="card-body">
                         <h6 class="ribbon ribbon-blue-bg fs-14 mb-3" *ngIf="formation.label">{{ formation.label }}</h6>
-                        <h5 class="card-title"><a href="course-details.html">{{ formation.title }}</a></h5>
+                        <h5 class="card-title">
+                            <a>{{ formation.title }}</a>
+                        </h5>
                         <p class="card-text">{{ formation.description }}</p>
                         <div class="rating-wrap d-flex align-items-center py-2">
                             <div class="review-stars">
@@ -46,7 +48,7 @@
                             <span class="rating-total pl-1">(20,230)</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <p class="card-price text-black font-weight-bold">{{ formation.price }}</p>
+                            <p class="card-price text-black font-weight-bold">{{ formation.price }}DT</p>
                             <div class="icon-element icon-element-sm shadow-sm cursor-pointer" title="Add to Wishlist">
                                 <i class="la la-heart-o"></i>
                             </div>

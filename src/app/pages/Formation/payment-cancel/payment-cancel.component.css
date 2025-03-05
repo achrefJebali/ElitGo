@@ -1,0 +1,14 @@
+.card {
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .card {
+        margin: 1rem;
+    }
+}

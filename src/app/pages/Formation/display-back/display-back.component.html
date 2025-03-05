@@ -157,182 +157,175 @@
         </ul>
     </div><!-- end off-canvas-menu -->
     <div class="dashboard-content-wrap">
-        <div class="dashboard-menu-toggler btn theme-btn theme-btn-sm lh-28 theme-btn-transparent mb-4 ml-3">
-            <i class="la la-bars mr-1"></i> Dashboard Nav
+        <!-- Dashboard Header -->
+        <div class="dashboard-bread dashboard--bread dashboard-bread-2">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="breadcrumb-content">
+                            <div class="section-heading">
+                                <h2 class="sec__title font-size-30 text-white">Formation Management</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="container-fluid">
-            <div class="breadcrumb-content d-flex flex-wrap align-items-center justify-content-between mb-5">
-                <div class="media media-card align-items-center">
-                    <div class="media-img media--img media-img-md rounded-full">
-                        <img class="rounded-full" src="./assets/images/small-avatar-1.jpg"
-                            alt="Student thumbnail image">
-                    </div>
-                    <div class="media-body">
-                        <h2 class="section__title fs-30">Howdy, Tim Buchalka</h2>
-                        <div class="rating-wrap d-flex align-items-center pt-2">
-                            <div class="review-stars">
-                                <span class="rating-number">4.4</span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star-o"></span>
-                            </div>
-                            <span class="rating-total pl-1">(20,230)</span>
-                        </div><!-- end rating-wrap -->
-                    </div><!-- end media-body -->
-                </div><!-- end media -->
-                <button (click)="navigateToAddFormation()" class="modern-button">
-                    <i class="la la-download mr-2"></i>add Formation
-                </button>
-            </div><!-- end breadcrumb-content -->
 
-            <div class="section-block mb-5"></div>
-            <div class="dashboard-heading mb-5">
-                <h3 class="fs-22 font-weight-semi-bold">Formation</h3>
-            </div>
-
-            <!-- Liste des formations -->
-            <div class="dashboard-cards mb-5">
-                <div *ngFor="let formation of formations" class="card card-item card-item-list-layout">
-                    <div class="card-image">
-                        <img class="card-img-top" [src]="formation.image" alt="Card image cap">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ formation.title }}</h5>
-                        <p class="card-text">{{ formation.description }}</p>
-                        <div class="duration-wrap d-flex align-items-center fs-15 pb-2">
-                            <i class="la la-clock mr-2"></i>
-                            <span class="text-black">Duration:</span>
-                            <span class="ml-1">{{ formation.duration }}</span>
-                        </div>
-                        <br><br><br><br>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="card-price text-black font-weight-bold">{{ formation.price | currency
-                                }}</p>
-                            <div class="card-action-wrap pl-3">
-                                <!-- Bouton Edit qui ouvre la modal -->
-                                <div (click)="navigateToEditFormation(formation.id);$event.stopPropagation()"
-                                    class="icon-element icon-element-sm shadow-sm cursor-pointer ml-1 text-secondary"
-                                    data-toggle="tooltip" data-placement="top" data-title="Edit">
-                                    <i class="la la-edit"></i>
+        <div class="dashboard-main-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-box">
+                            <div class="form-title-wrap">
+                                <div>
+                                    <h3 class="title">Formation Lists</h3>
+                                    <p class="font-size-14">Showing {{ formations.length }} formations</p>
                                 </div>
-
-                                <!-- Bouton Delete -->
-                                <div class="icon-element icon-element-sm shadow-sm cursor-pointer ml-1 text-danger"
-                                    data-toggle="tooltip" data-placement="top" title="Delete"
-                                    (click)="deleteFormation(formation.id)">
-                                    <i class="la la-trash"></i>
+                                <div class="ml-auto">
+                                    <button class="btn theme-btn" (click)="navigateToAddFormation($event)">
+                                        <i class="la la-plus mr-1"></i>Add New Formation
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-content">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Price</th>
+                                                <th>Duration</th>
+                                                <th>Label</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let formation of formations">
+                                                <td>{{ formation.title }}</td>
+                                                <td>{{ formation.price }}</td>
+                                                <td>{{ formation.duration }}</td>
+                                                <td>{{ formation.label }}</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-primary mr-2"
+                                                        (click)="navigateToEditFormation(formation.id, $event)">
+                                                        <i class="la la-edit mr-1"></i>Edit
+                                                    </button>
+                                                    <button class="btn btn-sm btn-danger"
+                                                        (click)="deleteFormation(formation.id, $event)">
+                                                        <i class="la la-trash mr-1"></i>Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Modal de modification de Formation -->
-            <ng-template #editModal let-modal>
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editFormationModalLabel">Edit Formation</h5>
-                    <button type="button" class="btn-close" (click)="modal.dismiss()" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
-                        <input type="hidden" formControlName="id">
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="title" formControlName="title">
-                        </div>
-                        <div class="mb-3">
-                            <label for="certificate" class="form-label">Certificate</label>
-                            <input type="text" class="form-control" id="certificate" formControlName="certificate">
-                        </div>
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description" formControlName="description"
-                                rows="3"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="discount" class="form-label">Discount</label>
-                            <input type="text" class="form-control" id="discount" formControlName="discount">
-                        </div>
-                        <div class="mb-3">
-                            <label for="duration" class="form-label">Duration</label>
-                            <input type="text" class="form-control" id="duration" formControlName="duration">
-                        </div>
-                        <div class="mb-3">
-                            <label for="featured" class="form-label">Featured</label>
-                            <input type="text" class="form-control" id="featured" formControlName="featured">
-                        </div>
-                        <div class="mb-3">
-                            <label for="highestRated" class="form-label">Highest Rated</label>
-                            <input type="text" class="form-control" id="highestRated" formControlName="highestRated">
-                        </div>
-                        <div class="mb-3">
-                            <label for="image" class="form-label">Image URL</label>
-                            <input type="text" class="form-control" id="image" formControlName="image">
-                        </div>
-                        <div class="mb-3">
-                            <label for="label" class="form-label">Label</label>
-                            <input type="text" class="form-control" id="label" formControlName="label">
-                        </div>
-                        <div class="mb-3">
-                            <label for="price" class="form-label">Price</label>
-                            <input type="number" class="form-control" id="price" formControlName="price">
-                        </div>
-                        <div class="mb-3">
-                            <label for="progression" class="form-label">Progression</label>
-                            <input type="text" class="form-control" id="progression" formControlName="progression">
-                        </div>
-                        <div class="mb-3">
-                            <label for="video" class="form-label">Video URL</label>
-                            <input type="text" class="form-control" id="video" formControlName="video">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </form>
-                </div>
-            </ng-template>
-            <div class="text-center py-3">
-                <nav aria-label="Page navigation example" class="pagination-box">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true"><i class="la la-arrow-left"></i></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true"><i class="la la-arrow-right"></i></span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <p class="fs-14 pt-2">Showing 1-4 of 16 results</p>
-            </div>
-            <div class="row align-items-center dashboard-copyright-content pb-4">
-                <div class="col-lg-6">
-                    <p class="copy-desc">&copy; 2021 Aduca. All Rights Reserved. by <a
-                            href="https://techydevs.com/">TechyDevs</a></p>
-                </div><!-- end col-lg-6 -->
-                <div class="col-lg-6">
-                    <ul class="generic-list-item d-flex flex-wrap align-items-center fs-14 justify-content-end">
-                        <li class="mr-3"><a href="terms-and-conditions.html">Terms & Conditions</a></li>
-                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                    </ul>
-                </div><!-- end col-lg-6 -->
-            </div><!-- end row -->
-            <div *ngIf="errorMessage" class="alert alert-danger">
-                {{ errorMessage }}
-            </div>
+    <style>
+        .dashboard-content-wrap {
+            padding: 30px;
+        }
 
-        </div><!-- end card -->
-    </div><!-- end col-lg-12 -->
+        .form-box {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-title-wrap {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-content {
+            padding: 20px;
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table th {
+            border-top: none;
+            font-weight: 600;
+        }
+
+        .btn {
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .theme-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+        }
+
+        .theme-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+    <div class="text-center py-3">
+        <nav aria-label="Page navigation example" class="pagination-box">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true"><i class="la la-arrow-left"></i></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true"><i class="la la-arrow-right"></i></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <p class="fs-14 pt-2">Showing 1-4 of 16 results</p>
+    </div>
+    <div class="row align-items-center dashboard-copyright-content pb-4">
+
+        <div class="col-lg-6">
+            <ul class="generic-list-item d-flex flex-wrap align-items-center fs-14 justify-content-end">
+                <li class="mr-3"><a href="terms-and-conditions.html">Terms & Conditions</a></li>
+                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            </ul>
+        </div><!-- end col-lg-6 -->
+    </div><!-- end row -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+    </div>
+
 
 </section><!-- end dashboard-area -->
 

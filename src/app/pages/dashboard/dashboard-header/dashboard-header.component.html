@@ -17,13 +17,61 @@
 
 </head>
 <!-- start cssload-loader -->
-<div class="preloader">
+<div class="preloader" *ngIf="isLoading">
     <div class="loader">
         <svg class="spinner" viewBox="0 0 50 50">
             <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
         </svg>
     </div>
 </div>
+
+<style>
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    animation: rotate 2s linear infinite;
+}
+
+.path {
+    stroke: #007bff;
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+    }
+}
+</style>
 <!-- end cssload-loader -->
 
 <!--======================================
@@ -243,7 +291,7 @@
                                                 <div class="shop-cart-btn">
                                                     <div class="avatar-xs">
                                                         <img class="rounded-full img-fluid"
-                                                            src="./assets/images/small-avatar-1.jpg" alt="Avatar image">
+                                                            src="../../../../assets/images/small-avatar-1.jpg" alt="Avatar image">
                                                     </div>
                                                     <span class="dot-status bg-1"></span>
                                                 </div>
@@ -253,7 +301,7 @@
                                                         <a href="teacher-detail.html"
                                                             class="avatar-sm flex-shrink-0 d-block">
                                                             <img class="rounded-full img-fluid"
-                                                                src="images/small-avatar-1.jpg" alt="Avatar image">
+                                                                src="../../../../assets/images/small-avatar-1.jpg" alt="Avatar image">
                                                         </a>
                                                         <div class="ml-2">
                                                             <h4><a href="teacher-detail.html" class="text-black">Alex

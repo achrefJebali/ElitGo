@@ -1,0 +1,32 @@
+.breadcrumb-area {
+    background-color: #fff;
+    background-image: url('/assets/images/pattern-bg.jpg');
+    /* Adjust path if needed */
+}
+
+.theme-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.theme-btn:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+.ribbon {
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.rating-stars .la-star {
+    color: #ffc107;
+}
+
+.rating-stars .la-star-o {
+    color: #e4e5e9;
+}

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, } from 'rxjs';
 import { Formation } from '../models/formation';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -17,6 +17,9 @@ export class FormationService {
     return this.http.get<Formation[]>(`${this.apiUrl}/retrieve-all-formation`);
   }
 
+  addFormationWithImage(formData: FormData): Observable<Formation> {
+    return this.http.post<Formation>(`${this.apiUrl}/add-formation-with-image`, formData);
+  }
 
   addFormation(formation: Formation): Observable<Formation> {
     const { id, ...formationWithoutId } = formation;
@@ -35,6 +38,7 @@ export class FormationService {
       })
     );
   }
+
 
   deleteFormation(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/delete-formation/${id}`).pipe(
@@ -56,7 +60,9 @@ export class FormationService {
       })
     );
   }
-
+  updateFormationWithImage(id: number, formData: FormData): Observable<Formation> {
+    return this.http.put<Formation>(`${this.apiUrl}/update-formation-with-image/${id}`, formData);
+  }
 
   getFormationById(id: number): Observable<Formation> {
     return this.http.get<Formation>(`${this.apiUrl}/retrieve-formation/${id}`).pipe(
@@ -82,6 +88,8 @@ export class FormationService {
     console.error('Server error:', error.error);
     return throwError(() => error);
   }
-
+  getFormationImageById(formationId: number): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/image/${formationId}`, { responseType: 'blob' });
+  }
 
 }

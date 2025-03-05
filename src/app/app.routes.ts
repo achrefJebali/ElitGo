@@ -17,6 +17,9 @@ import { DetailsFormationComponent } from './pages/Formation/details-formation/d
 import { DisplayBackComponent } from './pages/Formation/display-back/display-back.component';
 import { CategoryListComponent } from './pages/Formation/category-list/category-list.component';
 import { AddCategoryComponent } from './pages/Formation/add-category/add-category.component';
+import { PaymentCancelComponent } from './pages/Formation/payment-cancel/payment-cancel.component';
+import { PaymentSuccessComponent } from './pages/Formation/payment-success/payment-success.component';
+import { FormationEditComponent } from './pages/Formation/formation-edit/formation-edit.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -32,9 +35,15 @@ export const routes: Routes = [
   { path: 'dashboard-admin', component: DashboardAdminComponent },
   { path: 'formation-list', component: FormationDisplayComponent },
   { path: 'formation-add', component: AddComponent },
+  { path: 'formations/:id', component: DetailsFormationComponent },
   { path: 'DisplayBack', component: DisplayBackComponent },
-  { path: 'Formation-details', component: DetailsFormationComponent },
   { path: 'category-list', component: CategoryListComponent },
   { path: 'add-category', component: AddCategoryComponent },
-  { path: '**', redirectTo: '' },
+  { path: 'payment-success', component: PaymentSuccessComponent },
+  { path: 'payment-cancel', component: PaymentCancelComponent },
+  {
+    path: 'formation-edit/:id',
+    component: FormationEditComponent
+  },
+  { path: '**', redirectTo: '' }
 ];
