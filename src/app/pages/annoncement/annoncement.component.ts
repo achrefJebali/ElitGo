@@ -74,6 +74,8 @@ export class AnnoncementComponent implements OnInit {
     if (this.selectedFile) {
       formData.append('file', this.selectedFile); // 'file' au lieu de 'postimage'
     }
+    // Remplacez 'file' par 'postimage' lors de l'ajout du fichier
+ 
 
     const operation$ = this.editMode && this.currentAnnouncementId ?
       this.announcementService.updateAnnouncement(this.currentAnnouncementId, formData) :
