@@ -1,9 +1,10 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { User } from '../../models/user.model';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-user-details-dialog',
@@ -22,7 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
         <div class="user-info">
           <div class="profile-section">
             <div class="profile-image">
-              <img [src]="data.photo || 'images/small-avatar-1.jpg'" alt="Profile photo">
+              <img [src]="photoUrl" alt="Profile photo">
             </div>
             <div class="user-name">
               <h3>{{data.name || data.username}}</h3>
@@ -213,11 +214,47 @@ import { MatIconModule } from '@angular/material/icon';
     }
   `]
 })
-export class UserDetailsDialogComponent {
+export class UserDetailsDialogComponent implements OnInit {
+  photoUrl: string = 'assets/images/small-avatar-1.jpg';
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: User,
-    private dialogRef: MatDialogRef<UserDetailsDialogComponent>
+    private dialogRef: MatDialogRef<UserDetailsDialogComponent>,
+    private userService: UserService
   ) {}
+
+  ngOnInit(): void {
+    this.loadUserPhoto();
+  }
+
+  loadUserPhoto(): void {
+    if (this.data.id) {
+      if (this.data.photo) {
+        if (this.data.photo.startsWith('http')) {
+          this.photoUrl = this.data.photo;
+        } else if (this.data.photo.startsWith('data:image')) {
+          this.photoUrl = this.data.photo;
+        } else {
+          // Handle relative paths from the server
+          this.photoUrl = `http://localhost:8085/ElitGo${this.data.photo.startsWith('/') ? this.data.photo : '/' + this.data.photo}`;
+        }
+      } else {
+        // If no photo is available, try to load it from the server
+        this.userService.getPhotoUrl(this.data.id).subscribe({
+          next: (url) => {
+            console.log('Received photo URL:', url);
+            if (url) {
+              this.photoUrl = url;
+            }
+          },
+          error: (error) => {
+            console.error('Error loading user photo:', error);
+            this.photoUrl = 'assets/images/small-avatar-1.jpg';
+          }
+        });
+      }
+    }
+  }
 
   close(): void {
     this.dialogRef.close();

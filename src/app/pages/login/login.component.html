@@ -1,9 +1,6 @@
 <app-layout></app-layout>
 
- 
-  
-
-  <!-- ================================
+<!-- ================================
     START BREADCRUMB AREA
 ================================= -->
 <section class="breadcrumb-area section-padding img-bg-2">
@@ -43,7 +40,10 @@
                     <div class="card-body">
                         <h3 class="card-title text-center fs-24 lh-35 pb-4">Login to Your Account!</h3>
                         <div class="section-block"></div>
-                        <form (ngSubmit)="login()" class="pt-4">
+                        <div class="alert alert-danger" role="alert" *ngIf="error">
+                            {{ error }}
+                        </div>
+                        <form (ngSubmit)="onSubmit()" class="pt-4">
                             <div class="input-box">
                                 <label class="label-text">Email or Username</label>
                                 <div class="form-group">
@@ -60,12 +60,12 @@
                                 </div>
                             </div>
                         
-                            <div *ngIf="errorMessage" class="alert alert-danger">
-                                {{ errorMessage }}
-                            </div>
-                        
                             <div class="btn-box">
-                                <button class="btn theme-btn" type="submit">Login Account</button>
+                                <button class="btn theme-btn" type="submit" [disabled]="loading">
+                                    <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" *ngIf="loading"></span>
+                                    <span *ngIf="loading">Logging in...</span>
+                                    <span *ngIf="!loading">Login Account</span>
+                                </button>
                             </div>
                         </form>
                         

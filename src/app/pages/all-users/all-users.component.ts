@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../services/user.service';
-import { LayoutComponent } from '../layout/layout.component';
-import { FooterComponent } from '../footer/footer.component';
-import { DashboardHeaderComponent } from '../dashboard/dashboard-header/dashboard-header.component';
 import { User, Role } from '../models/user.model';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -16,9 +13,6 @@ import { UserDetailsDialogComponent } from '../dialog/user-details-dialog/user-d
   standalone: true,
   imports: [
     CommonModule, 
-    LayoutComponent, 
-    FooterComponent, 
-    DashboardHeaderComponent, 
     RouterModule,
     FormsModule,
     MatDialogModule
@@ -44,15 +38,33 @@ export class AllUsersComponent implements OnInit {
   loadUsers(): void {
     this.loading = true;
     this.error = '';
+    console.log('Loading users with simplified approach...');
+    
+    // Use the simplified direct approach now that the backend is fixed
     this.userService.getUser().subscribe({
       next: (users) => {
-        this.users = users;
+        console.log('Users received successfully:', users);
+        // Ensure we receive valid data
+        if (users && Array.isArray(users)) {
+          this.users = users;
+          if (users.length === 0) {
+            this.error = 'No users found in the database.';
+          }
+        } else {
+          console.error('Received invalid users data format:', users);
+          this.error = 'Received invalid data format from server.';
+          this.users = [];
+        }
         this.loading = false;
       },
       error: (err) => {
+        console.error('Error loading users:', err);
         this.error = 'Failed to load users. Please try again later.';
         this.loading = false;
-        console.error('Error loading users:', err);
+      },
+      complete: () => {
+        console.log('User loading completed');
+        this.loading = false;
       }
     });
   }
@@ -61,8 +73,7 @@ export class AllUsersComponent implements OnInit {
     this.dialog.open(UserDetailsDialogComponent, {
       width: '500px',
       data: user,
-      position: { top: '50px' },
-      panelClass: ['user-details-dialog', 'centered-dialog'],
+      panelClass: ['user-details-dialog', 'centered-dialog', 'mat-dialog-centered'],
       maxWidth: '100vw',
       maxHeight: '90vh'
     });

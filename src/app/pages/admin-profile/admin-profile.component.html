@@ -148,21 +148,45 @@
             <i class="la la-bars mr-1"></i> Dashboard Nav
         </div>
         <div class="container-fluid">
-            <div class="breadcrumb-content d-flex flex-wrap align-items-center justify-content-between mb-5">
-                <div class="media media-card align-items-center">
-                    <div class="media-img media--img media-img-md rounded-full">
-                        <img class="rounded-full" [src]="getPhotoUrl(user?.photo)" alt="Profile photo">
-                    </div>
-                    <div class="media-body">
-                        <h2 class="section__title fs-30">{{user?.username}}</h2>
-                        <div class="rating-wrap d-flex align-items-center pt-2">
-                            <div class="review-stars">
-                                <span class="rating-number">4.4</span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
+            <div class="breadcrumb-content mb-5">
+                <div class="profile-container">
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="profile-photo-display">
+                                <div class="profile-photo-frame">
+                                    <img [src]="getPhotoUrl(user?.photo)" alt="Profile photo" class="profile-img">
+                                </div>
+                                <div class="profile-photo-info text-center mt-3">
+                                    <span class="badge badge-primary">{{user?.role || 'Admin'}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="profile-header">
+                                <h2 class="section__title fs-30">{{user ? user.name : 'Loading...'}} <small class="text-muted fs-16">({{user?.username}})</small></h2>
+                                <p class="text-muted mb-2">{{user?.email}}</p>
+                                
+                                <div class="profile-stats d-flex flex-wrap align-items-center mt-4">
+                                    <div class="stat-item mr-4">
+                                        <span class="stat-value">4.8</span>
+                                        <span class="stat-label">Rating</span>
+                                        <div class="rating-stars">
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star-half-alt"></i>
+                                        </div>
+                                    </div>
+                                    <div class="stat-item mr-4">
+                                        <span class="stat-value">12</span>
+                                        <span class="stat-label">Interviews</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-value">Feb 2025</span>
+                                        <span class="stat-label">Member Since</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -176,11 +200,11 @@
                 <div *ngIf="user; else loading">
                     <ul class="generic-list-item generic-list-item-flash">
                         
-                        <li><span class="profile-name">First Name:</span> <span class="profile-desc">{{ user?.name }}</span></li>
-                        <li><span class="profile-name">User Name:</span> <span class="profile-desc">{{ user?.username }}</span></li>
-                        <li><span class="profile-name">Address:</span> <span class="profile-desc">{{ user?.address }}</span></li>
-                        <li><span class="profile-name">Email:</span> <span class="profile-desc">{{ user?.email }}</span></li>
-                        <li><span class="profile-name">Phone Number:</span> <span class="profile-desc">{{ user?.phone }}</span></li>
+                        <li><span class="profile-name">Name:</span> <span class="profile-desc">{{ user ? user.name : '' }}</span></li>
+                        <li><span class="profile-name">Username:</span> <span class="profile-desc">{{ user ? user.username : '' }}</span></li>
+                        <li><span class="profile-name">Address:</span> <span class="profile-desc">{{ user ? user.address : '' }}</span></li>
+                        <li><span class="profile-name">Email:</span> <span class="profile-desc">{{ user ? user.email : '' }}</span></li>
+                        <li><span class="profile-name">Phone:</span> <span class="profile-desc">{{ user ? user.phone : '' }}</span></li>
                     </ul>
                 </div>
                 

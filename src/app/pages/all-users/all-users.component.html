@@ -148,9 +148,7 @@
         <div class="container-fluid">
             <div class="breadcrumb-content d-flex flex-wrap align-items-center justify-content-between mb-5">
                 <div class="media media-card align-items-center">
-                    <div class="media-img media--img media-img-md rounded-full">
-                        <img class="rounded-full" src="./assets/images/small-avatar-1.jpg" alt="Admin thumbnail image">
-                    </div>
+                    
                     <div class="media-body">
                         <h2 class="section__title fs-30">Manage All Users</h2>
                     </div>
@@ -164,35 +162,64 @@
                         </div>
                         <div class="card-box-shared-body">
                             <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Username</th>
-                                            <th>Name</th>
-                                            <th>Role</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let user of users">
-                                            <td>{{user.id}}</td>
-                                            <td>{{user.username}}</td>
-                                            <td>{{user.name}}</td>
-                                            <td>
-                                                <select [(ngModel)]="user.role" (change)="updateRole(user, user.role)" class="form-control">
-                                                    <option [value]="userRoles.STUDENT">Student</option>
-                                                    <option [value]="userRoles.TEACHER">Teacher</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-danger btn-sm mr-2" (click)="viewProfile(user)">
-                                                    View Profile
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <!-- Loading spinner -->
+                                <div *ngIf="loading" class="text-center py-5">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <p class="mt-2">Loading users data...</p>
+                                </div>
+                                
+                                <!-- Error message -->
+                                <div *ngIf="error && !loading" class="alert alert-warning" role="alert">
+                                    <i class="la la-exclamation-circle"></i> {{error}}
+                                    <button class="btn btn-sm btn-primary ml-2" (click)="loadUsers()">Try Again</button>
+                                </div>
+                                
+                                <!-- Empty state -->
+                                <div *ngIf="!loading && !error && users.length === 0" class="text-center py-5">
+                                    <i class="la la-users la-3x text-muted"></i>
+                                    <p class="mt-2">No users found in the system.</p>
+                                </div>
+                                
+                                <!-- Users table with improved data handling -->
+                                <div *ngIf="!loading && users && users.length > 0">
+                                    <div class="alert alert-info mb-3">
+                                        <i class="la la-info-circle"></i> Showing {{users.length}} users from database
+                                    </div>
+                                    
+                                    <table class="table table-striped">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                
+                                                <th>Username</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let user of users; let i = index">
+                                                <td>{{user?.username || 'N/A'}}</td>
+                                                <td>{{user?.name || 'No name provided'}}</td>
+                                                <td>{{user?.email || 'No email'}}</td>
+                                                <td>
+                                                    <span *ngIf="!user.role" class="badge badge-secondary">No Role</span>
+                                                    <select *ngIf="user.role" [(ngModel)]="user.role" (change)="updateRole(user, user.role)" class="form-control">
+                                                        <option [ngValue]="userRoles.STUDENT">Student</option>
+                                                        <option [ngValue]="userRoles.TEACHER">Teacher</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-danger btn-sm mr-2" (click)="viewProfile(user)">
+                                                        <i class="la la-user"></i> View Profile
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

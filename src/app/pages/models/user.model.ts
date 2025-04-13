@@ -12,8 +12,10 @@ export interface User {
   email: string;
   password?: string;
   role: Role;
-  name?: string;
+  name: string;
   phone?: string;
   address?: string;
   photo?: string; // URL to the stored photo
+  isPaid?: boolean;
+  weeklyInterviews?: number;
 }

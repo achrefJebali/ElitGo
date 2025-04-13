@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
-import { LayoutComponent } from '../layout/layout.component';
-import { FooterComponent } from '../footer/footer.component';
 import { DashboardHeaderComponent } from '../dashboard/dashboard-header/dashboard-header.component';
 import { RouterModule } from '@angular/router';
 
@@ -12,8 +10,6 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [
     CommonModule,
-    LayoutComponent,
-    FooterComponent,
     DashboardHeaderComponent,
     RouterModule
   ],
@@ -60,7 +56,25 @@ export class AdminProfileComponent implements OnInit {
   }
 
   getPhotoUrl(photo: string | undefined): string {
-    return photo || 'assets/images/small-avatar-1.jpg';
+    if (!photo) {
+      // Utiliser une image par défaut qui existe dans le projet
+      return '/assets/images/small-avatar-1.jpg';
+    }
+    
+    // Gérer différents formats d'URL
+    if (photo.startsWith('http')) {
+      return photo;
+    }
+    
+    if (photo.startsWith('data:image')) {
+      return photo;
+    }
+    
+    // S'assurer qu'on utilise le bon format de chemin pour le backend
+    const basePath = 'http://localhost:8085/ElitGo';
+    const photoPath = photo.startsWith('/') ? photo : '/' + photo;
+    
+    return basePath + photoPath;
   }
 
   logout(): void {

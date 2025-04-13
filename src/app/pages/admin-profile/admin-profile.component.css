@@ -1,0 +1,107 @@
+/* Styles pour le conteneur de profil */
+.profile-container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+  border: 1px solid #f0f0f0;
+}
+
+/* Styles pour la photo de profil */
+.profile-photo-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-photo-frame {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 4px solid #ffffff;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.profile-img:hover {
+  transform: scale(1.05);
+}
+
+/* Styles pour les détails du profil */
+.profile-header {
+  padding: 0 20px;
+}
+
+/* Styles pour les statistiques */
+.profile-stats {
+  margin-top: 20px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 6px;
+  background-color: #f8f9fa;
+  min-width: 120px;
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 5px;
+}
+
+.rating-stars {
+  color: #ffc107;
+  font-size: 1.1rem;
+  margin-top: 5px;
+}
+
+/* Support pour les écrans de petit taille */
+@media (max-width: 768px) {
+  .profile-photo-frame {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .profile-header {
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  .profile-stats {
+    justify-content: center;
+  }
+}
+
+/* Style pour le badge */
+.badge-primary {
+  background-color: #5d5386;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  font-weight: normal;
+  box-shadow: 0 2px 5px rgba(93, 83, 134, 0.2);
+}

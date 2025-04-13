@@ -152,7 +152,7 @@
             <div class="breadcrumb-content d-flex flex-wrap align-items-center justify-content-between mb-5">
                 <div class="media media-card align-items-center">
                     <div class="media-img media--img media-img-md rounded-full">
-                        <img class="rounded-full" src="images/small-avatar-1.jpg" alt="Profile photo">
+                        <img class="rounded-full" [src]="getPhotoUrl()" alt="Profile photo">
                     </div>
                     <div class="media-body">
                         <h2 class="section__title fs-30">{{user.username}}</h2>
@@ -197,21 +197,55 @@
                 <div class="tab-pane fade show active" id="edit-profile" role="tabpanel" aria-labelledby="edit-profile-tab">
                     <div class="setting-body">
                         <h3 class="fs-17 font-weight-semi-bold pb-4">Edit Profile</h3>
-                        <div class="media-img media--img media-img-lg mr-4 mb-4">
-                            <img [src]="user.photo || 'images/small-avatar-1.jpg'" alt="Profile photo" class="profile-img rounded-full" style="width: 150px; height: 150px; object-fit: cover;">
-                        </div>
-
-                        <div class="file-upload-wrap mb-4">
-                            <input type="file" class="file-upload-input" (change)="onPhotoSelected($event)" accept="image/*">
-                            <span class="file-upload-text"><i class="la la-upload mr-2"></i>Upload Photo</span>
+                        <div class="profile-photo-container mb-4">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="profile-photo-frame">
+                                        <!-- Image avec classe d'animation loading -->
+                                        <img [src]="getPhotoUrl()" alt="Profile photo" class="profile-img" 
+                                             [ngClass]="{'loading-img': selectedPhoto}">
+                                        <!-- Indicateur de chargement -->
+                                        <div *ngIf="selectedPhoto" class="loading-overlay">
+                                            <i class="la la-spinner la-spin"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="profile-photo-details">
+                                        <h4 class="fs-16 font-weight-semi-bold">Profile Picture</h4>
+                                        <p class="text-muted fs-14 mb-3">Upload a professional photo for your profile.</p>
+                                        
+                                        <div class="file-upload-wrap mb-3">
+                                            <input type="file" class="file-upload-input" (change)="onPhotoSelected($event)" accept="image/*">
+                                            <span class="file-upload-text theme-btn"><i class="la la-camera mr-2"></i>Choose Profile Photo</span>
+                                        </div>
+                                        <div *ngIf="selectedPhoto" class="selected-photo-name mt-2 mb-2">
+                                            <i class="la la-check-circle text-success mr-1"></i>
+                                            <span class="fs-14">{{ selectedPhoto.name }}</span>
+                                            <button type="button" class="theme-btn-sm ml-2" (click)="uploadPhoto()">
+                                                <i class="la la-cloud-upload-alt mr-1"></i> Upload
+                                            </button>
+                                        </div>
+                                        
+                                        <p class="text-muted fs-13">
+                                            <i class="la la-info-circle mr-1"></i> Recommended: JPG, PNG. Max size: 5MB
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div *ngIf="photoError" class="alert alert-danger mt-2 mb-4">
                             {{photoError}}
                         </div>
+                        
+                        <!-- Message pour le chargement -->
+                        <div id="photoLoadingMessage" style="display: none;" class="alert alert-info mt-2 mb-4">
+                            <i class="la la-spinner la-spin mr-2"></i> Uploading photo...
+                        </div>
 
-                        <button *ngIf="selectedPhoto" (click)="uploadPhoto()" class="theme-btn mb-4">
-                            Save Photo
+                        <button *ngIf="selectedPhoto" (click)="uploadPhoto()" class="theme-btn mb-4" [disabled]="photoError">
+                            <i class="la la-save mr-1"></i> Save Photo
                         </button>
 
                         <form (ngSubmit)="saveChanges()" #editProfileForm="ngForm" class="row pt-40px">
@@ -304,6 +338,11 @@
                             <div *ngIf="passwordError" class="col-lg-12">
                                 <p class="text-danger">{{ passwordError }}</p>
                             </div>
+                            
+                            <!-- Success Message for Password Change -->
+                            <div *ngIf="passwordSuccess" class="col-lg-12">
+                                <p class="text-success">{{ passwordSuccess }}</p>
+                            </div>
                         
                             <div class="input-box col-lg-12 py-2">
                                 <button 
@@ -316,22 +355,7 @@
                         </form>
                         
                         
-                        <form method="post" class="pt-5 mt-5 border-top border-top-gray">
-                            <h3 class="fs-17 font-weight-semi-bold pb-1">Forgot Password then Recover Password</h3>
-                            <p class="pb-4">Enter the email of your account to reset password. Then you will receive a link to email
-                                to reset the password. If you have any issue about reset password
-                                <a href="contact.html" class="text-color">contact us</a></p>
-                            <div class="input-box">
-                                <label class="label-text">Email Address</label>
-                                <div class="form-group">
-                                    <input class="form-control form--control" type="email" name="email" placeholder="Enter email address">
-                                    <span class="la la-envelope input-icon"></span>
-                                </div>
-                            </div><!-- end input-box -->
-                            <div class="input-box py-2">
-                                <button class="btn theme-btn">Recover Password</button>
-                            </div><!-- end input-box -->
-                        </form>
+                     
                     </div><!-- end setting-body -->
                 </div><!-- end tab-pane -->
                 
