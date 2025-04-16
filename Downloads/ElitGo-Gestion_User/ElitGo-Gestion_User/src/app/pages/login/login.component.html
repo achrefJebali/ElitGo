@@ -1,0 +1,83 @@
+<app-layout></app-layout>
+
+<!-- ================================
+    START BREADCRUMB AREA
+================================= -->
+<section class="breadcrumb-area section-padding img-bg-2">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="breadcrumb-content d-flex flex-wrap align-items-center justify-content-between">
+            <div class="section-heading">
+                <h2 class="section__title text-white">Login</h2>
+            </div>
+            <ul class="generic-list-item generic-list-item-white generic-list-item-arrow d-flex flex-wrap align-items-center">
+                <li><a href="index.html">Home</a></li>
+                <li>Pages</li>
+                <li>Login</li>
+            </ul>
+        </div><!-- end breadcrumb-content -->
+    </div><!-- end container -->
+</section><!-- end breadcrumb-area -->
+<!-- ================================
+    END BREADCRUMB AREA
+================================= -->
+
+<!-- ================================
+       START CONTACT AREA
+================================= -->
+<section class="contact-area section--padding position-relative">
+    <span class="ring-shape ring-shape-1"></span>
+    <span class="ring-shape ring-shape-2"></span>
+    <span class="ring-shape ring-shape-3"></span>
+    <span class="ring-shape ring-shape-4"></span>
+    <span class="ring-shape ring-shape-5"></span>
+    <span class="ring-shape ring-shape-6"></span>
+    <span class="ring-shape ring-shape-7"></span>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 mx-auto">
+                <div class="card card-item">
+                    <div class="card-body">
+                        <h3 class="card-title text-center fs-24 lh-35 pb-4">Login to Your Account!</h3>
+                        <div class="section-block"></div>
+                        <div class="alert alert-danger" role="alert" *ngIf="error">
+                            {{ error }}
+                        </div>
+                        <form (ngSubmit)="onSubmit()" class="pt-4">
+                            <div class="input-box">
+                                <label class="label-text">Email or Username</label>
+                                <div class="form-group">
+                                    <input class="form-control form--control" type="text" name="name" placeholder="Email or Username" [(ngModel)]="username" required>
+                                    <span class="la la-user input-icon"></span>
+                                </div>
+                            </div>
+                        
+                            <div class="input-box">
+                                <label class="label-text">Password</label>
+                                <div class="input-group mb-3">
+                                    <span class="la la-lock input-icon"></span>
+                                    <input class="form-control form--control password-field" type="password" name="password" placeholder="Password" [(ngModel)]="password" required>
+                                </div>
+                            </div>
+                        
+                            <div class="btn-box">
+                                <button class="btn theme-btn" type="submit" [disabled]="loading">
+                                    <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" *ngIf="loading"></span>
+                                    <span *ngIf="loading">Logging in...</span>
+                                    <span *ngIf="!loading">Login Account</span>
+                                </button>
+                            </div>
+                            <a href="recover" class="btn-text">Forgot my password?</a>
+                        </form>
+                        
+                    </div><!-- end card-body -->
+                </div><!-- end card -->
+            </div><!-- end col-lg-7 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end contact-area -->
+<!-- ================================
+       END CONTACT AREA
+================================= -->
+
+<app-footer></app-footer>
