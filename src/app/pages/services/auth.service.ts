@@ -112,4 +112,52 @@ export class AuthService {
       'Content-Type': 'application/json'
     });
   }
+
+  /**
+   * Request a password reset email for the given email address
+   * @param email The user's email address
+   * @returns Observable of the request result
+   */
+  requestPasswordReset(email: string): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post(`${this.apiUrl}/forgot-password`, { email }, { headers }).pipe(
+      catchError(error => {
+        console.error('Password reset request error:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  /**
+   * Validate a password reset token
+   * @param token The password reset token to validate
+   * @returns Observable of the validation result
+   */
+  validateResetToken(token: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/validate-reset-token?token=${token}`).pipe(
+      catchError(error => {
+        console.error('Token validation error:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  /**
+   * Reset password with the given token and new password
+   * @param token The password reset token
+   * @param newPassword The new password
+   * @returns Observable of the reset result
+   */
+  resetPassword(token: string, newPassword: string): Observable<any> {
+    const params = new URLSearchParams();
+    params.set('token', token);
+    params.set('password', newPassword);
+    
+    return this.http.post(`${this.apiUrl}/reset-password?${params.toString()}`, {}).pipe(
+      catchError(error => {
+        console.error('Password reset error:', error);
+        return throwError(() => error);
+      })
+    );
+  }
 }

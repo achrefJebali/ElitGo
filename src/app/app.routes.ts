@@ -19,6 +19,7 @@ import { InterviewComponent } from './pages/interview/interview.component';
 import { AllStudentsComponent } from './pages/all-students/all-students.component';
 import { AllTeachersComponent } from './pages/all-teachers/all-teachers.component';
 import { InterviewViewComponent } from './pages/interview-view/interview-view.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { Role } from './pages/models/user.model';
 
 export const routes: Routes = [
@@ -27,6 +28,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: InscriptionComponent },
   { path: 'recover', component: RecoverComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'layout', component: LayoutComponent },
   { path: 'footer', component: FooterComponent },
   

@@ -113,20 +113,35 @@
                 </div>
               </div>
 
-              <!-- Address -->
+              <!-- Address with OpenStreetMap integration -->
               <div class="input-box">
                 <label class="label-text">Address</label>
                 <div class="form-group">
                   <input
+                    #addressInput
                     formControlName="address"
                     class="form-control form--control"
                     [class.is-invalid]="(submitted || f['address'].touched) && f['address'].errors"
                     type="text"
-                    placeholder="Address"
+                    placeholder="Type your address for autocomplete"
+                    (input)="onAddressInputChange($event)"
                   />
-                  <span class="la la-home input-icon"></span>
+                  <span class="la la-map-marker input-icon"></span>
                   <div class="invalid-feedback" *ngIf="(submitted || f['address'].touched) && f['address'].errors">
                     {{ getErrorMessage('address') }}
+                  </div>
+                  <small class="form-text text-muted">
+                    <i class="la la-info-circle"></i> Start typing for address suggestions
+                  </small>
+                  
+                  <!-- Address suggestions dropdown -->
+                  <div class="address-suggestions" *ngIf="showAddressSuggestions">
+                    <ul class="list-group">
+                      <li class="list-group-item" *ngFor="let address of addressSuggestions" 
+                          (click)="selectAddressSuggestion(address)">
+                        {{ address }}
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, of, forkJoin } from 'rxjs';
+import { Observable, throwError, of, forkJoin, BehaviorSubject } from 'rxjs';
 import { tap, switchMap, catchError, map } from 'rxjs/operators';
 import { User, Role } from '../models/user.model';
 import { Router } from '@angular/router';
+import { Interview } from '../models/interview.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,19 +12,29 @@ import { Router } from '@angular/router';
 export class UserService {
   private apiUrl = 'http://localhost:8085/ElitGo/User';
   private authUrl = 'http://localhost:8085/ElitGo/api/auth';
+  private interviewApiUrl = 'http://localhost:8085/ElitGo/Interview';
+  
+  // Observable for current user's interview notification
+  private interviewNotificationSubject = new BehaviorSubject<Interview | null>(null);
+  public interviewNotification$ = this.interviewNotificationSubject.asObservable();
+  
+  // Error handling helper
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = 'An error occurred';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error
+      errorMessage = error.error.message;
+    } else if (error.status) {
+      // Server-side error
+      errorMessage = `Error Code: ${error.status}, Message: ${error.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(() => new Error(errorMessage));
+  }
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  // POST method to add a new user
-  addUser(user: User): Observable<User> {
-    const token = this.getToken();
-    const headers = new HttpHeaders()
-      .set('Authorization', `Bearer ${token}`)
-      .set('Content-Type', 'application/json');
-    return this.http.post<User>(`${this.apiUrl}/add-user`, user, { headers }).pipe(
-      catchError(this.handleError)
-    );
-  }
+ 
 
   // Enhanced login method with better error handling and type safety
   login(username: string, password: string): Observable<{ token: string }> {
@@ -49,6 +60,12 @@ export class UserService {
               throw new Error('User role not found');
             }
             localStorage.setItem('userRole', user.role);
+            localStorage.setItem('userId', user.id?.toString() || '');
+            
+            // If user is a student, check for interviews
+            if (user.role === Role.STUDENT && user.id) {
+              this.checkStudentInterviews(user.id);
+            }
           }),
           map(() => response)
         );
@@ -289,6 +306,27 @@ export class UserService {
     localStorage.clear(); // Clear all stored data
     this.router.navigate(['/home']);
   }
+  
+  // Add a new user (registration)
+  addUser(user: User): Observable<User> {
+    console.log('Registering new user:', user);
+    
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
+    
+    // Use the registration endpoint
+    return this.http.post<User>(`${this.apiUrl}/add-user`, user, { headers }).pipe(
+      tap(response => {
+        console.log('User registration successful:', response);
+      }),
+      catchError(error => {
+        console.error('Error during user registration:', error);
+        return throwError(() => error);
+      })
+    );
+  }
 
   // Get user by username with error handling
   getUserByUsername(username: string): Observable<User> {
@@ -433,32 +471,69 @@ export class UserService {
       catchError(this.handleError)
     );
   }
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    let errorMessage = 'An error occurred';
-    
-    if (error.error instanceof ErrorEvent) {
-      // Client-side error
-      errorMessage = error.error.message;
-    } else {
-      // Server-side error
-      switch (error.status) {
-        case 401:
-          errorMessage = 'Unauthorized access';
-          break;
-        case 403:
-          errorMessage = 'Access forbidden';
-          break;
-        case 404:
-          errorMessage = 'Resource not found';
-          break;
-        case 500:
-          errorMessage = 'Internal server error';
-          break;
-        default:
-          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+  
+  // Check if a student has an assigned interview
+  checkStudentInterviews(studentId: number): void {
+    console.log('Checking for student interviews for ID:', studentId);
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json');
+      
+    // Get interviews for the specific student
+    this.http.get<Interview[]>(`${this.interviewApiUrl}/student/${studentId}`, { headers }).pipe(
+      catchError(error => {
+        console.error('Error fetching student interviews:', error);
+        return of([]);
+      })
+    ).subscribe(interviews => {
+      console.log('Student interviews:', interviews);
+      if (Array.isArray(interviews) && interviews.length > 0) {
+        // Get the most recent upcoming interview
+        const upcomingInterviews = interviews
+          .filter(interview => new Date(interview.date) > new Date())
+          .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+          
+        if (upcomingInterviews.length > 0) {
+          const nextInterview = upcomingInterviews[0];
+          console.log('Found upcoming interview:', nextInterview);
+          this.interviewNotificationSubject.next(nextInterview);
+          // Also store in localStorage for persistence
+          localStorage.setItem('interviewNotification', JSON.stringify(nextInterview));
+        } else {
+          this.interviewNotificationSubject.next(null);
+          localStorage.removeItem('interviewNotification');
+        }
+      } else {
+        this.interviewNotificationSubject.next(null);
+        localStorage.removeItem('interviewNotification');
+      }
+    });
+  }
+  
+  // Get any saved interview notification (for persistence across page loads)
+  getStoredInterviewNotification(): Interview | null {
+    const storedNotification = localStorage.getItem('interviewNotification');
+    if (storedNotification) {
+      try {
+        const interview = JSON.parse(storedNotification) as Interview;
+        // Convert date string to Date object
+        if (typeof interview.date === 'string') {
+          interview.date = new Date(interview.date);
+        }
+        return interview;
+      } catch (e) {
+        console.error('Error parsing stored interview notification:', e);
+        return null;
       }
     }
-    
-    return throwError(() => new Error(errorMessage));
+    return null;
   }
+  
+  // Clear the interview notification
+  clearInterviewNotification(): void {
+    this.interviewNotificationSubject.next(null);
+    localStorage.removeItem('interviewNotification');
+  }
+
+
 }

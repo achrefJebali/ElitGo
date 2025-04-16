@@ -22,6 +22,8 @@ import { UserDetailsDialogComponent } from '../dialog/user-details-dialog/user-d
 })
 export class AllUsersComponent implements OnInit {
   users: User[] = [];
+  filteredUsers: User[] = [];
+  searchUsername: string = '';
   userRoles = Role;
   loading = false;
   error = '';
@@ -47,6 +49,7 @@ export class AllUsersComponent implements OnInit {
         // Ensure we receive valid data
         if (users && Array.isArray(users)) {
           this.users = users;
+          this.filteredUsers = [...this.users];
           if (users.length === 0) {
             this.error = 'No users found in the database.';
           }
@@ -54,6 +57,7 @@ export class AllUsersComponent implements OnInit {
           console.error('Received invalid users data format:', users);
           this.error = 'Received invalid data format from server.';
           this.users = [];
+          this.filteredUsers = [];
         }
         this.loading = false;
       },
@@ -67,6 +71,18 @@ export class AllUsersComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+  
+  searchUsers(): void {
+    if (!this.searchUsername || this.searchUsername.trim() === '') {
+      this.filteredUsers = [...this.users];
+      return;
+    }
+    
+    const searchTerm = this.searchUsername.toLowerCase().trim();
+    this.filteredUsers = this.users.filter(user => 
+      user.username?.toLowerCase().includes(searchTerm)
+    );
   }
 
   viewProfile(user: User): void {

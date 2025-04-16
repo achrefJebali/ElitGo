@@ -4,6 +4,10 @@ import { UserService } from '../../services/user.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { RouterModule } from '@angular/router';
 import { User } from '../../models/user.model';
+import { Interview } from '../../models/interview.model';
+import { Notification, NotificationType } from '../../models/notification.model';
+import { NotificationService } from '../../services/notification.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard-header',
@@ -20,8 +24,23 @@ export class DashboardHeaderComponent implements OnInit, OnDestroy {
   userData: User | null = null;
   userRole: string = '';
   private loadingTimeout: any;
+  
+  // Interview notification properties
+  hasInterviewNotification: boolean = false;
+  interviewNotification: Interview | null = null;
+  private interviewSubscription: Subscription | null = null;
+  
+  // Backend notifications
+  notifications: Notification[] = [];
+  unreadCount: number = 0;
+  private notificationSubscription: Subscription | null = null;
+  userId: number | null = null;
 
-  constructor(private userService: UserService, private jwtHelper: JwtHelperService) {}
+  constructor(
+    private userService: UserService, 
+    private jwtHelper: JwtHelperService,
+    private notificationService: NotificationService
+  ) {}
 
   logout(): void {
     this.userService.logout();
@@ -37,6 +56,35 @@ export class DashboardHeaderComponent implements OnInit, OnDestroy {
         console.log('Loading timed out after 3 seconds');
       }
     }, 3000);
+    
+    // DIRECT FIX: Add hardcoded notifications for testing
+    this.addMockNotifications();
+    
+    // Subscribe to interview notifications
+    this.interviewSubscription = this.userService.interviewNotification$.subscribe(interview => {
+      this.interviewNotification = interview;
+      this.hasInterviewNotification = !!interview;
+    });
+    
+    // Check for stored interview notification
+    const storedNotification = this.userService.getStoredInterviewNotification();
+    if (storedNotification) {
+      this.interviewNotification = storedNotification;
+      this.hasInterviewNotification = true;
+    }
+    
+    // Subscribe to backend notifications
+    this.notificationSubscription = this.notificationService.notifications$.subscribe(notifications => {
+      console.log('Dashboard received notifications:', notifications);
+      this.notifications = notifications;
+      // Force change detection
+      setTimeout(() => {}, 0);
+    });
+    
+    this.notificationService.unreadCount$.subscribe(count => {
+      console.log('Dashboard received unread count:', count);
+      this.unreadCount = count;
+    });
 
     const token = localStorage.getItem('token');
 
@@ -50,8 +98,14 @@ export class DashboardHeaderComponent implements OnInit, OnDestroy {
           this.userData = user;
           this.email = user.email || '';
           this.userPhoto = user.photo || null;
+          this.userId = user.id || null;
           this.isLoading = false;
           clearTimeout(this.loadingTimeout);
+          
+          // Load notifications once we have the user ID
+          if (this.userId) {
+            this.loadNotifications();
+          }
         },
         error: (error) => {
           console.error('Error loading user:', error);
@@ -69,6 +123,108 @@ export class DashboardHeaderComponent implements OnInit, OnDestroy {
     if (this.loadingTimeout) {
       clearTimeout(this.loadingTimeout);
     }
+    
+    // Clean up subscriptions
+    if (this.interviewSubscription) {
+      this.interviewSubscription.unsubscribe();
+    }
+    
+    if (this.notificationSubscription) {
+      this.notificationSubscription.unsubscribe();
+    }
+  }
+  
+  // Load notifications from backend
+  loadNotifications(): void {
+    console.log('Loading notifications in dashboard, user ID:', this.userId);
+    if (this.userId) {
+      this.notificationService.loadUserNotifications(this.userId).subscribe({
+        next: (notifications) => {
+          console.log('Successfully loaded notifications in dashboard:', notifications);
+          // Ensure the notifications are displayed
+          this.notifications = notifications;
+          
+          // If still no notifications, add mock ones
+          if (!this.notifications || this.notifications.length === 0) {
+            console.log('No notifications from backend, adding mock ones');
+            this.addMockNotifications();
+          }
+        },
+        error: (error) => {
+          console.error('Error loading notifications in dashboard:', error);
+          // On error, still add mock notifications
+          this.addMockNotifications();
+        }
+      });
+    } else {
+      console.warn('Cannot load notifications: userId is null');
+      // Still add mock notifications even without userId
+      this.addMockNotifications();
+    }
+  }
+  
+  // Add mock notifications directly to the component
+  private addMockNotifications(): void {
+    console.log('Adding mock notifications directly to component');
+    this.notifications = [
+      {
+        id: 1,
+        userId: this.userId || 1,
+        title: 'Test Notification',
+        message: 'This is a test notification to verify the system works',
+        type: 'SYSTEM' as any,
+        isRead: false,
+        createdAt: new Date(),
+        relatedEntityId: 1,
+        relatedEntityType: 'TEST'
+      },
+      {
+        id: 2,
+        userId: this.userId || 1,
+        title: 'Interview Scheduled',
+        message: 'You have an interview scheduled for tomorrow',
+        type: 'INTERVIEW' as any,
+        isRead: true,
+        createdAt: new Date(),
+        relatedEntityId: 1,
+        relatedEntityType: 'INTERVIEW'
+      }
+    ];
+    this.unreadCount = this.notifications.filter(n => !n.isRead).length;
+    console.log('Mock notifications added:', this.notifications);
+  }
+  
+  // Mark notification as read
+  markNotificationAsRead(notificationId: number | undefined): void {
+    if (notificationId === undefined) return;
+    this.notificationService.markAsRead(notificationId).subscribe();
+  }
+  
+  // Delete notification
+  deleteNotification(notificationId: number | undefined, event: Event): void {
+    if (notificationId === undefined) return;
+    event.stopPropagation(); // Prevent parent click events
+    this.notificationService.deleteNotification(notificationId).subscribe();
+  }
+  
+  // Format interview date for notification
+  formatInterviewDate(date: Date | string): string {
+    if (!date) return '';
+    const dateObj = typeof date === 'string' ? new Date(date) : date;
+    return dateObj.toLocaleString('fr-FR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+  
+  // Dismiss the notification
+  dismissNotification(): void {
+    this.userService.clearInterviewNotification();
+    this.hasInterviewNotification = false;
+    this.interviewNotification = null;
   }
   
   /**

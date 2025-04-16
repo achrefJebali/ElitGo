@@ -7,6 +7,88 @@
     transition: all 0.3s ease;
 }
 
+/* Notification styles */
+.notification-btn {
+    position: relative;
+    cursor: pointer;
+}
+
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ff3366;
+    color: white;
+    border-radius: 50%;
+    font-size: 10px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.notification-dropdown-menu {
+    width: 320px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    border-bottom: 1px solid #eee;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.notification-item:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.notification-item.unread {
+    background-color: rgba(53, 124, 255, 0.05);
+}
+
+.notification-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.notification-message {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.notification-time {
+    font-size: 11px;
+    color: #999;
+}
+
+.btn-delete {
+    background: none;
+    border: none;
+    color: #999;
+    padding: 5px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: all 0.2s ease;
+}
+
+.btn-delete:hover {
+    opacity: 1;
+    color: #ff3366;
+}
+
+/* Interview notification alert */
+.interview-notification-alert {
+    position: relative;
+    z-index: 5;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #eaeaea;
+}
+
 .user-profile-btn:hover {
     background-color: rgba(0, 0, 0, 0.04);
 }

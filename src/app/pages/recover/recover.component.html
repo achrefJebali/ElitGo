@@ -41,19 +41,28 @@
                         <p class="fs-15 lh-24 pb-3">Enter the email of your account to reset password. Then you will
                             receive a link to email to reset the password.If you have any issue about reset password <a href="contact.html" class="text-color hover-underline">contact us</a></p>
                         <div class="section-block"></div>
-                        <form method="post" class="pt-4">
+                        <form class="pt-4" (ngSubmit)="resetPassword()" #resetForm="ngForm">
                             <div class="input-box">
                                 <label class="label-text">Email Address</label>
                                 <div class="form-group">
-                                    <input class="form-control form--control" type="text" name="name" placeholder="Enter email Address">
+                                    <input class="form-control form--control" type="email" name="email" [(ngModel)]="email" placeholder="Enter email Address" required>
                                     <span class="la la-user input-icon"></span>
                                 </div>
                             </div><!-- end input-box -->
+                            <div class="alert alert-success" *ngIf="successMessage" role="alert">
+                                {{ successMessage }}
+                            </div>
+                            <div class="alert alert-danger" *ngIf="errorMessage" role="alert">
+                                {{ errorMessage }}
+                            </div>
                             <div class="btn-box">
-                                <button class="btn theme-btn" type="submit">Reset Password <i class="la la-arrow-right icon ml-1"></i></button>
+                                <button class="btn theme-btn" type="submit" [disabled]="isSubmitting">
+                                    <span *ngIf="!isSubmitting">Reset Password <i class="la la-arrow-right icon ml-1"></i></span>
+                                    <span *ngIf="isSubmitting">Sending... <i class="la la-spinner fa-spin"></i></span>
+                                </button>
                                 <div class="d-flex align-items-center justify-content-between fs-14 pt-2">
-                                    <a href="login.html" class="text-color hover-underline">Login</a>
-                                    <p>Not a member? <a href="sign-up.html" class="text-color hover-underline">Register</a></p>
+                                    <a routerLink="/login" class="text-color hover-underline">Login</a>
+                                    <p>Not a member? <a routerLink="/register" class="text-color hover-underline">Register</a></p>
                                 </div>
                             </div><!-- end btn-box -->
                         </form>

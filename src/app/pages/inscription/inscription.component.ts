@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors, AsyncValidatorFn } from '@angular/forms';
-import { Observable, of, timer } from 'rxjs';
-import { map, switchMap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Observable, of, timer, Subject } from 'rxjs';
+import { map, switchMap, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
 import { LayoutComponent } from '../layout/layout.component';
 import { FooterComponent } from '../footer/footer.component';
+import { OpenStreetMapService } from '../services/open-street-map.service';
 
 interface RegistrationForm extends Omit<User, 'id' | 'token'> {
   confirmPassword: string;
@@ -21,22 +22,62 @@ interface RegistrationForm extends Omit<User, 'id' | 'token'> {
   templateUrl: './inscription.component.html',
   styleUrls: ['./inscription.component.css'],
 })
-export class InscriptionComponent implements OnInit {
+export class InscriptionComponent implements OnInit, AfterViewInit {
   registrationForm!: FormGroup;
   submitted = false;
   showPassword = false;
   showConfirmPassword = false;
+  
+  @ViewChild('addressInput') addressInput!: ElementRef<HTMLInputElement>;
+  addressSuggestions: string[] = [];
+  showAddressSuggestions = false;
+  private addressInputChanged = new Subject<string>();
+  private destroy$ = new Subject<void>();
 
   constructor(
     private userService: UserService, 
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private openStreetMapService: OpenStreetMapService
   ) {
     this.initForm();
   }
 
   ngOnInit() {
     // Form is already initialized in constructor
+    
+    // Set up address search with OpenStreetMap
+    this.setupAddressAutocomplete();
+  }
+  
+  ngAfterViewInit() {
+    // Nothing needed here since we're using reactive approach
+  }
+  
+  // Set up address autocomplete with OpenStreetMap
+  private setupAddressAutocomplete(): void {
+    // Listen for changes to the address input
+    this.addressInputChanged.pipe(
+      debounceTime(300), // Wait for 300ms pause in events
+      distinctUntilChanged(), // Only emit when the value has changed
+      switchMap(query => this.openStreetMapService.searchAddress(query)),
+      takeUntil(this.destroy$) // Clean up on component destroy
+    ).subscribe(suggestions => {
+      this.addressSuggestions = suggestions;
+      this.showAddressSuggestions = suggestions.length > 0;
+    });
+  }
+  
+  // Handle address input changes
+  onAddressInputChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.addressInputChanged.next(input.value);
+  }
+  
+  // Select an address suggestion
+  selectAddressSuggestion(address: string): void {
+    this.registrationForm.patchValue({ address });
+    this.showAddressSuggestions = false;
   }
 
   private createEmailValidator(): AsyncValidatorFn {

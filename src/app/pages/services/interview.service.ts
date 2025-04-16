@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, tap, throwError, map, retry, timeout, of } from 'rxjs';
+import { Observable, catchError, tap, throwError, map, retry, timeout, of, switchMap } from 'rxjs';
 import { Interview } from '../models/interview.model';
 
 @Injectable({
@@ -121,6 +121,30 @@ export class InterviewService {
     );
   }
 
+  // Check if a student already has an interview
+  studentHasInterview(studentId: number): Observable<boolean> {
+    console.log('Checking if student has an existing interview:', studentId);
+    const headers = this.getHeaders();
+    
+    return this.http.get<Interview[]>(`${this.apiUrl}/student/${studentId}`, { headers })
+      .pipe(
+        map(interviews => {
+          // Filter to get only future interviews
+          const futureInterviews = interviews.filter(interview => {
+            const interviewDate = new Date(interview.date);
+            return interviewDate > new Date();
+          });
+          
+          console.log(`Student ${studentId} has ${futureInterviews.length} future interviews`);
+          return futureInterviews.length > 0;
+        }),
+        catchError(error => {
+          console.error('Error checking student interviews:', error);
+          return of(false); // Return false on error to allow interview creation
+        })
+      );
+  }
+  
   addInterview(interview: Interview): Observable<Interview> {
     console.log('Adding interview with simplified approach:', interview);
     const headers = this.getHeaders();
@@ -131,21 +155,31 @@ export class InterviewService {
       return throwError(() => new Error('Student, teacher and date are required'));
     }
     
-    // Create a simplified interview object with only the essential data
-    // This avoids complex objects that might cause circular references
-    const simplifiedInterview = {
-      studentId: interview.studentId,
-      teacherId: interview.teacherId,
-      date: interview.date instanceof Date ? interview.date.toISOString() : interview.date,
-      duration: interview.duration || 30, // Default to 30 minutes if not specified
-      meeting_link: interview.meeting_link || '',
-      notes: interview.notes || ''
-    };
+    // Check if student already has an interview before creating a new one
+    return this.studentHasInterview(interview.studentId).pipe(
+      switchMap(hasInterview => {
+        if (hasInterview) {
+          console.error('Student already has an interview scheduled');
+          return throwError(() => new Error('This student already has an interview scheduled. Each student can only have one interview at a time.'));
+        }
     
-    console.log('Simplified interview for backend:', simplifiedInterview);
-    
-    // Try with the simplified format
-    return this.tryPostWithSimplifiedFormat(simplifiedInterview, headers);
+        // Create a simplified interview object with only the essential data
+        // This avoids complex objects that might cause circular references
+        const simplifiedInterview = {
+          studentId: interview.studentId,
+          teacherId: interview.teacherId,
+          date: interview.date instanceof Date ? interview.date.toISOString() : interview.date,
+          duration: interview.duration || 30, // Default to 30 minutes if not specified
+          meeting_link: interview.meeting_link || '',
+          notes: interview.notes || ''
+        };
+        
+        console.log('Simplified interview for backend:', simplifiedInterview);
+        
+        // Try with the simplified format
+        return this.tryPostWithSimplifiedFormat(simplifiedInterview, headers);
+      })
+    );
   }
   
   // Helper method with simplified format and more robust error handling
