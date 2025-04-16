@@ -1,167 +1,143 @@
-<app-layout></app-layout>
+<div *ngIf="isQuizStarted" class="timer">
+  <p>Time Remaining: {{ remainingTime | number: '2.0' }} seconds</p>
+</div>
+<section class="quiz-list" *ngIf="quizzes.length > 0">
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Liste des quiz</h2>
 
-
-  
-    <!-- ================================
-        START BREADCRUMB AREA
-    ================================= -->
-    <section class="breadcrumb-area">
-        <div class="bg-white py-3 pattern-bg">
-            <div class="container">
-                <div class="breadcrumb-content">
-                    <ul class="quiz-nav d-flex flex-wrap align-items-center">
-                        <li><a href="course-details.html"><i class="la la-arrow-left mr-2"></i>Back to Course</a></li>
-                        <li>
-                            <div class="d-flex align-items-center">
-                                <a href="course-details.html">
-                                    <img src="assets/images/angular.png" alt="Angular thumbnail">
-                                </a>
-                                <p>
-                                    <a href="course-details.html">Angular Fundamentals</a><span class="d-block fs-13">Brad Traversy</span>
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-                </div><!-- end breadcrumb-content -->
-            </div><!-- end container -->
-        </div>
-        <div class="bg-dark pt-60px pb-60px">
-            <div class="container">
-                <ul class="quiz-course-nav d-flex align-items-center justify-content-between">
-                    <li>
-                        <a href="course-details.html" class="icon-element icon-element-sm" data-toggle="tooltip" data-placement="top" title="Getting Started with Angular: Introduction">
-                            <i class="la la-check"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="course-details.html" class="icon-element icon-element-sm" data-toggle="tooltip" data-placement="top" title="Getting Started with Angular: Introduction to TypeScript">
-                            <i class="la la-check"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="course-details.html" class="icon-element icon-element-sm" data-toggle="tooltip" data-placement="top" title="Getting Started with Angular: Comparing Angular to AngularJS">
-                            <i class="la la-check"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="student-quiz.html" class="icon-element icon-element-sm text-success" data-toggle="tooltip" data-placement="top" title="Quiz: Getting Started with Angular">
-                            <i class="la la-user"></i>
-                        </a>
-                    </li>
-                </ul>
-                <div class="breadcrumb-content pt-40px">
-                    <div class="section-heading">
-                        <h2 class="section__title text-white fs-30 pb-2">Question 1 of 5</h2>
-                        <p class="section__desc text-white-50">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus deleniti deserunt dolorum eligendi exercitationem, facere fuga, hic laudantium obcaecati officia omnis qui quia quisquam rem sed sit ullam velit voluptatibus?</p>
-                    </div>
-                </div>
-            </div><!-- end container -->
-        </div>
-        <div class="quiz-action-nav bg-white py-3 shadow-sm">
-            <div class="container">
-                <div class="quiz-action-content d-flex flex-wrap align-items-center justify-content-between">
-                    <ul class="quiz-nav d-flex align-items-center">
-                        <li><i class="la la-sliders fs-17 mr-2"></i>Choose the correct answer below</li>
-                    </ul>
-                    <div class="quiz-nav-btns">
-                        <a href="student-quiz-result-details.html" class="btn theme-btn theme-btn-transparent mr-2">Skip Quiz</a>
-                        <a href="course-details.html" class="btn theme-btn theme-btn-transparent mr-2">Review Video</a>
-                        <a href="student-quiz-result-details.html" class="btn theme-btn">Next Question <i class="la la-angle-right icon ml-1"></i></a>
-                    </div>
-                </div>
-            </div><!-- end container -->
-        </div><!-- end quiz-action-nav -->
-    </section><!-- end breadcrumb-area -->
-    <!-- ================================
-        END BREADCRUMB AREA
-    ================================= -->
-    
-    <!-- ================================
-           START QUIZ ANS AREA
-    ================================= -->
-    <section class="quiz-ans-wrap pt-60px pb-60px">
-        <div class="container">
-            <div class="quiz-ans-content">
-                <h3 class="fs-22 font-weight-semi-bold">Your Answer:</h3>
-                <div class="quiz-ans-list py-3">
-                    <div class="custom-control custom-checkbox mb-1">
-                        <input type="checkbox" class="custom-control-input" id="quizAnsCheckbox" required>
-                        <label class="custom-control-label custom--control-label" for="quizAnsCheckbox">
-                            Ability to use newer syntax and offers reliability
-                        </label>
-                    </div><!-- end custom-control -->
-                    <div class="custom-control custom-checkbox mb-1">
-                        <input type="checkbox" class="custom-control-input" id="quizAnsCheckbox2" required checked>
-                        <label class="custom-control-label custom--control-label" for="quizAnsCheckbox2">
-                            Compatibility
-                        </label>
-                    </div><!-- end custom-control -->
-                    <div class="custom-control custom-checkbox mb-1">
-                        <input type="checkbox" class="custom-control-input" id="quizAnsCheckbox3" required>
-                        <label class="custom-control-label custom--control-label" for="quizAnsCheckbox3">
-                            Usage of missing features
-                        </label>
-                    </div><!-- end custom-control -->
-                </div><!-- end quiz-ans-list -->
-                <p class="fs-15"><strong class="font-weight-semi-bold text-black">Note:</strong> There can be multiple correct answers to this question.</p>
-            </div>
-        </div><!-- end container -->
-    </section>
-    <!-- ================================
-           START QUIZ ANS AREA
-    ================================= -->
-    
-    <!--======================================
-            START CTA AREA
-    ======================================-->
-    <section class="cta-area py-5 position-relative overflow-hidden bg-gray">
-        <span class="stroke-shape stroke-shape-1"></span>
-        <span class="stroke-shape stroke-shape-2"></span>
-        <span class="stroke-shape stroke-shape-3"></span>
-        <span class="stroke-shape stroke-shape-4"></span>
-        <span class="stroke-shape stroke-shape-5"></span>
-        <span class="stroke-shape stroke-shape-6"></span>
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <div class="cta-content-wrap">
-                        <h3 class="fs-20 font-weight-semi-bold lh-28">Top companies choose <a href="for-business.html" class="text-color hover-underline">Aduca for Business</a> to build in-demand career skills.</h3>
-                    </div>
-                </div><!-- end col-lg-6 -->
-                <div class="col-lg-6">
-                    <div class="client-logo-wrap text-right">
-                        <a href="#" class="client-logo-item client--logo-item-2 pr-3"><img src="images/sponsor-img.png" alt="brand image"></a>
-                        <a href="#" class="client-logo-item client--logo-item-2 pr-3"><img src="images/sponsor-img2.png" alt="brand image"></a>
-                        <a href="#" class="client-logo-item client--logo-item-2 pr-3"><img src="images/sponsor-img3.png" alt="brand image"></a>
-                    </div><!-- end client-logo-wrap -->
-                </div><!-- end col-lg-6 -->
-            </div><!-- end row -->
-        </div><!-- end container -->
-    </section><!-- end cta-area -->
-    <!--======================================
-            END CTA AREA
-    ======================================-->
-    
-    
-    
-    <!-- start scroll top -->
-    <div id="scroll-top">
-        <i class="la la-arrow-up" title="Go top"></i>
+    <div class="row mb-3">
+      <div class="col-12">
+        <input type="text" class="form-control" placeholder="Search by quiz title" [(ngModel)]="searchTerm" />
+      </div>
     </div>
-    <!-- end scroll top -->
-    
-    
-    <!-- template js files -->
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/bootstrap-select.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/isotope.js"></script>
-    <script src="js/waypoint.min.js"></script>
-    <script src="js/jquery.counterup.min.js"></script>
-    <script src="js/fancybox.js"></script>
-    <script src="js/datedropper.min.js"></script>
-    <script src="js/emojionearea.min.js"></script>
-    <script src="js/main.js"></script>
-    
-<app-footer></app-footer>
+
+    <div class="row">
+      <div class="col-md-4 mb-4" *ngFor="let quiz of filteredQuizzes">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ quiz.title }}</h5>
+            <p class="card-text">{{ quiz.description }}</p>
+            
+            <p class="card-text"><small class="text-muted">Durée : {{ quiz.duration }} minutes</small></p>
+            <p class="card-text"><small class="text-muted">Nombre de questions : {{ quiz.nbrquestions }}</small></p>
+
+            <div class="d-flex justify-content-between">
+              <button *ngIf="userRole !== 'teacher'" (click)="startQuiz(quiz.quizId)" class="btn btn-primary btn-sm">
+                Commencer
+              </button>
+              <button class="btn btn-secondary mt-3" (click)="downloadPDF(quiz)">
+                Télécharger le quiz en PDF
+              </button> 
+              <button *ngIf="userRole === 'teacher'" (click)="navigateToUpdateQuiz(quiz.quizId)" class="btn btn-warning btn-sm">
+                Modifier
+              </button>
+              <button *ngIf="userRole === 'teacher'" (click)="deleteQuiz(quiz.quizId)" class="btn btn-danger btn-sm">
+                Supprimer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav aria-label="Page navigation" *ngIf="totalPages > 1">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index">
+          <a class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</section>
+
+<section class="no-quiz" *ngIf="quizzes.length === 0 && !isLoading">
+  <div class="container mt-5">
+    <p class="text-center">Aucun quiz disponible pour le moment.</p>
+  </div>
+</section>
+
+<div *ngIf="isLoading" class="d-flex justify-content-center mt-4">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Chargement...</span>
+  </div>
+</div>
+<!-- Quiz content -->
+<div *ngIf="isQuizStarted && !isQuizSubmitted" class="container mt-5" id="quiz-pdf-content">
+  <h3 class="text-center">{{ selectedQuiz?.title }}</h3>
+  <p class="text-center">{{ selectedQuiz?.description }}</p>
+
+  <form>
+    <div *ngFor="let question of questions">
+      <div class="question">
+        <p><strong>{{ question.text }}</strong></p>
+       
+        <img *ngIf="question.imageUrl" [src]="question.imageUrl" alt="image" style="max-width: 300px;" />
+        
+        <ul>
+          <li *ngFor="let choice of question.choices">
+            <button type="button" class="btn btn-outline-primary"
+              (click)="selectAnswer(question.question_id, choice)">
+              {{ choice }}
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <button type="button" (click)="submitQuiz()" class="btn btn-success btn-sm mt-4">Soumettre</button>
+  </form>
+</div>
+<div id="quiz-pdf-content" style="background-color: white; padding: 20px;">
+  <h3>{{ selectedQuiz?.title }}</h3>
+  <p>{{ selectedQuiz?.description }}</p>
+  
+  <div *ngFor="let question of questions">
+    <p><strong>{{ question.text }}</strong></p>
+    <img *ngIf="question.imageUrl" [src]="question.imageUrl" alt="image" style="max-width: 1000px;" />
+    <ul>
+      <li *ngFor="let choice of question.choices">{{ choice }}</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Display results after quiz submission -->
+<div *ngIf="isQuizSubmitted" class="container mt-5">
+  <h3 class="text-center">Votre score: {{ quizScore }} / {{ questions.length }}</h3>
+  <div class="text-center">
+    <p><strong>Résultats par question:</strong></p>
+    <div *ngFor="let question of questions">
+      <div class="result-item">
+        <p><strong>{{ question.text }}</strong></p>
+        <p>Votre réponse: {{ getAnswerForQuestion(question.question_id) }}</p>
+        <p [class.text-success]="isAnswerCorrect(question)" [class.text-danger]="!isAnswerCorrect(question)">
+          <strong>{{ isAnswerCorrect(question) ? 'Correct!' : 'Incorrect' }}</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="quiz-pdf-content" style="display: none;">
+  <div *ngIf="selectedQuiz">
+    <h2 style="text-align: center;">{{ selectedQuiz.title }}</h2>
+    <p style="text-align: center;">{{ selectedQuiz.description }}</p>
+    <p><strong>Durée :</strong> {{ selectedQuiz.duration }} minutes</p>
+    <p><strong>Nombre de questions :</strong> {{ selectedQuiz.nbrquestions }}</p>
+
+    <div *ngFor="let question of questions; let i = index" style="margin-top: 20px;">
+      <p><strong>Q{{ i + 1 }} :</strong> {{ question.text }}</p>
+
+      <img *ngIf="question.imageUrl" [src]="'http://localhost:4200' + question.imageUrl"
+           alt="Image de la question"
+           style="max-width: 300px; margin: 10px 0;" />
+
+      <ul>
+        <li *ngFor="let choice of question.choices">- {{ choice }}</li>
+      </ul>
+
+      <hr />
+    </div>
+  </div>
+</div>
+

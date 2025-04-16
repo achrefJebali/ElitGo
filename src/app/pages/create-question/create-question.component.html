@@ -1,0 +1,63 @@
+<div class="container">
+  <h2>Créer une nouvelle question</h2>
+
+  <form [formGroup]="questionForm" (ngSubmit)="submitQuestion()">
+    <!-- Texte de la question -->
+    <div class="form-group">
+      <label for="text">Texte de la question</label>
+      <input type="text" id="text" class="form-control" formControlName="text" placeholder="Entrez la question" />
+      <div class="text-danger" *ngIf="questionForm.get('text')?.invalid && questionForm.get('text')?.touched">
+        <small *ngIf="questionForm.get('text')?.errors?.['required']">Le texte est requis.</small>
+        <small *ngIf="questionForm.get('text')?.errors?.['minlength']">Le texte doit contenir au moins 10 caractères.</small>
+      </div>
+    </div>
+<!-- Image -->
+<label for="image">Choisir une image (optionnel)</label>
+<input type="file" id="image" (change)="onFileSelected($event)" accept="image/*" />
+
+
+    <!-- Difficulté -->
+    <div class="form-group">
+      <label for="difficulty">Difficulté</label>
+      <select id="difficulty" class="form-control" formControlName="difficulty">
+        <option value="" disabled>Choisir une difficulté</option>
+        <option *ngFor="let diff of difficulties" [value]="diff">{{ diff }}</option>
+      </select>
+      <div class="text-danger" *ngIf="questionForm.get('difficulty')?.invalid && questionForm.get('difficulty')?.touched">
+        <small>La difficulté est requise.</small>
+      </div>
+    </div>
+
+    <!-- Choix -->
+    <div class="form-group">
+      <label for="choices">Choix (séparés par des virgules)</label>
+      <input type="text" id="choices" class="form-control" formControlName="choices" placeholder="Ex: choix1, choix2, choix3" />
+      <div class="text-danger" *ngIf="questionForm.get('choices')?.invalid && questionForm.get('choices')?.touched">
+        <small>Veuillez entrer les choix.</small>
+      </div>
+    </div>
+
+    <!-- Réponse correcte -->
+    <div class="form-group">
+      <label for="correctAnswer">Réponse correcte</label>
+      <input type="text" id="correctAnswer" class="form-control" formControlName="correctAnswer" />
+      <div class="text-danger" *ngIf="questionForm.get('correctAnswer')?.invalid && questionForm.get('correctAnswer')?.touched">
+        <small>La réponse correcte est requise.</small>
+      </div>
+    </div>
+
+    <!-- Quiz sélectionné -->
+    <div class="form-group" formGroupName="quiz">
+      <label for="quizId">Quiz</label>
+      <select id="quizId" class="form-control" formControlName="quizId">
+        <option value="" disabled>Choisir un quiz</option>
+        <option *ngFor="let quiz of quizzes" [value]="quiz.quizId">{{ quiz.title }}</option>
+      </select>
+      <div class="text-danger" *ngIf="questionForm.get('quiz.quizId')?.invalid && questionForm.get('quiz.quizId')?.touched">
+        <small>La sélection du quiz est obligatoire.</small>
+      </div>
+    </div>
+
+    <button class="btn btn-primary mt-3" type="submit" [disabled]="questionForm.invalid">Créer la question</button>
+  </form>
+</div>

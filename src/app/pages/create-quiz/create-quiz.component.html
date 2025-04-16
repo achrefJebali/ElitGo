@@ -1,0 +1,73 @@
+
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Créer un nouveau quiz</h2>
+  <form (ngSubmit)="createQuiz()" [formGroup]="quizForm">
+    <div class="card card-item shadow-sm">
+      <div class="card-body">
+        <h3 class="fs-22 font-weight-semi-bold pb-2">Informations du quiz</h3>
+        <div class="divider"><span></span></div>
+
+        <div class="row">
+          <!-- Titre -->
+          <div class="col-lg-6 mb-3">
+            <div class="form-group">
+              <label class="label-text" for="title">Titre</label>
+              <input class="form-control form-control-lg" type="text" id="title" formControlName="title" required>
+              <small *ngIf="quizForm.get('title')?.invalid && quizForm.get('title')?.touched" class="text-danger">
+                Le titre est requis et doit contenir au moins 3 caractères.
+              </small>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="col-lg-6 mb-3">
+            <div class="form-group">
+              <label class="label-text" for="description">Description</label>
+              <input class="form-control form-control-lg" type="text" id="description" formControlName="description" required>
+              <small *ngIf="quizForm.get('description')?.invalid && quizForm.get('description')?.touched" class="text-danger">
+                La description est requise et doit contenir au moins 10 caractères.
+              </small>
+            </div>
+          </div>
+
+          <!-- Durée -->
+          <div class="col-lg-6 mb-3">
+            <div class="form-group">
+              <label class="label-text" for="duration">Durée (minutes)</label>
+              <input class="form-control form-control-lg" type="number" id="duration" formControlName="duration" required>
+              <small *ngIf="quizForm.get('duration')?.invalid && quizForm.get('duration')?.touched" class="text-danger">
+                La durée doit être supérieure à 0.
+              </small>
+            </div>
+          </div>
+
+          <!-- Nombre de questions -->
+          <div class="col-lg-6 mb-3">
+            <div class="form-group">
+              <label class="label-text" for="nbrquestions">Nombre de questions</label>
+              <input class="form-control form-control-lg" type="number" id="nbrquestions" formControlName="nbrquestions" required>
+              <small *ngIf="quizForm.get('nbrquestions')?.invalid && quizForm.get('nbrquestions')?.touched" class="text-danger">
+                Le nombre de questions doit être supérieur à 0.
+              </small>
+            </div>
+          </div>
+
+          <!-- Catégories -->
+          <div class="col-lg-12 mb-3">
+            <div class="form-group">
+              <label class="label-text" for="categories">Catégories</label>
+              <select class="form-control form-control-lg" id="categories" formControlName="categories" required>
+                <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bouton de soumission -->
+        <div class="course-submit-btn-box pb-4">
+          <button class="btn theme-btn btn-lg w-100" type="submit" [disabled]="quizForm.invalid">Créer le quiz</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

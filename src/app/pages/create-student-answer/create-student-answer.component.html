@@ -1,0 +1,27 @@
+<div class="container mt-4">
+    <h2>Créer une réponse</h2>
+    <form (ngSubmit)="createStudentAnswer()" [formGroup]="studentAnswerForm">
+      <div class="form-group">
+        <label for="answer">Réponse</label>
+        <input type="text" id="answer" formControlName="answer" class="form-control">
+        <small *ngIf="studentAnswerForm.get('answer')?.invalid && studentAnswerForm.get('answer')?.touched" class="text-danger">
+          La réponse est requise.
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="answerTime">Temps de réponse</label>
+        <input type="text" id="answerTime" formControlName="answerTime" class="form-control">
+        <small *ngIf="studentAnswerForm.get('answerTime')?.invalid && studentAnswerForm.get('answerTime')?.touched" class="text-danger">
+          Le temps de réponse est requis.
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="questionId">ID de la question</label>
+        <input type="number" id="questionId" formControlName="question.question_id" class="form-control">
+        <small *ngIf="studentAnswerForm.get('question.question_id')?.invalid && studentAnswerForm.get('question.question_id')?.touched" class="text-danger">
+          L'ID de la question est requis.
+        </small>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="studentAnswerForm.invalid">Créer</button>
+    </form>
+  </div>

@@ -1,0 +1,22 @@
+<div class="container mt-4">
+    <h2>Liste des réponses des étudiants</h2>
+    <button class="btn btn-primary mb-3" routerLink="/create-student-answer">Créer une réponse</button>
+  
+    <div *ngIf="isLoading" class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div *ngIf="!isLoading && studentAnswers.length === 0">
+      <p>Aucune réponse disponible pour le moment.</p>
+    </div>
+    <div *ngIf="!isLoading && studentAnswers.length > 0">
+      <div class="card mb-3" *ngFor="let answer of studentAnswers">
+        <div class="card-body">
+          <h5 class="card-title">Réponse : {{ answer.answer }}</h5>
+          <p class="card-text">Temps de réponse : {{ answer.answerTime }}</p>
+          <p class="card-text">Question : {{ answer.question.text }}</p>
+          <button (click)="navigateToUpdateStudentAnswer(answer.id)" class="btn btn-warning mr-2">Modifier</button>
+          <button (click)="deleteStudentAnswer(answer.id)" class="btn btn-danger">Supprimer</button>
+        </div>
+      </div>
+    </div>
+  </div>

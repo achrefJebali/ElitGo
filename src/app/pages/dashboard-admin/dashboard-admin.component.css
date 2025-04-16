@@ -1,0 +1,33 @@
+li {
+    list-style: none;
+  }
+  
+  button {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border: 1px solid #17a2b8;
+    border-radius: 4px;
+    background-color: transparent;
+    color: #17a2b8;
+    text-align: left;
+    font-size: 14px;
+    transition: background-color 0.3s, border-color 0.3s;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #17a2b8;
+    color: white;
+    border-color: #17a2b8;
+  }
+  
+  svg {
+    margin-right: 8px; /* Space between icon and text */
+  }
+  
+  button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(23, 162, 184, 0.5);
+  }
+  

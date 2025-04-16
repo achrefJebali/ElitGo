@@ -1,0 +1,24 @@
+<ul class="question-list">
+  <li *ngFor="let question of questions" class="question-item">
+    <p class="question-text">{{ question.text }} - <strong>Difficulté:</strong> {{ question.difficulty }}</p>
+    <!-- Image si elle existe -->
+    <div *ngIf="question.imageUrl">
+      <img [src]="'http://localhost:4200' + question.imageUrl" alt="Image de la question"
+           style="max-width: 300px; margin-bottom: 10px;" />
+    </div>
+    <p><strong>Choix:</strong></p>
+    <ul class="choices-list">
+      <li *ngFor="let choice of question.choices">{{ choice }}</li>
+    </ul>
+    <p><strong>Réponse correcte:</strong> {{ question.correctAnswer }}</p>
+    <p><strong>Quiz:</strong> {{ question.quizId.title }}</p>
+    
+    <!-- Bouton pour mettre à jour la question -->
+    <button class="btn btn-outline-primary" [routerLink]="['/update-question', question.question_id]">
+      Mettre à jour
+    </button>
+    <button class="btn btn-outline-danger" (click)="deleteQuestion(question.question_id)">
+      Supprimer
+    </button>
+  </li>
+</ul>

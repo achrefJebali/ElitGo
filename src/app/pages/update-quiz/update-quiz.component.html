@@ -1,0 +1,57 @@
+<p>update-quiz works!</p>
+
+<!-- <p>{{ quiz | json }}</p> -->
+<p>{{ quiz }}</p>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Modifier le quiz</h2>
+  
+    <div *ngIf="isLoading" class="d-flex justify-content-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Chargement...</span>
+      </div>
+    </div>
+  
+  <form [formGroup]="quizForm" (ngSubmit)="updateQuiz()">
+    <div class="form-group">
+      <label for="title">Titre</label>
+      <input id="title" formControlName="title" class="form-control" placeholder="Titre du quiz" />
+      <div *ngIf="quizForm.controls['title'].invalid && quizForm.controls['title'].touched" class="text-danger">
+        Le titre est requis.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description" class="form-control" placeholder="Description du quiz"></textarea>
+      <div *ngIf="quizForm.controls['description'].invalid && quizForm.controls['description'].touched" class="text-danger">
+        La description est requise.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="duration">Durée (en minutes)</label>
+      <input id="duration" type="number" formControlName="duration" class="form-control" placeholder="Durée en minutes" />
+      <div *ngIf="quizForm.controls['duration'].invalid && quizForm.controls['duration'].touched" class="text-danger">
+        La durée est requise et doit être supérieure à 0.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="nbrquestions">Nombre de questions</label>
+      <input id="nbrquestions" type="number" formControlName="nbrquestions" class="form-control" placeholder="Nombre de questions" />
+      <div *ngIf="quizForm.controls['nbrquestions'].invalid && quizForm.controls['nbrquestions'].touched" class="text-danger">
+        Le nombre de questions est requis et doit être supérieur à 0.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="categories">Catégorie</label>
+      <input id="categories" formControlName="categories" class="form-control" placeholder="Catégorie du quiz" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3" [disabled]="quizForm.invalid || isLoading">
+      Mettre à jour
+    </button>
+  </form>
+</div>
