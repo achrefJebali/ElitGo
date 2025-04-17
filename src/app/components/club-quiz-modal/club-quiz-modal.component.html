@@ -1,0 +1,116 @@
+<div class="modal-header">
+  <h5 class="modal-title">
+    <span *ngIf="!showResult && quiz">Quiz: {{ quiz.title }}</span>
+    <span *ngIf="showResult">Résultat du Quiz</span>
+    <span *ngIf="!quiz && !showResult">Chargement du quiz...</span>
+  </h5>
+  <button type="button" class="btn-close" (click)="closeModal()"></button>
+</div>
+
+<div class="modal-body">
+  <!-- Affichage des erreurs -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- Loader -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+    <p class="mt-2">Chargement en cours...</p>
+  </div>
+
+  <!-- Quiz en cours -->
+  <div *ngIf="!loading && !showResult && questions.length > 0">
+    <div class="quiz-progress mb-3">
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" [style.width]="((currentQuestionIndex+1)/questions.length*100) + '%'"
+          [attr.aria-valuenow]="currentQuestionIndex+1" aria-valuemin="0" [attr.aria-valuemax]="questions.length">
+          {{ currentQuestionIndex+1 }}/{{ questions.length }}
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-question">
+      <h5>{{ currentQuestion?.questionText }}</h5>
+      <div class="options-list mt-4">
+        <div class="form-check option-item" *ngFor="let option of currentQuestion?.options; let i = index">
+          <input class="form-check-input" type="radio" [name]="'question_' + (currentQuestion?.id || 0)" 
+                [id]="'option_' + (currentQuestion?.id || 0) + '_' + i"
+                [checked]="isOptionSelected(currentQuestion?.id || 0, i)"
+                (change)="selectOption(currentQuestion?.id || 0, i)">
+          <label class="form-check-label" [for]="'option_' + (currentQuestion?.id || 0) + '_' + i">
+            {{ option }}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Résultat du quiz -->
+  <div *ngIf="!loading && showResult && quizResult" class="quiz-result">
+    <div class="text-center">
+      <div *ngIf="quizResult.passed" class="alert alert-success">
+        <i class="la la-check-circle la-2x mb-2"></i>
+        <h4>Félicitations!</h4>
+        <p>Vous avez réussi le quiz avec un score de {{ quizResult.score }}%</p>
+        <p>Vous avez été ajouté au club!</p>
+      </div>
+      <div *ngIf="!quizResult.passed" class="alert alert-danger">
+        <i class="la la-times-circle la-2x mb-2"></i>
+        <h4>Désolé!</h4>
+        <p>Vous n'avez pas atteint le score minimum requis.</p>
+        <p>Votre score: {{ quizResult && quizResult.score }}% (minimum requis: {{ quiz?.passingScore }}%)</p>
+        <p>Vous pouvez réessayer plus tard.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pas de questions -->
+  <div *ngIf="!loading && !showResult && questions.length === 0 && !error" class="text-center py-4">
+    <p>Aucune question disponible pour ce quiz.</p>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <!-- Navigation pour le quiz -->
+  <div *ngIf="!loading && !showResult && questions.length > 0" class="d-flex justify-content-between w-100">
+    <button type="button" class="btn btn-secondary" 
+            [disabled]="currentQuestionIndex === 0"
+            (click)="previousQuestion()">
+      <i class="la la-arrow-left"></i> Précédent
+    </button>
+    
+    <div>
+      <button *ngIf="currentQuestionIndex < questions.length - 1" type="button" class="btn btn-primary"
+              (click)="nextQuestion()">
+        Suivant <i class="la la-arrow-right"></i>
+      </button>
+      <button *ngIf="currentQuestionIndex === questions.length - 1" type="button" class="btn btn-success"
+              (click)="submitQuiz()">
+        Terminer le Quiz
+      </button>
+    </div>
+  </div>
+
+  <!-- Boutons pour les résultats -->
+  <div *ngIf="!loading && showResult" class="d-flex justify-content-between w-100">
+    <!-- Si échec: Fermer ou réessayer -->
+    <div *ngIf="!quizResult?.passed" class="w-100 d-flex justify-content-between">
+      <button type="button" class="btn btn-secondary" (click)="closeModal()">
+        Fermer
+      </button>
+      <button type="button" class="btn btn-primary" (click)="restartQuiz()">
+        Réessayer le quiz
+      </button>
+    </div>
+    
+    <!-- Si succès: Fermer avec confirmation -->
+    <div *ngIf="quizResult?.passed" class="w-100 d-flex justify-content-center">
+      <button type="button" class="btn btn-success" (click)="closeModal()">
+        Rejoindre le club
+      </button>
+    </div>
+  </div>
+</div>

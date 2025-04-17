@@ -25,9 +25,12 @@
               "src/assets"
             ],
             "styles": [
+  "node_modules/leaflet/dist/leaflet.css",
+  "src/assets/leaflet/leaflet-control-geocoder.css",
+
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": ["src/assets/leaflet/leaflet-control-geocoder.js"]
           },
           "configurations": {
             "production": {
@@ -84,6 +87,8 @@
               "src/assets"
             ],
             "styles": [
+  "node_modules/leaflet/dist/leaflet.css",
+  "src/assets/leaflet/leaflet-control-geocoder.css",
               "src/styles.css"
             ],
             "scripts": []

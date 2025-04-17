@@ -1,0 +1,54 @@
+.dashboard-area {
+    padding: 30px;
+}
+
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    color: #333;
+    font-weight: 600;
+}
+
+.divider {
+    height: 1px;
+    background-color: #eee;
+    margin: 15px 0;
+}
+
+.input-box {
+    margin-bottom: 20px;
+}
+
+.label-text {
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form--control {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px 12px;
+}
+
+.theme-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.theme-btn:hover {
+    background-color: #0056b3;
+}
+
+.theme-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

@@ -1,1 +1,449 @@
-<p>clubs works!</p>
+<app-layout></app-layout>
+
+
+<!-- ================================
+    START BREADCRUMB AREA
+================================= -->
+<section class="breadcrumb-area pt-120px bg-white pattern-bg">
+    <div class="container">
+        <div class="breadcrumb-content pb-40px">
+            <div class="section-heading">
+                <h2 class="section__title">Les Clubs</h2>
+            </div>
+            <ul class="generic-list-item generic-list-item-arrow d-flex flex-wrap align-items-center">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="teachers.html">Les Clubs</a></li>
+                <li>Clubs</li>
+            </ul>
+        </div><!-- end breadcrumb-content -->
+    </div><!-- end container -->
+</section><!-- end breadcrumb-area -->
+<!-- ================================
+        START BREADCRUMB AREA
+======================================-->
+
+<!--======================================
+        START TEAM MEMBER AREA
+======================================-->
+<section class="team-member-area section-padding">
+    <div class="container">
+        <div class="section-heading text-center mb-5">
+            <h2 class="section__title">Our Vibrant Clubs</h2>
+            <p class="section__desc">Join one of our dynamic communities and unlock your potential</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <!-- Club filter buttons -->
+        <div class="club-filter-buttons text-center mb-5">
+            <button class="filter-btn active">All Clubs</button>
+            <button class="filter-btn">Academic</button>
+            <button class="filter-btn">Technology</button>
+            <button class="filter-btn">Arts</button>
+            <button class="filter-btn">Sports</button>
+        </div>
+
+        <div class="row club-card-container">
+            <!-- Dynamic clubs -->
+            <ng-container *ngIf="clubs && clubs.length > 0">
+                <div class="col-lg-4 col-md-6 club-card-wrapper" *ngFor="let club of clubs">
+                    <div class="modern-club-card">
+                        <div class="card-banner">
+                            <img class="club-image" [src]="getImageUrl(club.image)" [alt]="club.name">
+                            <div class="club-overlay">
+                                <div class="club-quick-actions">
+                                    <button class="action-btn" (click)="openJoinClubQuiz()" title="Join Club">
+                                        <i class="la la-user-plus"></i>
+                                    </button>
+                                    <button class="action-btn" (click)="openClubDetails(club)" title="View Details">
+                                        <i class="la la-info-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="club-content">
+                            <div class="club-badge">{{ club.theme || 'ELIT' }}</div>
+                            <h3 class="club-title">{{ club.name }}</h3>
+                            <p class="club-description">{{ club.description || 'Join this exciting club to enhance your skills and connect with like-minded peers.' | slice:0:80 }}{{ (club.description && club.description.length > 80) ? '...' : '' }}</p>
+                            <div class="club-footer">
+                                <div class="club-contact">
+                                    <i class="la la-envelope"></i>
+                                    <span *ngIf="club.email">{{ club.email.split('@')[0] }}&#64;{{ club.email.split('@')[1] }}</span>
+                                    <span *ngIf="!club.email">N/A</span>
+                                </div>
+                                <button class="view-profile-btn" (click)="openClubDetails(club)">
+                                    Club Details <i class="la la-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            
+            <!-- Load More button - only displayed when there are more clubs to load -->
+            <div class="col-12 text-center mt-4 mb-5" *ngIf="hasMoreClubs()">
+                <button class="load-more-btn" (click)="loadMoreClubs()">
+                    <i class="la la-refresh mr-2"></i> Load More Clubs
+                </button>
+            </div>
+
+            <!-- Clubs statiques (affichés si aucun club n'est disponible) -->
+            <ng-container *ngIf="!clubs || clubs.length === 0">
+                <!-- Static clubs with modern design -->
+                <div class="col-lg-4 col-md-6 club-card-wrapper">
+                    <div class="modern-club-card">
+                        <div class="card-banner">
+                            <img class="club-image" src="assets/images/espoir.jpeg" alt="Team Espoir">
+                            <div class="club-overlay">
+                                <div class="club-quick-actions">
+                                    <button class="action-btn" (click)="openJoinClubQuiz()" title="Join Club">
+                                        <i class="la la-user-plus"></i>
+                                    </button>
+                                    <button class="action-btn" title="View Details" (click)="openStaticClubDetails({name: 'Club Espoir', theme: 'ELIT', email: 'club1@elit.tn', image: 'assets/images/espoir.jpeg', description: 'A club dedicated to promoting hope and positive change through community service and engagement.', members: 15, creationDate: '2023-01-01', location: 'ELIT Campus'})">
+                                        <i class="la la-info-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="club-content">
+                            <div class="club-badge">ELIT</div>
+                            <h3 class="club-title">Club Espoir</h3>
+                            <p class="club-description">A club dedicated to promoting hope and positive change through community service...</p>
+                            <div class="club-footer">
+                                <div class="club-contact">
+                                    <i class="la la-envelope"></i>
+                                    <span>club1&#64;elit.tn</span>
+                                </div>
+                                <button class="view-profile-btn" (click)="openStaticClubDetails({name: 'Club Espoir', theme: 'ELIT', email: 'club1@elit.tn', image: 'assets/images/espoir.jpeg', description: 'A club dedicated to promoting hope and positive change through community service and engagement.', members: 15, creationDate: '2023-01-01', location: 'ELIT Campus'})">
+                                    Club Details <i class="la la-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 club-card-wrapper">
+                    <div class="modern-club-card">
+                        <div class="card-banner">
+                            <img class="club-image" src="assets/images/robot.png" alt="CLUB-ROBOT">
+                            <div class="club-overlay">
+                                <div class="club-quick-actions">
+                                    <button class="action-btn" (click)="openJoinClubQuiz()" title="Join Club">
+                                        <i class="la la-user-plus"></i>
+                                    </button>
+                                    <button class="action-btn" title="View Details" (click)="openStaticClubDetails({name: 'CLUB-ROBOT', theme: 'ELIT', email: 'clubrobot@elit.tn', image: 'assets/images/robot.png', description: 'Robotics and automation club focused on innovation and technical skills development.', members: 25, creationDate: '2022-05-15', location: 'ELIT Campus - Robotics Laboratory'})">
+                                        <i class="la la-info-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="club-content">
+                            <div class="club-badge">Technology</div>
+                            <h3 class="club-title">CLUB-ROBOT</h3>
+                            <p class="club-description">Robotics and automation club focused on innovation and technical skills development...</p>
+                            <div class="club-footer">
+                                <div class="club-contact">
+                                    <i class="la la-envelope"></i>
+                                    <span>clubrobot&#64;elit.tn</span>
+                                </div>
+                                <button class="view-profile-btn" (click)="openStaticClubDetails({name: 'CLUB-ROBOT', theme: 'ELIT', email: 'clubrobot@elit.tn', image: 'assets/images/robot.png', description: 'Robotics and automation club focused on innovation and technical skills development.', members: 25, creationDate: '2022-05-15', location: 'ELIT Campus - Robotics Laboratory'})">
+                                    Club Details <i class="la la-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 club-card-wrapper">
+                    <div class="modern-club-card">
+                        <div class="card-banner">
+                            <img class="club-image" src="assets/images/radio.png" alt="CLUB-Radio">
+                            <div class="club-overlay">
+                                <div class="club-quick-actions">
+                                    <button class="action-btn" (click)="openJoinClubQuiz()" title="Join Club">
+                                        <i class="la la-user-plus"></i>
+                                    </button>
+                                    <button class="action-btn" title="View Details" (click)="openStaticClubDetails({name: 'CLUB-Radio', theme: 'ELIT', email: 'clubradio@elit.tn', image: 'assets/images/radio.png', description: 'Radio and communications club focusing on media production and broadcasting.', members: 18, creationDate: '2022-09-10', location: 'ELIT Campus - Radio Studio'})">
+                                        <i class="la la-info-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="club-content">
+                            <div class="club-badge">Media</div>
+                            <h3 class="club-title">CLUB-Radio</h3>
+                            <p class="club-description">Radio and communications club focusing on media production and broadcasting...</p>
+                            <div class="club-footer">
+                                <div class="club-contact">
+                                    <i class="la la-envelope"></i>
+                                    <span>clubradio&#64;elit.tn</span>
+                                </div>
+                                <button class="view-profile-btn" (click)="openStaticClubDetails({name: 'CLUB-Radio', theme: 'ELIT', email: 'clubradio@elit.tn', image: 'assets/images/radio.png', description: 'Radio and communications club focusing on media production and broadcasting.', members: 18, creationDate: '2022-09-10', location: 'ELIT Campus - Radio Studio'})">
+                                    Club Details <i class="la la-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 club-card-wrapper">
+                    <div class="modern-club-card">
+                        <div class="card-banner">
+                            <img class="club-image" src="assets/images/geniecivil.png" alt="CLUB-Civil Engineering">
+                            <div class="club-overlay">
+                                <div class="club-quick-actions">
+                                    <button class="action-btn" (click)="openJoinClubQuiz()" title="Join Club">
+                                        <i class="la la-user-plus"></i>
+                                    </button>
+                                    <button class="action-btn" title="View Details" (click)="openStaticClubDetails({name: 'CLUB-Génie Civil', theme: 'ELIT', email: 'clubgeniecivil@elit.tn', image: 'assets/images/geniecivil.png', description: 'Engineering and construction club focused on civil engineering projects and innovation.', members: 22, creationDate: '2022-03-20', location: 'ELIT Campus - Civil Engineering Department'})">
+                                        <i class="la la-info-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="club-content">
+                            <div class="club-badge">Engineering</div>
+                            <h3 class="club-title">CLUB-Génie Civil</h3>
+                            <p class="club-description">Engineering and construction club focused on civil engineering projects and innovation...</p>
+                            <div class="club-footer">
+                                <div class="club-contact">
+                                    <i class="la la-envelope"></i>
+                                    <span>clubgeniecivil&#64;elit.tn</span>
+                                </div>
+                                <button class="view-profile-btn" (click)="openStaticClubDetails({name: 'CLUB-Génie Civil', theme: 'ELIT', email: 'clubgeniecivil@elit.tn', image: 'assets/images/geniecivil.png', description: 'Engineering and construction club focused on civil engineering projects and innovation.', members: 22, creationDate: '2022-03-20', location: 'ELIT Campus - Civil Engineering Department'})">
+                                    Club Details <i class="la la-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 club-card-wrapper">
+                    <div class="modern-club-card">
+                        <div class="card-banner">
+                            <img class="club-image" src="assets/images/tunivision.png" alt="CLUB-TUNIVISION">
+                            <div class="club-overlay">
+                                <div class="club-quick-actions">
+                                    <button class="action-btn" (click)="openJoinClubQuiz()" title="Join Club">
+                                        <i class="la la-user-plus"></i>
+                                    </button>
+                                    <button class="action-btn" title="View Details" (click)="openStaticClubDetails({name: 'CLUB-TUNIVISION', theme: 'ELIT', email: 'clubtunivision@elit.tn', image: 'assets/images/tunivision.png', description: 'Vision and multimedia club specializing in digital media, photography and video production.', members: 20, creationDate: '2022-06-18', location: 'ELIT Campus - Multimedia Studio'})">
+                                        <i class="la la-info-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="club-content">
+                            <div class="club-badge">Multimedia</div>
+                            <h3 class="club-title">CLUB-TUNIVISION</h3>
+                            <p class="club-description">Vision and multimedia club specializing in digital media, photography and video production...</p>
+                            <div class="club-footer">
+                                <div class="club-contact">
+                                    <i class="la la-envelope"></i>
+                                    <span>clubtunivision&#64;elit.tn</span>
+                                </div>
+                                <button class="view-profile-btn" (click)="openStaticClubDetails({name: 'CLUB-TUNIVISION', theme: 'ELIT', email: 'clubtunivision@elit.tn', image: 'assets/images/tunivision.png', description: 'Vision and multimedia club specializing in digital media, photography and video production.', members: 20, creationDate: '2022-06-18', location: 'ELIT Campus - Multimedia Studio'})">
+                                    Club Details <i class="la la-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 responsive-column-half">
+                    <div class="card card-item member-card text-center">
+                        <div class="card-image">
+                            <img class="card-img-top" src="assets/images/Fusion.png" alt="team member">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="javascript:void(0)">CLUB-FUSION</a></h5>
+                            <p class="card-text"><strong>Theme:</strong> ELIT</p>
+                            <p class="card-text"><i class="la la-envelope"></i> <strong>Email:</strong> clubfusion&#64;elit.tn</p>
+                            <button (click)="openStaticClubDetails({name: 'CLUB-FUSION', theme: 'ELIT', email: 'clubfusion@elit.tn', image: 'assets/images/Fusion.png', description: 'Club multidisciplinaire de fusion des compétences', members: 30, creationDate: '2022-02-15', location: 'ELIT Campus - Salle Polyvalente'})" class="btn theme-btn theme-btn-sm theme-btn-transparent mt-3">View Profile <i class="la la-arrow-right icon ml-1"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 responsive-column-half">
+                    <div class="card card-item member-card text-center">
+                        <div class="card-image">
+                            <img class="card-img-top" src="assets/images/dev.jpeg" alt="team member">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="javascript:void(0)">CLUB-Dev</a></h5>
+                            <p class="card-text"><strong>Theme:</strong> ELIT</p>
+                            <p class="card-text"><i class="la la-envelope"></i> <strong>Email:</strong> clubdev&#64;elit.tn</p>
+                            <button (click)="openStaticClubDetails({name: 'CLUB-Dev', theme: 'ELIT', email: 'clubdev@elit.tn', image: 'assets/images/dev.jpeg', description: 'Club de développement informatique', members: 28, creationDate: '2022-01-05', location: 'ELIT Campus - Laboratoire Informatique'})" class="btn theme-btn theme-btn-sm theme-btn-transparent mt-3">View Profile <i class="la la-arrow-right icon ml-1"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 responsive-column-half">
+                    <div class="card card-item member-card text-center">
+                        <div class="card-image">
+                            <img class="card-img-top" src="assets/images/ia.png" alt="team member">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="javascript:void(0)">CLUB-IA</a></h5>
+                            <p class="card-text"><strong>Theme:</strong> ELIT</p>
+                            <p class="card-text"><i class="la la-envelope"></i> <strong>Email:</strong> clubia&#64;elit.tn</p>
+                            <button (click)="openStaticClubDetails({name: 'CLUB-IA', theme: 'ELIT', email: 'clubia@elit.tn', image: 'assets/images/ia.png', description: 'Club d\'intelligence artificielle et machine learning', members: 25, creationDate: '2022-04-12', location: 'ELIT Campus - Laboratoire IA'})" class="btn theme-btn theme-btn-sm theme-btn-transparent mt-3">View Profile <i class="la la-arrow-right icon ml-1"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 responsive-column-half">
+                    <div class="card card-item member-card text-center">
+                        <div class="card-image">
+                            <img class="card-img-top" src="assets/images/tunivision.png" alt="team member">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="javascript:void(0)">CLUB-TUNIVISION</a></h5>
+                            <p class="card-text"><strong>Theme:</strong> ELIT</p>
+                            <p class="card-text"><i class="la la-envelope"></i> <strong>Email:</strong> clubtunivision&#64;elit.tn</p>
+                            <button (click)="openStaticClubDetails({name: 'CLUB-TUNIVISION', theme: 'ELIT', email: 'clubtunivision@elit.tn', image: 'assets/images/tunivision.png', description: 'Club de vision et multimédia', members: 20, creationDate: '2022-06-18', location: 'ELIT Campus - Studio Multimédia'})" class="btn theme-btn theme-btn-sm theme-btn-transparent mt-3">View Profile <i class="la la-arrow-right icon ml-1"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</section>
+<!--======================================
+        END TEAM MEMBER AREA
+======================================-->
+
+<!-- ================================
+    START DOWNLOAD AREA
+================================= -->
+<section class="download-area bg-gray pt-60px pb-60px">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="mobile-img">
+                    <img src="assets/images/mobile.png" alt="mobile-img">
+                </div>
+            </div><!-- end col-lg-6 -->
+            <div class="col-lg-5 ml-auto">
+                <div class="download-content">
+                    <div class="section-heading mb-3">
+                        <h2 class="section__title mb-2">Download ELIT Go App</h2>
+                        <p class="section__desc">Download the Aduca mobile App for even better ease of use. Access your own profile or browse courses, all while on the go!</p>
+                    </div><!-- end section-heading -->
+                    <div class="btn-box">
+                        <a href="#" class="d-block mb-3"><img src="assets/images/app-store.png" alt="app store" class="img-fluid"></a>
+                        <a href="#" class="d-block"><img src="assets/images/google-play.png" alt="google play" class="img-fluid"></a>
+                    </div><!-- end btn-box -->
+                </div>
+            </div><!-- end col-lg-5 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end download-area -->
+<!-- ================================
+    END DOWNLOAD AREA
+================================= -->
+
+<app-footer></app-footer>
+
+<!-- Solution de quiz avec overlay visible/invisible en utilisant *ngIf -->
+<div *ngIf="showQuizModal && selectedClub" class="quiz-overlay">
+    <div class="quiz-dialog">
+        <div class="quiz-content">
+            <app-club-quiz-modal 
+                [clubId]="selectedClub.id"
+                [userId]="currentUserId"
+                (quizCompleted)="onQuizCompleted($event)">
+            </app-club-quiz-modal>
+        </div>
+    </div>
+</div>
+
+<!-- Styles spécifiques pour notre solution de quiz -->
+<style>
+.quiz-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quiz-dialog {
+    width: 100%;
+    max-width: 800px;
+    margin: 1.75rem auto;
+    position: relative;
+}
+
+.quiz-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 0.3rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+</style>
+
+<!-- Club Details Modal -->
+<div class="modal fade" id="clubDetailsModal" tabindex="-1" aria-labelledby="clubDetailsModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="clubDetailsModalLabel">{{ selectedClub?.name || 'Club Details' }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
+            </div>
+            <div class="modal-body" *ngIf="selectedClub">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="text-center mb-4">
+                            <img [src]="getImageUrl(selectedClub.image)" [alt]="selectedClub.name" class="img-fluid rounded">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="club-details">
+                            <h5>Club Information</h5>
+                            <hr>
+                            <p><strong>Name:</strong> {{ selectedClub.name }}</p>
+                            <p><strong>Theme:</strong> {{ selectedClub.theme || 'ELIT' }}</p>
+                            <p>
+                                <strong>Email:</strong>
+                                <span *ngIf="selectedClub.email">{{ selectedClub.email.split('@')[0] }}&#64;{{ selectedClub.email.split('@')[1] }}</span>
+                                <span *ngIf="!selectedClub.email">N/A</span>
+                            </p>
+                            <p><strong>Description:</strong> {{ selectedClub.description || 'No description available.' }}</p>
+                            <p><strong>Objectives:</strong> {{ selectedClub.objectives || 'No objectives available.' }}</p>
+                            
+                            <!-- Informations additionnelles pour les clubs statiques seulement -->
+                            <div *ngIf="!isClubFromDatabase()">
+    <p><strong>Members:</strong> {{ selectedClub.members || 'Information not available' }}</p>
+    <p><strong>Creation Date:</strong> {{ selectedClub.creationDate || 'Information not available' }}</p>
+    <p><strong>Location:</strong> {{ selectedClub.location || 'ELIT Campus' }}</p>
+    <div class="alert alert-info mt-3">
+        <small>Note: Some displayed information is for example purposes as it is not available in the database.</small>
+    </div>
+</div>
+                            
+                            <!-- Message pour les clubs de la base de données -->
+                            <div *ngIf="isClubFromDatabase() && selectedClub.events && selectedClub.events.length > 0" class="mt-3">
+    <h6>Associated Events:</h6>
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let event of selectedClub.events.slice(0, 3)">
+            {{ event.name || 'Unnamed Event' }}
+        </li>
+    </ul>
+    <div *ngIf="selectedClub.events.length > 3" class="text-right mt-2">
+        <small>+ {{ selectedClub.events.length - 3 }} more events</small>
+    </div>
+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">Close</button>
+                <button type="button" class="btn btn-primary" (click)="openJoinClubQuiz()" *ngIf="!isUserMemberOfClub()">Join Club</button>
+            </div>
+        </div>
+    </div>
+</div>
