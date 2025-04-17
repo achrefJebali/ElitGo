@@ -1,0 +1,213 @@
+<!-- Préchargeur -->
+<div class="preloader" *ngIf="isLoading">
+    <div class="loader">
+        <svg class="spinner" viewBox="0 0 50 50">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+        </svg>
+    </div>
+</div>
+
+<!--======================================
+    HEADER AREA
+======================================-->
+<header class="header-menu-area" [class.d-none]="isLoading">
+    <div class="header-menu-content dashboard-menu-content pr-30px pl-30px bg-white shadow-sm">
+        <div class="container-fluid">
+            <div class="main-menu-content">
+                <div class="row align-items-center">
+                    <div class="col-lg-12">
+                        <!-- Logo -->
+                        <div class="logo-box logo--box">
+                            <a [routerLink]="['/home']" class="logo">
+                                <img src="./assets/images/logo.png" alt="ElitGo Logo" style="max-height: 85px; width: auto;">
+                            </a>
+                            <div class="user-btn-action">
+                                <div class="off-canvas-menu-toggle main-menu-toggle icon-element icon-element-sm shadow-sm" 
+                                     data-toggle="tooltip" data-placement="top" title="Menu principal">
+                                    <i class="la la-bars"></i>
+                                </div>
+                            </div>
+                        </div><!-- end logo-box -->
+                        
+                        <!-- Menu principal -->
+                        <div class="menu-wrapper">
+                            <!-- Barre de recherche -->
+                            <form method="post" class="mr-auto ml-0">
+                                <div class="form-group mb-0">
+                                    <input class="form-control form--control form--control-gray pl-3" 
+                                           type="text" name="search" placeholder="Rechercher...">
+                                    <span class="la la-search search-icon"></span>
+                                </div>
+                            </form>
+                            
+                            <!-- Actions utilisateur -->
+                            <div class="nav-right-button d-flex align-items-center">
+                                <div class="user-action-wrap d-flex align-items-center">
+                                    
+                                    <!-- Icône entretiens -->
+                                    <div class="shop-cart notification-cart pr-3 mr-3 border-right border-right-gray">
+                                        <ul>
+                                            <li>
+                                                <a [routerLink]="['/interview']" class="shop-cart-btn position-relative">
+                                                    <i class="la la-comments"></i>
+                                                    <span class="tooltip-tip">Entretiens</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <!-- Profil utilisateur -->
+                                    <div class="shop-cart user-profile-cart">
+                                        <ul>
+                                            <li>
+                                                <!-- Bouton avec photo de profil -->
+                                                <div class="shop-cart-btn user-profile-btn">
+                                                    <div class="avatar-xs">
+                                                        <img class="rounded-full img-fluid user-avatar" 
+                                                             [src]="getPhotoUrl()" 
+                                                             alt="Photo de {{getDisplayName()}}">
+                                                    </div>
+                                                    <span class="user-name-preview d-none d-md-inline-block">
+                                                        {{getDisplayName() | slice:0:12}}{{getDisplayName().length > 12 ? '...' : ''}}
+                                                    </span>
+                                                    <span class="dot-status bg-success"></span>
+                                                </div>
+                                                
+                                                <!-- Menu déroulant utilisateur -->
+                                                <ul class="cart-dropdown-menu after-none p-0 notification-dropdown-menu">
+                                                    <!-- En-tête avec infos utilisateur -->
+                                                    <li class="menu-heading-block d-flex align-items-center p-3">
+                                                        <a [routerLink]="['/dashboard-profile']" class="avatar-sm flex-shrink-0 d-block">
+                                                            <img class="rounded-full img-fluid" 
+                                                                 [src]="getPhotoUrl()" 
+                                                                 alt="Photo de {{getDisplayName()}}">
+                                                        </a>
+                                                        <div class="ml-2">
+                                                            <h4>
+                                                                <a [routerLink]="['/dashboard-profile']" class="text-black font-weight-semi-bold">
+                                                                    {{getDisplayName()}}
+                                                                </a>
+                                                            </h4>
+                                                            <div class="user-info-row">
+                                                                <span class="d-block fs-14 lh-20 text-truncate">{{email}}</span>
+                                                                <span class="badge badge-sm mt-1" [ngClass]="getRoleBadgeClass()">
+                                                                    {{getFormattedRole()}}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    
+                                                    <!-- Sélecteur de thème -->
+                                                    <li>
+                                                        <div class="theme-picker d-flex align-items-center justify-content-center lh-40">
+                                                            <button class="theme-picker-btn dark-mode-btn w-100 font-weight-semi-bold justify-content-center" 
+                                                                    title="Mode sombre">
+                                                                <svg class="mr-1" viewBox="0 0 24 24" stroke-width="1.5" 
+                                                                     stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                                                </svg>
+                                                                Mode sombre
+                                                            </button>
+                                                            <button class="theme-picker-btn light-mode-btn w-100 font-weight-semi-bold justify-content-center" 
+                                                                    title="Mode clair">
+                                                                <svg class="mr-1" viewBox="0 0 24 24" stroke-width="1.5" 
+                                                                     stroke-linecap="round" stroke-linejoin="round">
+                                                                    <circle cx="12" cy="12" r="5"></circle>
+                                                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                                                </svg>
+                                                                Mode clair
+                                                            </button>
+                                                        </div>
+                                                    </li>
+                                                    
+                                                    <!-- Options du menu utilisateur -->
+                                                    <li>
+                                                        <ul class="generic-list-item user-menu">
+                                                            <!-- Tableau de bord -->
+                                                            <li>
+                                                                <a [routerLink]="['/dashboard']">
+                                                                    <i class="la la-tachometer mr-1"></i> Tableau de bord
+                                                                </a>
+                                                            </li>
+                                                            <!-- Profil -->
+                                                            <li>
+                                                                <a [routerLink]="['/dashboard-profile']">
+                                                                    <i class="la la-user mr-1"></i> Mon profil
+                                                                </a>
+                                                            </li>
+                                                            <!-- Entretiens -->
+                                                            <li>
+                                                                <a [routerLink]="['/interview']">
+                                                                    <i class="la la-comments mr-1"></i> Mes entretiens
+                                                                </a>
+                                                            </li>
+                                                            <li><div class="section-block"></div></li>
+                                                            
+                                                            <!-- Section Admin (visible si admin) -->
+                                                            <li *ngIf="hasAdminAccess()">
+                                                                <a [routerLink]="['/admin-profile']">
+                                                                    <i class="la la-user-shield mr-1"></i> Profil Admin
+                                                                </a>
+                                                            </li>
+                                                            <li *ngIf="userRole === 'ADMIN'">
+                                                                <a [routerLink]="['/all-users']">
+                                                                    <i class="la la-users mr-1"></i> Gestion utilisateurs
+                                                                </a>
+                                                            </li>
+                                                            <li *ngIf="hasAdminAccess()"><div class="section-block"></div></li>
+                                                            
+                                                            <!-- Paramètres -->
+                                                            <li>
+                                                                <a [routerLink]="['/dashboard-settings']">
+                                                                    <i class="la la-cog mr-1"></i> Paramètres
+                                                                </a>
+                                                            </li>
+                                                            <li><div class="section-block"></div></li>
+                                                            
+                                                            <!-- Déconnexion -->
+                                                            <li>
+                                                                <a (click)="logout()" style="cursor:pointer">
+                                                                    <i class="la la-sign-out mr-1"></i> Déconnexion
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div><!-- end user-profile-cart -->
+                                </div><!-- end user-action-wrap -->
+                            </div><!-- end nav-right-button -->
+                        </div><!-- end menu-wrapper -->
+                    </div><!-- end col-lg-12 -->
+                </div><!-- end row -->
+            </div><!-- end main-menu-content -->
+        </div><!-- end container-fluid -->
+    </div><!-- end header-menu-content -->
+    
+    <!-- Menu off-canvas -->
+    <div class="off-canvas-menu custom-scrollbar-styled main-off-canvas-menu">
+        <div class="off-canvas-menu-close main-menu-close icon-element icon-element-sm shadow-sm" 
+             data-toggle="tooltip" data-placement="left" title="Fermer menu">
+            <i class="la la-times"></i>
+        </div>
+        
+        <h4 class="off-canvas-menu-heading pt-90px">Menu principal</h4>
+        
+        <ul class="generic-list-item off-canvas-menu-list pt-1">
+            <li><a [routerLink]="['/dashboard']">Tableau de bord</a></li>
+            <li><a [routerLink]="['/interview']">Entretiens</a></li>
+            <li><a [routerLink]="['/dashboard-profile']">Mon profil</a></li>
+            <li *ngIf="hasAdminAccess()"><a [routerLink]="['/admin-profile']">Administration</a></li>
+            <li><a [routerLink]="['/dashboard-settings']">Paramètres</a></li>
+            <li><a (click)="logout()" style="cursor:pointer">Déconnexion</a></li>
+        </ul>
+    </div><!-- end off-canvas-menu -->
+</header><!-- end header-menu-area -->

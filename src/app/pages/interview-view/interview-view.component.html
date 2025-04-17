@@ -1,0 +1,120 @@
+<app-dashboard-header></app-dashboard-header>
+
+<section class="dashboard-area">
+    <div class="container-fluid">
+        <div class="dashboard-heading mb-5">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="fs-22 font-weight-semi-bold">My Interviews</h3>
+                <button class="btn btn-primary btn-sm" (click)="createTestInterview()">
+                    Create Test Interview
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Interview List -->
+            <div class="col-lg-4">
+                <div class="card card-item">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Scheduled Interviews</h5>
+                        <div class="list-group">
+                            <a *ngFor="let interview of interviews" 
+                               href="javascript:void(0)" 
+                               class="list-group-item list-group-item-action"
+                               [class.active]="selectedInterview?.id === interview.id"
+                               (click)="selectInterview(interview)">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">
+                                        {{currentUser?.role === 'STUDENT' || currentUser?.role === Role.STUDENT ? interview.teacherName : interview.studentName}}
+                                    </h6>
+                                    <small>
+                                        <span class="badge badge-info">
+                                            Interview
+                                        </span>
+                                    </small>
+                                </div>
+                                <p class="mb-1">{{interview.date | date:'medium'}}</p>
+                                <small>Time until: {{getTimeUntilInterview(interview.date)}}</small>
+                            </a>
+                            
+                            <!-- No interviews message -->
+                            <div *ngIf="interviews.length === 0" class="alert alert-info mt-3">
+                                <p class="mb-0">No interviews scheduled yet.</p>
+                                <small *ngIf="currentUser?.role === 'STUDENT' || currentUser?.role === Role.STUDENT">
+                                    Contact your administrator if you believe this is an error.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interview Details -->
+            <div class="col-lg-8">
+                <div class="card card-item" *ngIf="selectedInterview">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Interview Details</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Date & Time:</strong> {{selectedInterview.date | date:'medium'}}</p>
+                                <p><strong>Duration:</strong> {{selectedInterview.duration}} minutes</p>
+
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Student:</strong> {{selectedInterview.studentName}}</p>
+                                <p><strong>Teacher:</strong> {{selectedInterview.teacherName}}</p>
+                                <p *ngIf="selectedInterview.score">
+                                    <strong>Score:</strong> {{selectedInterview.score}}
+                                </p>
+                            </div>
+                            <div class="col-12">
+                                <p><strong>Meeting Link:</strong> 
+                                    <a [href]="selectedInterview.meeting_link" target="_blank" class="btn btn-sm btn-info">
+                                        Join Meeting
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="col-12" *ngIf="selectedInterview.notes">
+                                <p><strong>Notes:</strong></p>
+                                <p class="border p-3 rounded">{{selectedInterview.notes}}</p>
+                            </div>
+                            <div class="col-12" *ngIf="selectedInterview.feedback">
+                                <p><strong>Feedback:</strong></p>
+                                <p class="border p-3 rounded">{{selectedInterview.feedback}}</p>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="col-12 mt-4">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <a [href]="selectedInterview.meeting_link" target="_blank" 
+                                           class="btn btn-success mr-2" *ngIf="selectedInterview.meeting_link">
+                                            Join Meeting
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Teacher Feedback Form -->
+                            <div class="col-12 mt-4" *ngIf="canSubmitFeedback()">
+                                <div class="form-group">
+                                    <label for="feedback"><strong>Submit Feedback</strong></label>
+                                    <textarea class="form-control" 
+                                              id="feedback" 
+                                              rows="3" 
+                                              [(ngModel)]="feedback"
+                                              placeholder="Enter your feedback here..."></textarea>
+                                </div>
+                                <button class="btn btn-primary mt-2" 
+                                        (click)="submitFeedback()"
+                                        [disabled]="!feedback">
+                                    Submit Feedback
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
