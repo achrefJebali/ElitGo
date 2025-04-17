@@ -1,0 +1,158 @@
+.dashboard-content-wrap {
+    padding: 30px;
+    min-height: 100vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.dashboard-main-content {
+    padding-bottom: 60px; /* Add padding at the bottom for the buttons */
+}
+
+.form-box {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.form-title-wrap {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.form-content {
+    padding: 20px;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 0.375rem 0.75rem;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.form-control.ng-invalid.ng-touched {
+    border-color: #dc3545;
+}
+
+.form-control.ng-invalid.ng-touched:focus {
+    box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
+}
+
+.invalid-feedback {
+    display: block;
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.image-upload-container {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.image-upload-container.dragging {
+    border-color: #007bff;
+    background: rgba(0, 123, 255, 0.1);
+}
+
+.image-upload-content {
+    width: 100%;
+}
+
+.upload-placeholder {
+    color: #6c757d;
+}
+
+.upload-placeholder i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #007bff;
+}
+
+.upload-placeholder p {
+    margin-bottom: 1rem;
+}
+
+.image-preview {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.image-preview img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image-preview:hover .image-overlay {
+    opacity: 1;
+}
+
+.btn-outline-light {
+    color: #fff;
+    border-color: #fff;
+}
+
+.btn-outline-light:hover {
+    background: #fff;
+    color: #000;
+}
+
+.btn-box {
+    border-top: 1px solid #eee;
+    padding: 20px;
+    margin-top: 20px;
+    position: sticky;
+    bottom: 0;
+    background: white;
+    z-index: 100;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+/* Make sure the content is scrollable */
+@media (max-height: 800px) {
+    .dashboard-content-wrap {
+        height: 100vh;
+        overflow-y: auto;
+    }
+    
+    .dashboard-main-content {
+        min-height: calc(100vh - 60px);
+    }
+}

@@ -1,0 +1,71 @@
+.list-group-item {
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-2px);
+}
+
+.list-group-item.active {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.badge {
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 15px;
+}
+
+.badge-warning {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.badge-info {
+    background-color: #17a2b8;
+    color: #fff;
+}
+
+.badge-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.badge-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn {
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.card-title {
+    color: #333;
+    font-weight: 600;
+}
+
+textarea.form-control {
+    border-radius: 10px;
+    resize: none;
+}
+
+.border {
+    border-radius: 10px;
+    background-color: #f8f9fa;
+}

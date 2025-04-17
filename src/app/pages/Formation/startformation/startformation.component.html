@@ -1,0 +1,67 @@
+<app-layout></app-layout>
+<section class="lesson-details-area section--padding modern-formation-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-xl-10 col-lg-11">
+        <div class="lesson-single-content mb-5 p-4 rounded shadow-lg bg-white">
+          <!-- Formation Name -->
+          <h2 class="formation-title display-4 font-weight-bold pb-4 text-left text-primary">{{ formation?.title }}</h2>
+          <!-- Videos and Details -->
+          <div class="formation-videos">
+            <h2>Formation Videos</h2>
+            <div class="video-card" *ngIf="resources.length > 0">
+              <h4>{{ resources[currentIndex].title }}</h4>
+              <video
+                width="480"
+                controls
+                [src]="'http://localhost:8085/ElitGo' + resources[currentIndex].fileUrl"
+                (ended)="onVideoEnded(resources[currentIndex])"
+                [attr.id]="'video-' + resources[currentIndex].id">
+                Your browser does not support the video tag.
+              </video>
+              <div class="video-status">
+                <span *ngIf="watchedVideos.has(resources[currentIndex].id)" class="watched">✅ Watched</span>
+                <span *ngIf="!watchedVideos.has(resources[currentIndex].id)">Not watched</span>
+              </div>
+              <p>{{ resources[currentIndex].description }}</p>
+              <div class="d-flex justify-content-between mt-4">
+                <button class="btn btn-outline-secondary" (click)="prevVideo()" [disabled]="currentIndex === 0">Previous</button>
+                <button class="btn btn-outline-primary" (click)="nextVideo()" *ngIf="showNext && currentIndex < resources.length - 1">Next</button>
+              </div>
+            </div>
+            <div *ngIf="resources.length === 0" class="alert alert-info mt-3">No videos available.</div>
+          </div>
+          <!-- Quiz Button: Show only when all videos are watched -->
+          <div class="text-center mt-4" *ngIf="watchedVideos.size === allVideoIds.length && allVideoIds.length > 0">
+            <button class="btn btn-lg btn-success shadow-sm px-5 py-2 modern-quiz-btn" (click)="startQuiz()">
+              <i class="la la-question-circle mr-2"></i> Take the Quiz
+            </button>
+          </div>
+          <!-- Back Button -->
+          <div class="text-center mt-5">
+            <button class="btn btn-lg btn-gradient-primary shadow-sm px-5 py-2" (click)="goBackToPurchased()">
+              <i class="la la-arrow-left mr-2"></i> Back to My Formations
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--
+.modern-quiz-btn {
+  background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: box-shadow 0.3s;
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.12);
+}
+.modern-quiz-btn:hover {
+  box-shadow: 0 12px 32px rgba(34, 197, 94, 0.18);
+  color: #fff;
+}
+--> 

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ElitGoPublic": {
+    "ElitGo": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -11,11 +11,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/elit-go-public",
+            "outputPath": "dist/elit-go",
             "index": "src/index.html",
-            "browser": "src/main.ts",
+            "main": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -25,25 +25,66 @@
               "src/assets"
             ],
             "styles": [
+
   "node_modules/leaflet/dist/leaflet.css",
   "src/assets/leaflet/leaflet-control-geocoder.css",
 
               "src/styles.css"
             ],
             "scripts": ["src/assets/leaflet/leaflet-control-geocoder.js"]
+
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.css",
+              "src/assets/css/bootstrap.min.css",
+              "src/assets/css/bootstrap-tagsinput.css",
+              "src/assets/css/line-awesome.css",
+              "src/assets/css/owl.carousel.min.css",
+              "src/assets/css/owl.theme.default.min.css",
+              "src/assets/css/bootstrap-select.min.css",
+              "src/assets/css/fancybox.css",
+              "src/assets/css/emojionearea.css",
+              "src/assets/css/jquery-te-1.4.0.css",
+              "src/assets/css/style.css"
+            ],
+            "scripts": [
+              "src/assets/js/jquery-3.4.1.min.js",
+              "src/assets/js/jquery-te-1.4.0.min.js",
+              "src/assets/js/jquery.counterup.min.js",
+              "src/assets/js/jquery.lazy.min.js",
+              "src/assets/js/jquery.MultiFile.min.js",
+              "src/assets/js/bootstrap.bundle.min.js",
+              "src/assets/js/bootstrap-select.min.js",
+              "src/assets/js/bootstrap-tagsinput.min.js",
+              "src/assets/js/owl.carousel.min.js",
+              "src/assets/js/isotope.js",
+              "src/assets/js/fancybox.js",
+              "src/assets/js/tooltipster.bundle.min.js",
+              "src/assets/js/datedropper.min.js",
+              "src/assets/js/emojionearea.min.js",
+              "src/assets/js/intlTelInput-jquery.min.js",
+              "src/assets/js/waypoint.min.js",
+              "src/assets/js/plyr.js",
+              "src/assets/js/leaflet.js",
+              "src/assets/js/chart.js",
+              "src/assets/js/animated-headline.js",
+              "src/assets/js/animated-skills.js",
+              "src/assets/js/utils.js",
+              "src/assets/js/main.js"
+            ]
+
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "500kb",
+                  "maximumError": "2mb"
                 }
               ],
               "outputHashing": "all"
@@ -60,10 +101,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ElitGoPublic:build:production"
+              "buildTarget": "ElitGo:build:production"
             },
             "development": {
-              "buildTarget": "ElitGoPublic:build:development"
+              "buildTarget": "ElitGo:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,14 +112,13 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "ElitGoPublic:build"
+            "buildTarget": "ElitGo:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "polyfills": [
-              "zone.js",
               "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",

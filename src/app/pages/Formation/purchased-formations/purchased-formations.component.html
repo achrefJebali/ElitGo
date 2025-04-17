@@ -1,0 +1,181 @@
+<app-layout></app-layout>
+
+
+<!-- Breadcrumb Area -->
+<section class="breadcrumb-area py-5 bg-white pattern-bg">
+    <div class="container">
+        <div class="breadcrumb-content">
+            <div class="section-heading">
+                <h2 class="section__title">My Purchased Formations</h2>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- My Courses Area -->
+<section class="my-courses-area pt-30px pb-90px">
+    <div class="container">
+        <div class="my-course-content-wrap">
+            <div class="my-course-body">
+                <!-- Simplified Filtering (Optional) -->
+                <div class="my-course-filter-wrap d-flex align-items-center pt-2">
+                    <div class="my-course-filter-item my-course-sort-by-content">
+                        <span class="fs-14 font-weight-semi-bold">Sort by</span>
+                        <div class="select-container w-100 pt-2">
+                            <select class="select-container-select">
+                                <option value="0" selected>Recently Accessed</option>
+                                <option value="1">Recently Enrolled</option>
+                                <option value="2">Title: A-to-Z</option>
+                                <option value="3">Title: Z-to-A</option>
+                                <option value="4">Completion: 0% to 100%</option>
+                                <option value="5">Completion: 100% to 0%</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="my-course-filter-item my-course-search-content">
+                        <span class="fs-14 font-weight-semi-bold">Search</span>
+                        <div class="pt-2">
+                            <input class="form-control form--control form--control-gray pl-3" type="text"
+                                [(ngModel)]="searchQuery" (input)="onSearch()" placeholder="Search by course title...">
+                        </div>
+                    </div><!-- end my-course-filter-item -->
+                </div>
+
+                <!-- Course Cards -->
+                <div class="my-course-cards pt-40px">
+                    @if (purchasedFormations.length > 0) {
+                    <div class="row align-items-stretch">
+                        @for (formation of purchasedFormations; track formation.id) {
+                        <div class="col-lg-4 responsive-column-half h-100">
+                            <div class="card card-item h-100">
+                                <div class="card-image position-relative">
+                                    <img *ngIf="formation.image" [src]="imageUrls[formation.id] | async"
+                                        (error)="onImageError($event)" class="card-img-top" [alt]="formation.title">
+                                    <a class="play-button" (click)="viewFormation(formation.id); $event.stopPropagation()">
+                                        <div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+                                                <g>
+                                                    <circle class="st0" cx="32" cy="32" r="32"/>
+                                                    <polygon class="st1" points="26,20 26,44 46,32 "/>
+                                                </g>
+                                            </svg>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <a style="cursor: pointer;">{{ formation.title }}</a>
+                                    </h5>
+                                    <p class="card-text lh-22 pt-2">{{ formation.description }}</p>
+                                    <p class="card-text lh-22">Duration: {{ formation.duration }}</p>
+
+                                    <app-progress [formationId]="formation.id" [userId]="userId"></app-progress>
+
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <button
+                                            class="btn btn-outline-primary btn-sm rounded-pill px-4 py-2 shadow-sm hover-transform"
+                                            (click)="openReviewModal(formation); $event.stopPropagation()">
+                                            <i class="la la-star-half-alt mr-2"></i>
+                                            Write Review
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    } @else {
+                    <div class="text-center pt-5">
+                        <p class="mb-3 text-muted">You don’t have any purchased formations yet.</p>
+                        <button class="btn btn-modern btn-lg w-50" (click)="checkFormations()">
+                            Check Our Formations
+                        </button>
+                    </div>
+                    }
+                    @if (errorMessage) {
+                    <div class="text-center pt-3">
+                        <p class="text-danger">{{ errorMessage }}</p>
+                    </div>
+                    }
+                    <!-- Empty State -->
+                    <div class="col-12" *ngIf="filteredFormations.length === 0 && !isLoading && !errorMessage">
+                        <div class="alert alert-info text-center">
+                            No courses found matching your criteria.
+                        </div>
+                    </div>
+                    <!-- Loading State -->
+                    <div class="col-12" *ngIf="isLoading">
+                        <div class="alert alert-info text-center">
+                            Loading courses...
+                        </div>
+                    </div>
+                    <!-- Error State 
+                    <div class="col-12" *ngIf="errorMessage && !isLoading">
+                        <div class="alert alert-danger text-center">
+                            {{ errorMessage }}
+                        </div>
+                    </div>-->
+                </div>
+                <div class="modern-pagination-container text-center py-3">
+                    <nav aria-label="Page navigation example" class="pagination-box">
+                        <ul class="pagination justify-content-center modern-pagination">
+                            <li class="page-item" [class.disabled]="currentPage === 1">
+                                <a class="page-link modern-page-link" href="#" (click)="previousPage(); $event.preventDefault()" aria-label="Previous">
+                                    <span aria-hidden="true"><i class="la la-arrow-left"></i></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            <li class="page-item modern-page-number" *ngFor="let page of getPageNumbers()" [class.active]="currentPage === page">
+                                <a class="page-link modern-page-link" href="#" (click)="goToPage(page); $event.preventDefault()">{{ page }}</a>
+                            </li>
+                            <li class="page-item" [class.disabled]="currentPage === totalPages">
+                                <a class="page-link modern-page-link" href="#" (click)="nextPage(); $event.preventDefault()" aria-label="Next">
+                                    <span aria-hidden="true"><i class="la la-arrow-right"></i></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <p class="fs-14 pt-2 modern-pagination-info">{{ getShowingText() }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Review Modal -->
+<div class="modal-backdrop" *ngIf="showReviewModal" (click)="closeReviewModal()"></div>
+<div class="review-modal" *ngIf="showReviewModal">
+  <div class="modal-content-modern">
+    <div class="modal-header-modern">
+      <h4>Write a Review</h4>
+      <button class="close-btn" (click)="closeReviewModal()" aria-label="Close">&times;</button>
+    </div>
+    <div class="star-rating mb-3 mt-3">
+      <ng-container *ngFor="let star of [1,2,3,4,5]">
+        <span
+          class="star"
+          [class.filled]="star <= review.rating"
+          (mouseenter)="hoveredStar = star"
+          (mouseleave)="hoveredStar = 0"
+          [class.hovered]="hoveredStar >= star"
+          (click)="setRating(star)">&#9733;</span>
+      </ng-container>
+    </div>
+    <div class="form-floating mb-4">
+      <textarea
+        [(ngModel)]="review.comment"
+        id="reviewComment"
+        class="form-control review-textarea-lg"
+        rows="7"
+        required
+        ></textarea>
+    </div>
+    <div class="d-flex justify-content-end gap-2">
+      <button class="btn btn-outline-modern" (click)="closeReviewModal()">Cancel</button>
+      <button class="btn btn-gradient-modern" (click)="submitReview()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

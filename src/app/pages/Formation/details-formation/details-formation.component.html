@@ -1,0 +1,145 @@
+<!-- Feedback Alerts -->
+<div *ngIf="successMessage" class="alert alert-success" style="margin-top: 1rem;">{{ successMessage }}</div>
+<div *ngIf="errorMessage" class="alert alert-danger" style="margin-top: 1rem;">{{ errorMessage }}</div>
+
+<app-layout></app-layout>
+<section class="breadcrumb-area pt-50px pb-50px bg-white pattern-bg">
+    <div class="container">
+        <div class="row">
+            <!-- Left Column: Formation Details -->
+            <div class="col-lg-8">
+                <div class="breadcrumb-content">
+                    <ul class="generic-list-item generic-list-item-arrow d-flex flex-wrap align-items-center">
+                        <li><a routerLink="/">Home</a></li>
+                        <li><a routerLink="/categories/development">Development</a></li>
+                        <li><a routerLink="/categories/java">Java</a></li>
+                    </ul>
+                    <div class="section-heading" *ngIf="formation">
+                        <h2 class="section__title">{{ formation.title }}</h2>
+                        <p class="section__desc pt-2 lh-30">{{ formation.description }}</p>
+                    </div><!-- end section-heading -->
+                    <div class="d-flex flex-wrap align-items-center pt-3" *ngIf="formation">
+                        <h6 class="ribbon ribbon-lg mr-2 bg-3 text-white" *ngIf="formation.featured === 'true'">
+                            Bestseller</h6>
+                        <div class="rating-wrap d-flex flex-wrap align-items-center">
+                            <div class="review-stars">
+                                <span class="rating-number">{{ averageRating || 'No reviews yet' }}</span>
+                                <span *ngFor="let star of getStarArray(averageRating)" [ngClass]="{
+                                        'star-full': star === 1,
+                                        'star-half': star === 0.5,
+                                        'star-empty': star === 0
+                                      }">
+                                    {{ star === 1 ? '★' : (star === 0.5 ? '★' : '☆') }}
+                                </span>
+                            </div>
+                            <span class="rating-total pl-1">({{ totalReviews | number }})</span>
+                        </div>
+                    </div><!-- end d-flex -->
+                    <!-- Price -->
+                    <div class="price-wrap pt-3" *ngIf="formation">
+                        <h4 class="price-text font-weight-bold text-black d-flex align-items-center">
+                          <span *ngIf="formation.discountedPrice && formation.discountedPrice < formation.price" class="d-flex align-items-center">
+                            <span class="text-muted text-decoration-line-through me-2">{{ formation.price | currency:'USD':'symbol':'1.2-2' }}</span>
+                            <span class="fw-bold text-success">{{ formation.discountedPrice | currency:'USD':'symbol':'1.2-2' }}</span>
+                            <span class="badge badge-pill badge-info px-3 py-1 ml-3" style="font-size:1rem; background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%); color: white;">
+                              <i class="la la-clock mr-1"></i> {{ formation.duration || 'N/A' }}
+                            </span>
+                          </span>
+                          <span *ngIf="!formation.discountedPrice || formation.discountedPrice === formation.price" class="d-flex align-items-center">
+                            {{ formation.price | currency:'USD':'symbol':'1.2-2' }}
+                            <span class="badge badge-pill badge-info px-3 py-1 ml-3" style="font-size:1rem; background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%); color: white;">
+                              <i class="la la-clock mr-1"></i> {{ formation.duration || 'N/A' }}
+                            </span>
+                          </span>
+                        </h4>
+                        <div class="fs-14 text-muted" *ngIf="formation.discount && formation.discount > 0">
+                          Discount: -{{ formation.discount }}%
+                        </div>
+                    </div>
+                    <div class="bread-btn-box pt-3" *ngIf="formation">
+                        <button class="btn theme-btn theme-btn-sm theme-btn-transparent lh-28 mr-2 mb-2"
+                            (click)="buyFormation()">
+                            <i class="la la-shopping-cart mr-1"></i>
+                            Buy the Formation
+                        </button>
+                        <button class="btn theme-btn theme-btn-sm theme-btn-transparent lh-28 mr-2 mb-2" (click)="toggleWishlist()">
+                            <i class="la la-heart-o mr-1"></i>
+                            <span class="swapping-btn">{{ isWishlisted ? 'Wishlisted' : 'Wishlist' }}</span>
+                        </button>
+                        <button class="btn theme-btn theme-btn-sm theme-btn-transparent lh-28 mr-2 mb-2" (click)="shareFormation()">
+                            <i class="la la-share mr-1"></i>Share
+                        </button>
+                        <button class="btn theme-btn theme-btn-sm theme-btn-transparent lh-28 mb-2" (click)="reportAbuse()">
+                            <i class="la la-flag mr-1"></i>Report abuse
+                        </button>
+                    </div>
+                </div><!-- end breadcrumb-content -->
+            </div><!-- end col-lg-8 -->
+
+            <!-- Right Column: Formation Image -->
+            <div class="col-lg-4">
+                <div class="formation-image text-center" *ngIf="imageUrl" data-animate="fade-in">
+                    <div class="image-wrapper" data-toggle="modal" data-target="#imagePreviewModal">
+                        <img [src]="imageUrl | async" (error)="onImageError($event)" [alt]="formation?.title"
+                            class="img-fluid formation-img">
+                        <div class="image-overlay">
+                            <span class="overlay-text">Preview</span>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end col-lg-4 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+
+    <!-- Image Preview Modal -->
+    <div class="modal fade" id="imagePreviewModal" tabindex="-1" role="dialog" aria-labelledby="imagePreviewModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imagePreviewModalLabel">{{ formation?.title }} Preview</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img [src]="imageUrl | async" (error)="onImageError($event)" [alt]="formation?.title"
+                        class="img-fluid full-size-image">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn theme-btn" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- end modal -->
+</section><!-- end breadcrumb-area -->
+
+<!-- Reviews Section -->
+<section class="reviews-area section-padding">
+    <div class="container">
+        <div class="col-lg-8 mr-auto">
+            <div class="section-heading">
+                <h3 class="section__title">Reviews</h3>
+            </div>
+            <div *ngIf="errorMessage" class="alert alert-danger">
+                {{ errorMessage }}
+            </div>
+            <div *ngIf="reviews.length === 0 && !errorMessage" class="alert alert-info">
+                No reviews yet for this formation.
+            </div>
+            <div class="review-list">
+                <div class="review-item" *ngFor="let review of reviews">
+                    <div class="review-header d-flex align-items-center">
+                        <div class="review-stars">
+                            <span class="rating-number">{{ review.rating }}</span>
+                            <span class="la la-star" *ngFor="let star of [1, 2, 3, 4, 5]"
+                                [class.text-muted]="star > review.rating"></span>
+                        </div>
+                        <span class="review-date pl-3">{{ review.createdAt | date:'mediumDate' }}</span>
+                    </div>
+                    <p class="review-comment pt-2">{{ review.comment }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- end reviews-area -->

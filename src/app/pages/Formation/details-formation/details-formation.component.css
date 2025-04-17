@@ -1,0 +1,223 @@
+/* Breadcrumb Area */
+.breadcrumb-area {
+    background-color: #fff;
+    background-image: url('/assets/images/pattern-bg.jpg');
+    padding: 50px 0;
+}
+
+/* Theme Buttons */
+.theme-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.theme-btn:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+/* Ribbon (Bestseller Badge) */
+.ribbon {
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+/* Rating Stars (Shared between general rating and reviews) */
+.review-stars {
+    display: flex;
+    align-items: center;
+}
+
+.review-stars .rating-number {
+    margin-right: 5px;
+    /* Space between the number and stars */
+}
+
+.review-stars .star-full {
+    color: #ffc107;
+    /* Golden yellow for full stars */
+    font-size: 14px;
+    margin-right: 2px;
+}
+
+.review-stars .star-half {
+    color: #e4e5e9;
+    /* Base color for half star (empty part) */
+    font-size: 14px;
+    margin-right: 2px;
+    position: relative;
+    display: inline-block;
+}
+
+.review-stars .star-half::before {
+    content: '★';
+    position: absolute;
+    left: 0;
+    width: 50%;
+    /* Fill only the left half */
+    color: #ffc107;
+    /* Golden yellow for the filled part */
+    overflow: hidden;
+}
+
+.review-stars .star-empty {
+    color: #e4e5e9;
+    /* Light gray for empty stars */
+    font-size: 14px;
+    margin-right: 2px;
+}
+
+/* Price Section */
+.price-wrap {
+    margin-bottom: 15px;
+}
+
+.price-text {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Formation Image Section */
+.formation-image {
+    margin-top: 20px;
+}
+
+.image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 2px solid transparent;
+    background: linear-gradient(45deg, #171717, #012fff);
+    padding: 2px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.image-wrapper:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+}
+
+.formation-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+}
+
+/* Image Overlay Effect */
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image-wrapper:hover .image-overlay {
+    opacity: 1;
+}
+
+.overlay-text {
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Fade-in Animation for Image */
+[data-animate="fade-in"] {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-in forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Image Preview Modal */
+.modal-content {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.modal-body {
+    padding: 0;
+}
+
+.full-size-image {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.modal-footer {
+    border-top: 1px solid #dee2e6;
+    justify-content: center;
+}
+
+/* Reviews Section */
+.reviews-area {
+    padding: 40px 0;
+}
+
+.section-heading {
+    margin-bottom: 20px;
+}
+
+.review-list {
+    margin-top: 20px;
+}
+
+.review-item {
+    border-bottom: 1px solid #eee;
+    padding: 20px 0;
+}
+
+.review-header {
+    margin-bottom: 10px;
+}
+
+.review-date {
+    font-size: 14px;
+    color: #666;
+}
+
+.review-comment {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+}

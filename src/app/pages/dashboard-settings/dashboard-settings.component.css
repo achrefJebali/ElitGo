@@ -1,0 +1,44 @@
+/* Styles pour l'affichage des photos */
+.loading-img {
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 24px;
+  z-index: 10;
+}
+
+.loading-overlay i {
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+}
+
+/* Animation pour le spinner */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.la-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Style pour le conteneur de l'image de profil */
+.media-img {
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style pour le bouton de sauvegarde */
+.theme-btn[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

@@ -1,0 +1,28 @@
+<div class="progress-wrapper">
+    <div class="my-course-progress-bar-wrap d-flex flex-wrap align-items-center position-relative">
+        <p class="skillbar-title">Complete:</p>
+        <div class="skillbar-box">
+            @if (isLoadingProgress) {
+            <div class="loading-text">Loading...</div>
+            } @else {
+            <div class="skillbar skillbar-skillbar-2">
+                <div class="skillbar-bar skillbar--bar-2" [style.width]="progressPercentage + '%'"
+                    style="transition: width 0.5s ease-in-out;">
+                    <span class="percentage-text">{{ progressPercentage }}%</span>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+    @if (errorMessage) {
+    <div class="alert alert-danger mt-2">
+        {{ errorMessage }}
+    </div>
+    }
+    @if (certificate) {
+    <div class="certificate-message alert alert-success mt-2">
+        Congratulations! You have earned a certificate for this course.
+        <a href="#" (click)="downloadCertificate($event)" class="text-primary">Download Certificate</a>
+    </div>
+    }
+</div>
