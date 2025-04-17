@@ -45,7 +45,6 @@ export class FormationEditComponent implements OnInit, OnDestroy {
     this.categoryService.getCategories().subscribe({
       next: (categories) => {
         this.categories = categories;
-        console.log('Loaded categories:', categories);
         // After categories are loaded, load the formation
         const id = this.route.snapshot.paramMap.get('id');
         if (id) {
@@ -54,7 +53,6 @@ export class FormationEditComponent implements OnInit, OnDestroy {
         }
       },
       error: (error) => {
-        console.error('Error loading categories:', error);
         this.errorMessage = 'Failed to load categories';
       }
     });
@@ -67,19 +65,29 @@ export class FormationEditComponent implements OnInit, OnDestroy {
   }
 
   private initForm(): void {
+    function symbolValidator(pattern: RegExp) {
+      return (control: import('@angular/forms').AbstractControl): { [key: string]: any } | null => {
+        const value = control.value;
+        if (!value) return null; // Skip if empty
+        return pattern.test(value) ? null : { pattern: true };
+      };
+    }
+
+    const titlePattern = /^[a-zA-Z0-9\s]+$/;
+    const labelPattern = /^[a-zA-Z0-9\s]+$/;
+    const durationPattern = /^([0-9]+h)?([0-9]+m)?$/;
+    const descriptionPattern = /^[a-zA-Z0-9\s.,;:!?]+$/;
+
     this.editForm = this.fb.group({
       id: [''],
-      title: ['', [Validators.required, Validators.minLength(3)]],
-      description: ['', Validators.required],
+      title: ['', [Validators.required, Validators.minLength(3), symbolValidator(titlePattern)]],
+      description: ['', [Validators.required, symbolValidator(descriptionPattern)]],
       price: [0, [Validators.required, Validators.min(0)]],
-      duration: ['', Validators.required],
-      label: ['', Validators.required],
-      certificate: [''],
-      video: [''],
+      duration: ['', [Validators.required, symbolValidator(durationPattern)]],
+      label: ['', [Validators.required, symbolValidator(labelPattern)]],
       discount: [''],
       featured: [false],
       highestRated: [false],
-      progression: [''],
       categoryName: ['', Validators.required]
     });
   }
@@ -88,11 +96,6 @@ export class FormationEditComponent implements OnInit, OnDestroy {
     this.formationService.getFormationById(this.formationId).subscribe({
       next: (formation) => {
         const categoryName = formation.category ? formation.category.name : '';
-        console.log('Formation loaded:', formation);
-        console.log('Category from formation:', formation.category);
-        console.log('Extracted category name:', categoryName);
-        console.log('Available categories for comparison:', this.categories);
-
         // Update form values
         this.editForm.patchValue({
           id: formation.id,
@@ -101,16 +104,11 @@ export class FormationEditComponent implements OnInit, OnDestroy {
           price: formation.price,
           duration: formation.duration,
           label: formation.label,
-          certificate: formation.certificate,
-          video: formation.video,
           discount: formation.discount,
           featured: formation.featured,
           highestRated: formation.highestRated,
-          progression: formation.progression,
           categoryName: categoryName
         });
-
-        console.log('Form value after patching:', this.editForm.value);
 
         // Load image and complete loading
         this.loadFormationImage(this.formationId);
@@ -118,26 +116,21 @@ export class FormationEditComponent implements OnInit, OnDestroy {
         this.preSelectCategory(); // Pre-select after patching
       },
       error: (error) => {
-        console.error('Error loading formation:', error);
         this.errorMessage = 'Failed to load formation details';
         this.loading = false;
       }
     });
   }
+
   private preSelectCategory(): void {
     const categoryName = this.editForm.get('categoryName')?.value;
-    console.log('Pre-selecting category with name:', categoryName);
-    console.log('Available categories:', this.categories);
 
     if (categoryName) {
       const category = this.categories.find(cat => cat.name.toLowerCase() === categoryName.toLowerCase());
       if (category) {
-        console.log('Found matching category:', category);
         this.editForm.get('categoryName')?.setValue(category.name, { emitEvent: false });
       } else {
-        console.warn('Category not found for:', categoryName);
         const possibleMatches = this.categories.filter(cat => cat.name.toLowerCase().includes(categoryName.toLowerCase()));
-        console.warn('Possible category matches:', possibleMatches);
         this.editForm.get('categoryName')?.setValue('', { emitEvent: false }); // Reset if not found
       }
     }
@@ -151,7 +144,6 @@ export class FormationEditComponent implements OnInit, OnDestroy {
         return this.sanitizer.bypassSecurityTrustUrl(url);
       }),
       catchError(error => {
-        console.error(`Failed to load image for formation ID ${formationId}:`, error);
         return new Observable<SafeUrl>(subscriber => {
           subscriber.error(error);
         });
@@ -161,7 +153,6 @@ export class FormationEditComponent implements OnInit, OnDestroy {
         this.imagePreview = safeUrl;
       },
       error: (error) => {
-        console.error('Error setting image preview:', error);
         this.imagePreview = null;
       }
     });
@@ -210,6 +201,41 @@ export class FormationEditComponent implements OnInit, OnDestroy {
     }
   }
 
+  getErrorMessage(controlName: string): string {
+    const control = this.editForm.get(controlName);
+    if (!control || !control.errors || !(control.dirty || control.touched)) return '';
+    const errors = control.errors;
+    const fieldNames: { [key: string]: string } = {
+      'title': 'Titre',
+      'label': 'Label',
+      'duration': 'Durée',
+      'price': 'Prix',
+      'description': 'Description',
+      'categoryName': 'Catégorie',
+      'discount': 'Remise'
+    };
+    const fieldName = fieldNames[controlName] || controlName;
+    if (errors['minlength']) return `${fieldName} doit contenir au moins ${errors['minlength'].requiredLength} caractères`;
+    if (errors['maxlength']) return `${fieldName} ne peut pas dépasser ${errors['maxlength'].requiredLength} caractères`;
+    if (errors['min']) return `${fieldName} doit être au moins ${errors['min'].min}`;
+    if (errors['max']) return `${fieldName} ne peut pas dépasser ${errors['max'].max}`;
+    if (errors['required']) return `${fieldName} est requis.`;
+    if (errors['pattern']) {
+      switch (controlName) {
+        case 'duration':
+          return 'La durée doit être au format : 1h30m';
+        case 'title':
+        case 'label':
+          return `${fieldName} contient des caractères non autorisés. Lettres, chiffres et espaces seulement.`;
+        case 'description':
+          return `${fieldName} contient des caractères non autorisés. Lettres, chiffres, espaces, et ponctuation (.,;:!?) autorisés.`;
+        default:
+          return 'Format invalide';
+      }
+    }
+    return 'Entrée invalide';
+  }
+
   onSubmit(): void {
     this.errorMessage = '';
     this.successMessage = '';
@@ -224,22 +250,17 @@ export class FormationEditComponent implements OnInit, OnDestroy {
       formData.append('price', this.editForm.get('price')?.value.toString());
       formData.append('duration', this.editForm.get('duration')?.value);
       formData.append('label', this.editForm.get('label')?.value);
-      formData.append('certificate', this.editForm.get('certificate')?.value || '');
-      formData.append('video', this.editForm.get('video')?.value || '');
       formData.append('discount', this.editForm.get('discount')?.value?.toString() || '');
       formData.append('featured', this.editForm.get('featured')?.value.toString());
       formData.append('highestRated', this.editForm.get('highestRated')?.value.toString());
-      formData.append('progression', this.editForm.get('progression')?.value || '');
       formData.append('categoryName', this.editForm.get('categoryName')?.value);
 
-      console.log('FormData being sent (Edit):', [...formData.entries()]);
       this.formationService.updateFormationWithImage(this.formationId, formData).subscribe({
         next: (response: Formation) => {
           this.successMessage = 'Formation updated successfully!';
           setTimeout(() => this.router.navigate(['/DisplayBack']), 1500);
         },
         error: (error: HttpErrorResponse) => {
-          console.error('Error updating formation:', error);
           this.errorMessage = error.status === 400
             ? 'Invalid data submitted. Please check your inputs.'
             : `Failed to update formation: ${error.message}`;
@@ -257,7 +278,6 @@ export class FormationEditComponent implements OnInit, OnDestroy {
 
   onImageError(event: Event): void {
     const img = event.target as HTMLImageElement;
-    console.log('Image failed to load:', img.src);
     img.setAttribute('src', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=');
   }
 }

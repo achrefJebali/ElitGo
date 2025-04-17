@@ -20,6 +20,10 @@ import { AddCategoryComponent } from './pages/Formation/add-category/add-categor
 import { PaymentCancelComponent } from './pages/Formation/payment-cancel/payment-cancel.component';
 import { PaymentSuccessComponent } from './pages/Formation/payment-success/payment-success.component';
 import { FormationEditComponent } from './pages/Formation/formation-edit/formation-edit.component';
+import { ProgressComponent } from './pages/Formation/progress/progress.component';
+import { PurchasedFormationsComponent } from './pages/Formation/purchased-formations/purchased-formations.component';
+import { StartFormationComponent } from './pages/Formation/startformation/startformation.component';
+import { DisplayRessourceComponent } from './pages/Formation/display-ressource/display-ressource.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -41,9 +45,10 @@ export const routes: Routes = [
   { path: 'add-category', component: AddCategoryComponent },
   { path: 'payment-success', component: PaymentSuccessComponent },
   { path: 'payment-cancel', component: PaymentCancelComponent },
-  {
-    path: 'formation-edit/:id',
-    component: FormationEditComponent
-  },
+  { path: 'formation-edit/:id', component: FormationEditComponent },
+  { path: 'progress', component: ProgressComponent },
+  { path: 'purchased-formations', component: PurchasedFormationsComponent },
+  { path: 'startformation/:id', component: StartFormationComponent },
+  { path: 'ressourcelist', component: DisplayRessourceComponent },
   { path: '**', redirectTo: '' }
 ];

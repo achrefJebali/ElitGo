@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError, } from 'rxjs';
 import { Formation } from '../models/formation';
+import { Review } from '../models/review';
 import { catchError, map } from 'rxjs/operators';
 
 
@@ -10,10 +11,11 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class FormationService {
   private apiUrl = 'http://localhost:8085/ElitGo/Formation';
+  private reviewApiUrl = 'http://localhost:8085/ElitGo/api/reviews';
 
   constructor(private http: HttpClient) { }
 
-  getFormations(): Observable<Formation[]> {
+  getAllFormations(): Observable<Formation[]> {
     return this.http.get<Formation[]>(`${this.apiUrl}/retrieve-all-formation`);
   }
 
@@ -24,7 +26,6 @@ export class FormationService {
   addFormation(formation: Formation): Observable<Formation> {
     const { id, ...formationWithoutId } = formation;
 
-    console.log('Sending:', JSON.stringify(formationWithoutId));
     return this.http.post<Formation>(
       `${this.apiUrl}/add-formation`,
       formationWithoutId,
@@ -33,7 +34,6 @@ export class FormationService {
       }
     ).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.error('Server error:', error.error);
         return throwError(() => error);
       })
     );
@@ -43,7 +43,6 @@ export class FormationService {
   deleteFormation(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/delete-formation/${id}`).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.error('Server error:', error.error);
         return throwError(() => error);
       })
     );
@@ -55,7 +54,6 @@ export class FormationService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.error('Server error:', error.error);
         return throwError(() => error);
       })
     );
@@ -67,7 +65,6 @@ export class FormationService {
   getFormationById(id: number): Observable<Formation> {
     return this.http.get<Formation>(`${this.apiUrl}/retrieve-formation/${id}`).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.error('Server error:', error.error);
         return throwError(() => error);
       })
     );
@@ -83,13 +80,64 @@ export class FormationService {
     );
   }
 
-  // Gestion des erreurs
-  private handleError(error: HttpErrorResponse) {
-    console.error('Server error:', error.error);
-    return throwError(() => error);
-  }
+
   getFormationImageById(formationId: number): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/image/${formationId}`, { responseType: 'blob' });
   }
 
+  getPurchasedFormations(userId: number): Observable<Formation[]> {
+    return this.http.get<Formation[]>(`${this.apiUrl}/purchased-formations/${userId}`);
+  }
+
+  getFormations(page: number, size: number): Observable<{ formations: Formation[], totalItems: number }> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+    return this.http.get<{ formations: Formation[], totalItems: number }>(this.apiUrl, { params });
+  }
+
+  searchFormations(
+    title: string,
+    categoryName: string,
+    minPrice: number | undefined,
+    maxPrice: number | undefined,
+    label: string,
+    page: number,
+    size: number
+  ): Observable<{ formations: Formation[], totalItems: number }> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+    if (title) params = params.set('title', title);
+    if (categoryName) params = params.set('categoryName', categoryName);
+    if (minPrice !== undefined) params = params.set('minPrice', minPrice.toString());
+    if (maxPrice !== undefined) params = params.set('maxPrice', maxPrice.toString());
+    if (label) params = params.set('label', label);
+
+    return this.http.get<{ formations: Formation[], totalItems: number }>(`${this.apiUrl}/search`, { params });
+  }
+
+  getReviewsByFormation(formationId: number): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.reviewApiUrl}/formation/${formationId}`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => error);
+      })
+    );
+  }
+
+  // Optional: If you also want to fetch a specific review by user and formation
+  getReviewByUserAndFormation(userId: number, formationId: number): Observable<Review> {
+    return this.http.get<Review>(`${this.reviewApiUrl}/user/${userId}/formation/${formationId}`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => error);
+      })
+    );
+  }
+
+  updateDiscount(id: number, discount: number): Observable<Formation> {
+    return this.http.put<Formation>(`${this.apiUrl}/formations/${id}/discount?discount=${discount}`, {});  }
+  
+  private handleError(error: HttpErrorResponse) {
+    return throwError(() => error);
+  }
 }

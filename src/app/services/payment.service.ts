@@ -10,10 +10,12 @@ export class PaymentService {
 
   constructor(private http: HttpClient) { }
 
-  initiatePayment(formationId: number, studentEmail: string): Observable<string> {
+  initiatePayment(formationId: number, studentEmail: string, userId: number): Observable<string> {
+    console.log('Sending payment request with:', { formationId, studentEmail, userId });
     let params = new HttpParams()
       .set('formationId', formationId.toString())
-      .set('studentEmail', studentEmail);
+      .set('studentEmail', studentEmail)
+      .set('userId', userId.toString());
 
     return this.http.post<string>(`${this.apiUrl}/create-session`, null, {
       params: params,

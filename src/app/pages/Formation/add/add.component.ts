@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { FormationService } from '../../../services/formation.service';
 import { Formation } from '../../../models/formation';
 import { Router } from '@angular/router';
@@ -9,6 +9,15 @@ import { Category } from '../../../models/category';
 import { CategoryService } from '../../../services/category.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
+// Custom validator for symbol validation
+function symbolValidator(pattern: RegExp): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const value = control.value;
+    if (!value) return null; // Skip if empty
+    return pattern.test(value) ? null : { pattern: true };
+  };
+}
 
 @Component({
   selector: 'app-add',
@@ -26,6 +35,13 @@ export class AddComponent implements OnInit {
   errorMessage = '';
   successMessage = '';
   loading = false;
+
+  // Regex patterns for validation
+  private readonly titlePattern = /^[a-zA-Z0-9\s]+$/;
+  private readonly labelPattern = /^[a-zA-Z0-9\s]+$/;
+  private readonly durationPattern = /^([0-9]+h)?([0-9]+m)?$/;
+  private readonly urlPattern = /^(https?:\/\/)?([\da-z.\-]+)\.([a-z.]{2,6})([\/\w .\-_?=%&]*)*\/?$/i;
+  private readonly descriptionPattern = /^[a-zA-Z0-9\s.,;:!?]+$/;
 
   constructor(
     private fb: FormBuilder,
@@ -45,16 +61,18 @@ export class AddComponent implements OnInit {
       title: ['', [
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(100)
+        Validators.maxLength(100),
+        symbolValidator(this.titlePattern) // Custom validator
       ]],
       label: ['', [
         Validators.required,
         Validators.minLength(2),
-        Validators.maxLength(50)
+        Validators.maxLength(50),
+        symbolValidator(this.labelPattern)
       ]],
       duration: ['', [
         Validators.required,
-        Validators.pattern(/^([0-9]+h)?([0-9]+m)?$/)
+        Validators.pattern(this.durationPattern)
       ]],
       price: [0, [
         Validators.required,
@@ -64,23 +82,16 @@ export class AddComponent implements OnInit {
       description: ['', [
         Validators.required,
         Validators.minLength(10),
-        Validators.maxLength(1000)
+        Validators.maxLength(1000),
+        symbolValidator(this.descriptionPattern)
       ]],
       categoryName: ['', Validators.required],
-      certificate: [''],
-      video: ['', [
-        Validators.pattern(/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/)
-      ]],
       discount: [0, [
         Validators.min(0),
         Validators.max(100)
       ]],
       featured: [false],
-      highestRated: [false],
-      progression: [0, [
-        Validators.min(0),
-        Validators.max(100)
-      ]]
+      highestRated: [false]
     });
   }
 
@@ -88,10 +99,8 @@ export class AddComponent implements OnInit {
     this.categoryService.getCategories().subscribe({
       next: (data: Category[]) => {
         this.categories = data;
-        console.log('Categories loaded:', this.categories);
       },
       error: (error) => {
-        console.error('Failed to load categories:', error);
         this.errorMessage = 'Failed to load categories. Please try again later.';
       }
     });
@@ -113,30 +122,48 @@ export class AddComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     this.isDragging = false;
-    this.handleFiles(event.dataTransfer?.files);
+    if (event.dataTransfer) {
+      this.handleFiles(event.dataTransfer.files);
+    }
   }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    this.handleFiles(input.files);
+    if (input.files) {
+      this.handleFiles(input.files);
+    }
   }
 
-  private handleFiles(files: FileList | null | undefined): void {
+  private handleFiles(files: FileList | null): void {
     if (files && files.length > 0) {
       const file = files[0];
-      if (file.type.startsWith('image/')) {
-        this.selectedFile = file;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.imagePreview = this.sanitizer.bypassSecurityTrustUrl(e.target?.result as string);
-        };
-        reader.readAsDataURL(file);
-        this.errorMessage = '';
-      } else {
-        this.errorMessage = 'Please select an image file (e.g., .jpg, .png).';
+
+      // Validate file type
+      if (!file.type.match(/image\/(jpeg|jpg|png|gif|webp)/)) {
+        this.errorMessage = 'Please select a valid image file (JPEG, PNG, GIF, WEBP).';
         this.selectedFile = null;
         this.imagePreview = null;
+        return;
       }
+
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        this.errorMessage = 'The image file size must not exceed 5 MB.';
+        this.selectedFile = null;
+        this.imagePreview = null;
+        return;
+      }
+
+      // Process valid image
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target && e.target.result) {
+          this.imagePreview = this.sanitizer.bypassSecurityTrustUrl(e.target.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+      this.errorMessage = '';
     }
   }
 
@@ -144,19 +171,22 @@ export class AddComponent implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
 
+    // Validate form before proceeding
+    if (!this.validateForm()) {
+      return;
+    }
+
     if (this.addForm.valid && this.selectedFile) {
       this.loading = true;
       const formData = new FormData();
       formData.append('image', this.selectedFile);
-      
+
       // Append all form values
       Object.keys(this.addForm.value).forEach(key => {
         const value = this.addForm.get(key)?.value;
         formData.append(key, value !== null && value !== undefined ? value.toString() : '');
       });
 
-      console.log('FormData being sent:', [...formData.entries()]);
-      
       this.formationService.addFormationWithImage(formData).subscribe({
         next: (response: Formation) => {
           this.successMessage = 'Course created successfully!';
@@ -164,19 +194,43 @@ export class AddComponent implements OnInit {
           setTimeout(() => this.router.navigate(['/DisplayBack']), 1500);
         },
         error: (error: HttpErrorResponse) => {
-          console.error('Error creating formation:', error);
           this.loading = false;
           this.errorMessage = error.status === 400
-            ? 'Invalid data submitted. Please check your inputs.'
-            : `Failed to create course: ${error.message}`;
+            ? 'Invalid data submitted. Please check your entries.'
+            : `Failed to create course: ${error.message || 'Unknown error'}`;
         }
       });
     } else {
       this.markFormGroupTouched(this.addForm);
-      this.errorMessage = !this.selectedFile 
+      this.errorMessage = !this.selectedFile
         ? 'Please upload an image for the course.'
-        : 'Please fill all required fields correctly.';
+        : 'Please fill in all required fields correctly.';
     }
+  }
+
+  private validateForm(): boolean {
+    const fieldsWithPatterns = ['title', 'label', 'duration', 'description'];
+    let isValid = true;
+
+    fieldsWithPatterns.forEach(field => {
+      const control = this.addForm.get(field);
+      if (control && control.value) {
+        let pattern;
+        switch (field) {
+          case 'title': pattern = this.titlePattern; break;
+          case 'label': pattern = this.labelPattern; break;
+          case 'duration': pattern = this.durationPattern; break;
+          case 'description': pattern = this.descriptionPattern; break;
+        }
+
+        if (pattern && !pattern.test(control.value)) {
+          control.setErrors({ 'pattern': true });
+          isValid = false;
+        }
+      }
+    });
+
+    return isValid;
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -190,43 +244,54 @@ export class AddComponent implements OnInit {
 
   getErrorMessage(controlName: string): string {
     const control = this.addForm.get(controlName);
-    if (!control || !control.errors || !control.touched) return '';
+    if (!control || !control.errors || !(control.dirty || control.touched)) return '';
 
     const errors = control.errors;
-    
-    if (errors['required']) return `${controlName} is required`;
-    if (errors['minlength']) return `${controlName} must be at least ${errors['minlength'].requiredLength} characters`;
-    if (errors['maxlength']) return `${controlName} cannot exceed ${errors['maxlength'].requiredLength} characters`;
-    if (errors['min']) return `${controlName} must be at least ${errors['min'].min}`;
-    if (errors['max']) return `${controlName} cannot exceed ${errors['max'].max}`;
+    const fieldNames: { [key: string]: string } = {
+      'title': 'Title',
+      'label': 'Label',
+      'duration': 'Duration',
+      'price': 'Price',
+      'description': 'Description',
+      'categoryName': 'Category',
+      'discount': 'Discount'
+    };
+
+    const fieldName = fieldNames[controlName] || controlName;
+
+    if (errors['minlength']) return `${fieldName} must contain at least ${errors['minlength'].requiredLength} characters`;
+    if (errors['maxlength']) return `${fieldName} cannot exceed ${errors['maxlength'].requiredLength} characters`;
+    if (errors['min']) return `${fieldName} must be at least ${errors['min'].min}`;
+    if (errors['max']) return `${fieldName} cannot exceed ${errors['max'].max}`;
+
     if (errors['pattern']) {
-      switch(controlName) {
+      switch (controlName) {
         case 'duration':
-          return 'Duration must be in format: 1h30m';
-        case 'video':
-          return 'Please enter a valid URL';
+          return 'The duration must be in the format: 1h30m';
+        case 'title':
+        case 'label':
+          return `${fieldName} contains unauthorized characters. Allowed characters: letters, numbers, and spaces`;
+        case 'description':
+          return `${fieldName} contains unauthorized characters. Allowed characters: letters, numbers, spaces, and punctuation (.,;:!?)`;
         default:
           return 'Invalid format';
       }
     }
-    
+
     return 'Invalid input';
   }
 
   resetForm(): void {
     this.addForm.reset({
-      title: '', 
-      label: '', 
-      duration: '', 
-      price: 0, 
+      title: '',
+      label: '',
+      duration: '',
+      price: 0,
       description: '',
-      categoryName: '', 
-      certificate: '', 
-      video: '', 
+      categoryName: '',
       discount: 0,
-      featured: false, 
-      highestRated: false, 
-      progression: 0
+      featured: false,
+      highestRated: false
     });
     this.selectedFile = null;
     this.imagePreview = null;

@@ -9,8 +9,8 @@ import { Formation } from '../../../models/formation';
 describe('FormationEditComponent', () => {
   let component: FormationEditComponent;
   let fixture: ComponentFixture<FormationEditComponent>;
-  let mockFormationService: jest.Mocked<FormationService>;
-  let mockRouter: jest.Mocked<Router>;
+  let mockFormationService: any;
+  let mockRouter: any;
 
   const mockFormation: Formation = {
     id: 1,
@@ -20,23 +20,23 @@ describe('FormationEditComponent', () => {
     duration: '2 hours',
     image: 'test.jpg',
     label: 'Test Label',
-    certificate: 'Test Certificate',
-    video: 'test.mp4',
     discount: '10%',
     featured: 'true',
     highestRated: 'false',
-    progression: '50%'
+    ressources: [],
+    quiz: {
+      idQuiz: 1,
+      title: 'Sample Quiz',
+      description: 'A sample quiz',
+      duration: 10,
+      nbrquestions: 5,
+      categorie: 'General'
+    }
   };
 
   beforeEach(async () => {
-    mockFormationService = {
-      getFormationById: jest.fn(),
-      updateFormation: jest.fn()
-    } as unknown as jest.Mocked<FormationService>;
-
-    mockRouter = {
-      navigate: jest.fn()
-    } as unknown as jest.Mocked<Router>;
+    mockFormationService = jasmine.createSpyObj('FormationService', ['getFormationById', 'updateFormation']);
+    mockRouter = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
       imports: [
@@ -60,7 +60,7 @@ describe('FormationEditComponent', () => {
       ]
     }).compileComponents();
 
-    mockFormationService.getFormationById.mockReturnValue(of(mockFormation));
+    mockFormationService.getFormationById.and.returnValue(of(mockFormation));
   });
 
   beforeEach(() => {
@@ -69,20 +69,20 @@ describe('FormationEditComponent', () => {
     fixture.detectChanges();
   });
 
-  test('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  test('should load formation data on init', () => {
+  it('should load formation data on init', () => {
     expect(mockFormationService.getFormationById).toHaveBeenCalledWith(1);
     expect(component.editForm.get('title')?.value).toBe('Test Formation');
   });
 
-  test('should handle image drop', () => {
+  it('should handle image drop', () => {
     const mockFile = new File([''], 'test.jpg', { type: 'image/jpeg' });
     const mockEvent = {
-      preventDefault: jest.fn(),
-      stopPropagation: jest.fn(),
+      preventDefault: jasmine.createSpy('preventDefault'),
+      stopPropagation: jasmine.createSpy('stopPropagation'),
       dataTransfer: {
         files: [mockFile]
       }
@@ -92,14 +92,14 @@ describe('FormationEditComponent', () => {
     expect(component.isDragging).toBe(false);
   });
 
-  test('should update formation on valid form submit', () => {
+  it('should update formation on valid form submit', () => {
     const updatedFormation: Formation = {
       ...mockFormation,
       title: 'Updated Formation',
       price: 200
     };
-    mockFormationService.updateFormation.mockReturnValue(of(updatedFormation));
-    
+    mockFormationService.updateFormation.and.returnValue(of(updatedFormation));
+
     component.editForm.patchValue({
       title: 'Updated Formation',
       price: 200
@@ -111,7 +111,7 @@ describe('FormationEditComponent', () => {
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/DisplayBack']);
   });
 
-  test('should show error message on invalid form submit', () => {
+  it('should show error message on invalid form submit', () => {
     component.editForm.controls['title'].setErrors({ required: true });
     component.onSubmit();
     expect(component.errorMessage).toBe('Please fill in all required fields correctly.');

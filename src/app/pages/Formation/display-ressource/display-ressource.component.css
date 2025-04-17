@@ -1,0 +1,42 @@
+.ressource-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 10px 0;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+.ressource-card h5 {
+  margin-top: 0;
+}
+.btn {
+  margin-top: 8px;
+}
+
+/* Modern button styles for add resource */
+.modern-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.modern-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.modern-button:active {
+    background-color: #004080;
+    transform: translateY(0);
+}
+
+.modern-button i {
+    margin-right: 8px;
+}
