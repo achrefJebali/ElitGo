@@ -1,3 +1,8 @@
+
+import { Component } from '@angular/core';
+import { DashboardHeaderComponent } from '../dashboard/dashboard-header/dashboard-header.component';
+
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,9 +12,18 @@ import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 
+
 @Component({
   selector: 'app-dashboard-settings',
   standalone: true,
+
+  imports: [DashboardHeaderComponent],
+  templateUrl: './dashboard-settings.component.html',
+  styleUrl: './dashboard-settings.component.css'
+})
+export class DashboardSettingsComponent {
+
+
   imports: [DashboardHeaderComponent, FormsModule, CommonModule],
   templateUrl: './dashboard-settings.component.html',
   styleUrls: ['./dashboard-settings.component.css']
@@ -265,4 +279,5 @@ export class DashboardSettingsComponent implements OnInit {
       }
     });
   }
+
 }

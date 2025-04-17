@@ -1,3 +1,8 @@
+
+import { Component } from '@angular/core';
+import { DashboardHeaderComponent } from '../dashboard/dashboard-header/dashboard-header.component';
+
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../services/user.service';
@@ -7,9 +12,18 @@ import { FooterComponent } from '../footer/footer.component';
 import { DashboardHeaderComponent } from '../dashboard/dashboard-header/dashboard-header.component';
 import { RouterModule } from '@angular/router';
 
+
 @Component({
   selector: 'app-dashboard-profile',
   standalone: true,
+
+  imports: [DashboardHeaderComponent],
+  templateUrl: './dashboard-profile.component.html',
+  styleUrl: './dashboard-profile.component.css'
+})
+export class DashboardProfileComponent {
+
+
   imports: [
     CommonModule,
     LayoutComponent,
@@ -68,4 +82,5 @@ export class DashboardProfileComponent implements OnInit {
   logout(): void {
     this.userService.logout();
   }
+
 }

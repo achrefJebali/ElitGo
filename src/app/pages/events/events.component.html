@@ -1,0 +1,307 @@
+<app-layout></app-layout>
+<!-- ================================
+    START BREADCRUMB AREA
+================================= -->
+<section class="breadcrumb-area pt-120px bg-white pattern-bg">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <div class="section-heading">
+                <h2 class="section__title fs-60 lh-70 pb-3">Upcoming Events <br> Learn Grow Connect!</h2>
+                <p class="section__desc"> Unlock New Knowledge   <br> Join Our Events.</p>
+            </div>
+            <div class="breadcrumb-btn-box pt-30px">
+                <a href="#jobs" class="btn theme-btn page-scroll">List Of Next Events <i class="la la-angle-down ml-1"></i></a>
+            </div>
+            <div class="story-img-item video-box mb-0">
+                <img class="lazy" src="images/img-loading.png" data-src="assets/images/ev3.png" alt="Story image">
+                <a href="#" class="video-play-btn" data-fancybox="" data-src="https://www.youtube.com/watch?v=jGKIUeGfakA&pp=ygUPZWR1Y2F0aW9uIGV2ZW50">
+                     <span class="icon-element">
+                         <svg focusable="false" class="svg-inline--fa fa-play" width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"></path></svg>
+                     </span>
+                </a>
+            </div>
+        </div><!-- end breadcrumb-content -->
+    </div><!-- end container -->
+</section><!-- end breadcrumb-area -->
+
+<!--======================================
+        START GET STARTED AREA
+======================================-->
+<section class="get-started-area pt-140px position-relative bg-gray pb-90px">
+    <span class="ring-shape ring-shape-1"></span>
+    <span class="ring-shape ring-shape-2"></span>
+    <span class="ring-shape ring-shape-3"></span>
+    <span class="ring-shape ring-shape-4"></span>
+    <span class="ring-shape ring-shape-5"></span>
+    <span class="ring-shape ring-shape-6"></span>
+    <div class="container">
+        <div class="row pt-80px">
+            <div class="col-lg-6">
+                <div class="card card-item hover-y">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="flex-shrink-0 avatar-lg">
+                            <img src="assets/images/event2.png" alt="card image" class="w-100 rounded-full shadow-sm">
+                        </div>
+                        <div class="pl-4">
+                            <h5 class="card-title pt-4 pb-2">We are learners</h5>
+                            <p class="card-text">Organized by Club DEV for educational purposes</p>
+                        </div>
+                    </div><!-- end card-body -->
+                </div><!-- end card -->
+            </div><!-- end col-lg-6 -->
+            <div class="col-lg-6">
+                <div class="card card-item hover-y">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="flex-shrink-0 avatar-lg">
+                            <img src="assets/images/event1.jpeg" alt="card image" class="w-100 rounded-full shadow-sm">
+                        </div>
+                        <div class="pl-4">
+                            <h5 class="card-title pt-4 pb-2">We are navigators</h5>
+                            <p class="card-text">Organized by Club ROBOT for educational purposes</p>
+                        </div>
+                    </div><!-- end card-body -->
+                </div><!-- end card -->
+            </div><!-- end col-lg-6 -->
+            <div class="col-lg-6">
+                <div class="card card-item hover-y">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="flex-shrink-0 avatar-lg">
+                            <img src="assets/images/event3.jpeg" alt="card image" class="w-100 rounded-full shadow-sm">
+                        </div>
+                        <div class="pl-4">
+                            <h5 class="card-title pt-4 pb-2">We are global</h5>
+                            <p class="card-text"> Organized by Club RADIO for educational purposese</p>
+                        </div>
+                    </div><!-- end card-body -->
+                </div><!-- end card -->
+            </div><!-- end col-lg-6 -->
+            <div class="col-lg-6">
+                <div class="card card-item hover-y">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="flex-shrink-0 avatar-lg">
+                            <img src="assets/images/event4.jpeg" alt="card image" class="w-100 rounded-full shadow-sm">
+                        </div>
+                        <div class="pl-4">
+                            <h5 class="card-title pt-4 pb-2">We make an impact</h5>
+                            <p class="card-text">Organized by Club TUNIVISION for educational purposes</p>
+                        </div>
+                    </div><!-- end card-body -->
+                </div><!-- end card -->
+            </div><!-- end col-lg-6 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end get-started-area -->
+<!--======================================
+        START FULL SCREEN SLIDER AREA
+======================================-->
+<section class="fullscreen-slider-area section-padding">
+    <div class="section-heading text-center mb-50px">
+        <h2 class="section__title">Don't Miss Out <br> Exciting Learning Events Ahead!</h2>
+    </div><!-- end section-heading -->
+    <div class="fullscreen-slider owl-action-styled">
+        <!-- Afficher les images des événements de la base de données -->
+        <ng-container *ngIf="events && events.length > 0">
+            <div class="fullscreen-slider-item" *ngFor="let event of events">
+                <img [src]="getImageUrl(event.image)" [alt]="event.name" (click)="openEventDetails(event)" style="cursor: pointer;">
+                <div class="event-caption">
+                    <h3>{{ event.name }}</h3>
+                    <p>{{ event.eventDate | date:'dd/MM/yyyy' }}</p>
+                </div>
+            </div><!-- end fullscreen-slider-item -->
+        </ng-container>
+
+        <!-- Afficher des images par défaut si aucun événement n'est disponible -->
+        <ng-container *ngIf="!events || events.length === 0">
+            <div class="fullscreen-slider-item">
+                <img src="assets/images/ev1.png" alt="slider image">
+            </div><!-- end fullscreen-slider-item -->
+            <div class="fullscreen-slider-item">
+                <img src="assets/images/ev2.jpeg" alt="slider image">
+            </div><!-- end fullscreen-slider-item -->
+            <div class="fullscreen-slider-item">
+                <img src="assets/images/ev3.png" alt="slider image">
+            </div><!-- end fullscreen-slider-item -->
+        </ng-container>
+    </div><!-- end fullscreen-slider -->
+</section><!-- end fullscreen-slider-area -->
+<!-- ================================
+       START FULL SCREEN SLIDER AREA
+================================= -->
+
+
+
+  
+<!-- ================================
+         START JOBS BOX AREA
+================================= -->
+<section class="jobs-area section-padding bg-gray" id="jobs">
+    <div class="container">
+        <div class="section-heading text-center">
+            <h2 class="section__title pb-2">UPCOMING EVENTS</h2>
+            <p class="section__desc"> Coming Soon: Events That Inspire & Educate.</p>
+        </div><!-- end section-heading -->
+        <!-- events.component.html -->
+
+        <div class="jobs-list pt-60px">
+            <a href="career-details.html" class="card card-item hover-s mb-3">
+                <div class="card-body d-flex flex-wrap align-items-center justify-content-between">
+                    <div class="pr-4">
+                        <h5 class="card-title">January: Educational Events For Students   </h5>
+                        <p class="card-text text-gray">ELIT CLUB-ESPOIR</p>
+                    </div>
+                    <div class="btn-box">
+                        <span class="fs-18 text-black">Participate NOW <i class="la la-arrow-right ml-1"></i></span>
+                    </div><!-- end btn-box -->
+                </div><!-- end card-body -->
+            </a><!-- end card -->
+            <a href="career-details.html" class="card card-item hover-s mb-3">
+                <div class="card-body d-flex flex-wrap align-items-center justify-content-between">
+                    <div class="pr-4">
+                        <h5 class="card-title">February: BETT</h5>
+                        <p class="card-text text-gray">ELIT CLUB-TUNIVISION</p>
+                    </div>
+                    <div class="btn-box">
+                        <span class="fs-18 text-black">Participate NOW <i class="la la-arrow-right ml-1"></i></span>
+                    </div><!-- end btn-box -->
+                </div><!-- end card-body -->
+            </a><!-- end card -->
+            <a href="career-details.html" class="card card-item hover-s mb-3">
+                <div class="card-body d-flex flex-wrap align-items-center justify-content-between">
+                    <div class="pr-4">
+                        <h5 class="card-title">March: Diversity, Education, And Student Success</h5>
+                        <p class="card-text text-gray">ELIT CLUB-ROBOT</p>
+                    </div>
+                    <div class="btn-box">
+                        <span class="fs-18 text-black">Participate NOW <i class="la la-arrow-right ml-1"></i></span>
+                    </div><!-- end btn-box -->
+                </div><!-- end card-body -->
+            </a><!-- end card -->
+            <a href="career-details.html" class="card card-item hover-s mb-3">
+                <div class="card-body d-flex flex-wrap align-items-center justify-content-between">
+                    <div class="pr-4">
+                        <h5 class="card-title">April: Media Education Summit </h5>
+                        <p class="card-text text-gray">ELIT CLUB-Radio</p>
+                    </div>
+                    <div class="btn-box">
+                        <span class="fs-18 text-black">Participate NOW <i class="la la-arrow-right ml-1"></i></span>
+                    </div><!-- end btn-box -->
+                </div><!-- end card-body -->
+            </a><!-- end card -->
+            <a href="career-details.html" class="card card-item hover-s mb-3">
+                <div class="card-body d-flex flex-wrap align-items-center justify-content-between">
+                    <div class="pr-4">
+                        <h5 class="card-title">May:ELI Annual Meeting </h5>
+                        <p class="card-text text-gray">ELIT CLUB-Génie Civil</p>
+                    </div>
+                    <div class="btn-box">
+                        <span class="fs-18 text-black">Participate NOW <i class="la la-arrow-right ml-1"></i></span>
+                    </div><!-- end btn-box -->
+                </div><!-- end card-body -->
+            </a><!-- end card -->
+            <a href="career-details.html" class="card card-item hover-s mb-3">
+                <div class="card-body d-flex flex-wrap align-items-center justify-content-between">
+                    <div class="pr-4">
+                        <h5 class="card-title">June: NEXUS Education Virtual Awards</h5>
+                        <p class="card-text text-gray">ELIT CLUB-FUSION</p>
+                    </div>
+                    <div class="btn-box">
+                        <span class="fs-18 text-black">Participate NOW <i class="la la-arrow-right ml-1"></i></span>
+                    </div><!-- end btn-box -->
+                </div><!-- end card-body -->
+            </a><!-- end card -->
+            <a href="career-details.html" class="card card-item hover-s mb-3">
+                <div class="card-body d-flex flex-wrap align-items-center justify-content-between">
+                    <div class="pr-4">
+                        <h5 class="card-title">July: Business solutions</h5>
+                        <p class="card-text text-gray">ELIT CLUB-Dev</p>
+                    </div>
+                    <div class="btn-box">
+                        <span class="fs-18 text-black">Participate NOW <i class="la la-arrow-right ml-1"></i></span>
+                    </div><!-- end btn-box -->
+                </div><!-- end card-body -->
+            </a><!-- end card -->
+        </div>
+        <div class="d-flex flex-wrap justify-content-between pt-4">
+            <p class="fs-18 pb-2">Mark Your Calendar: Don’t Miss These Events!</p>
+            <a href="contact.html" class="btn-text">Apply Here <i class="la la-arrow-right ml-1"></i></a>
+        </div>
+    </div><!-- end container -->
+</section>
+<!-- ================================
+         END JOBS BOX AREA
+================================= -->
+<app-footer></app-footer>
+
+<!-- Event Details Modal -->
+<div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-labelledby="eventDetailsModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventDetailsModalLabel">{{ selectedEvent?.name || 'Event Details' }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
+            </div>
+            <div class="modal-body" *ngIf="selectedEvent">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="text-center mb-4">
+                            <img [src]="getImageUrl(selectedEvent.image)" [alt]="selectedEvent.name" class="img-fluid rounded">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="event-details">
+                            <h5>Event Information</h5>
+                            <hr>
+                            <p><strong>Name:</strong> {{ selectedEvent.name }}</p>
+                            <p><strong>Description:</strong> {{ selectedEvent.description || 'No description available.' }}</p>
+                            <p><strong>Event Date:</strong> {{ formatDate(selectedEvent.eventDate) }}</p>
+                            <p><strong>Registration Deadline:</strong> {{ formatDate(selectedEvent.registrationDeadline) }}</p>
+                            
+                            <!-- Show available seats information -->
+                            <p *ngIf="selectedEvent.maxParticipants !== undefined">
+  <strong>Available Seats:</strong>
+  {{ (selectedEvent.maxParticipants - (selectedEvent.currentParticipants || 0)) }} out of {{ selectedEvent.maxParticipants }}
+</p>
+                            
+                            <!-- Show schedule if exists -->
+                            <div *ngIf="selectedEvent.planning">
+                                <h6 class="mt-3">Schedule:</h6>
+                                <p>{{ selectedEvent.planning }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">Close</button>
+                
+                <!-- Registration or cancellation buttons depending on status -->
+                <div *ngIf="!isRegistering; else registeringSpinner">
+                    <button *ngIf="!isUserRegistered" type="button" class="btn theme-btn" (click)="registerForEvent()">
+                        Register for Event
+                    </button>
+                    <button *ngIf="isUserRegistered" type="button" class="btn btn-danger" (click)="cancelRegistration()">
+                        Cancel my Registration
+                    </button>
+                </div>
+                
+                <!-- Spinner during processing -->
+                <ng-template #registeringSpinner>
+                    <button class="btn theme-btn" disabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Processing...
+                    </button>
+                </ng-template>
+            </div>
+            
+            <!-- Confirmation or error message -->
+            <div *ngIf="registrationMessage" class="alert" 
+                [ngClass]="{
+                    'alert-success': registrationMessage.includes('success') || registrationMessage.includes('registered'),
+                    'alert-danger': !registrationMessage.includes('success') && !registrationMessage.includes('registered')
+                }"
+                style="margin: 0 16px 16px; text-align: center;">
+                {{ registrationMessage }}
+            </div>
+        </div>
+    </div>
+</div>

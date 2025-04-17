@@ -1,3 +1,8 @@
+
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -12,10 +17,18 @@ import { Notification, NotificationType } from '../../models/notification.model'
 import { NotificationService } from '../../services/notification.service';
 import { Subscription } from 'rxjs';
 
+
 @Component({
   selector: 'app-dashboard-header',
   standalone: true,
+
+  imports: [
+    CommonModule,
+    RouterModule
+  ],
+
   imports: [CommonModule, RouterModule],
+
   templateUrl: './dashboard-header.component.html',
   styleUrls: ['./dashboard-header.component.css']
 })

@@ -1,0 +1,37 @@
+.fullscreen-slider-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.fullscreen-slider-item img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.fullscreen-slider-item:hover img {
+  transform: scale(1.05);
+}
+
+.event-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 15px;
+  transition: opacity 0.3s ease;
+}
+
+.event-caption h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.event-caption p {
+  margin: 5px 0 0;
+  font-size: 14px;
+}
