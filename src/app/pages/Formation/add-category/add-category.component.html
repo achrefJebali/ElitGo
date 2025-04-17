@@ -1,0 +1,47 @@
+<app-dashboard-header></app-dashboard-header>
+
+<div class="container-fluid">
+    <div class="breadcrumb-content d-flex flex-wrap align-items-center justify-content-between mb-5">
+        <div class="section-block mb-5"></div>
+        <div class="dashboard-heading mb-5">
+            <h3 class="fs-22 font-weight-semi-bold">Add New Category</h3>
+        </div>
+        <!-- Add Back Button Here -->
+        <button (click)="goBack()" class="modern-back-button">
+            <i class="la la-arrow-left mr-2"></i>Back
+        </button>
+    </div>
+
+    <form [formGroup]="addCategoryForm" (ngSubmit)="onSubmit()">
+        <div class="card card-item">
+            <div class="card-body">
+                <h3 class="fs-22 font-weight-semi-bold pb-2">Category Details</h3>
+                <div class="divider"><span></span></div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="label-text">Category Name</label>
+                            <input class="form-control form--control pl-3" type="text" formControlName="name" required>
+                            <div *ngIf="addCategoryForm.get('name')?.touched && addCategoryForm.get('name')?.invalid" class="text-danger">
+                                {{ getErrorMessage('name') }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="label-text">Category Description</label>
+                            <input class="form-control form--control pl-3" type="text" formControlName="description" required>
+                            <div *ngIf="addCategoryForm.get('description')?.touched && addCategoryForm.get('description')?.invalid" class="text-danger">
+                                {{ getErrorMessage('description') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="course-submit-btn-box pb-4">
+            <button class="btn theme-btn" type="submit">Add Category</button>
+        </div>
+    </form>
+</div>

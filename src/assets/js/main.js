@@ -10,7 +10,7 @@ Author Email:   contact@techydevs.com
 
     var $window = $(window);
 
-    $window.on('load', function (key, value){
+    $window.on('load', function (key, value) {
 
         var $document = $(document);
         var $dom = $('html, body');
@@ -56,10 +56,10 @@ Author Email:   contact@techydevs.com
         $window.on('resize', function () {
             if ($window.width() > 991) {
                 $('.header-top').show();
-            }else {
+            } else {
                 if (isMenuOpen) {
                     $('.header-top').show();
-                }else {
+                } else {
                     $('.header-top').hide();
                 }
             }
@@ -69,7 +69,7 @@ Author Email:   contact@techydevs.com
 
         searchFormToggle.on('click', function () {
             $('.mobile-search-form, .body-overlay').addClass('active');
-            $('body').css({'overflow': 'hidden'});
+            $('body').css({ 'overflow': 'hidden' });
         });
 
         /*=========== Mobile search form close ============*/
@@ -77,7 +77,7 @@ Author Email:   contact@techydevs.com
 
         searchFormClose.on('click', function () {
             $('.mobile-search-form, .body-overlay').removeClass('active');
-            $('body').css({'overflow': 'inherit'});
+            $('body').css({ 'overflow': 'inherit' });
         });
 
         /*=========== Category menu open ============*/
@@ -85,7 +85,7 @@ Author Email:   contact@techydevs.com
 
         catMenuToggle.on('click', function () {
             $('.category-off-canvas-menu, .body-overlay').addClass('active');
-            $('body').css({'overflow': 'hidden'});
+            $('body').css({ 'overflow': 'hidden' });
         });
 
         /*=========== Category menu close ============*/
@@ -93,7 +93,7 @@ Author Email:   contact@techydevs.com
 
         catMenuClose.on('click', function () {
             $('.category-off-canvas-menu, .body-overlay').removeClass('active');
-            $('body').css({'overflow': 'inherit'});
+            $('body').css({ 'overflow': 'inherit' });
         });
 
         /*=========== Main menu open ============*/
@@ -101,7 +101,7 @@ Author Email:   contact@techydevs.com
 
         mainMenuToggle.on('click', function () {
             $('.main-off-canvas-menu, .body-overlay').addClass('active');
-            $('body').css({'overflow': 'hidden'});
+            $('body').css({ 'overflow': 'hidden' });
         });
 
         /*=========== Main menu close ============*/
@@ -109,7 +109,7 @@ Author Email:   contact@techydevs.com
 
         mainMenuClose.on('click', function () {
             $('.main-off-canvas-menu, .body-overlay').removeClass('active');
-            $('body').css({'overflow': 'inherit'});
+            $('body').css({ 'overflow': 'inherit' });
         });
 
         /*=========== User menu open ============*/
@@ -117,7 +117,7 @@ Author Email:   contact@techydevs.com
 
         userMenuToggle.on('click', function () {
             $('.user-off-canvas-menu, .body-overlay').addClass('active');
-            $('body').css({'overflow': 'hidden'});
+            $('body').css({ 'overflow': 'hidden' });
         });
 
         /*=========== User menu close ============*/
@@ -125,7 +125,7 @@ Author Email:   contact@techydevs.com
 
         userMenuClose.on('click', function () {
             $('.user-off-canvas-menu, .body-overlay').removeClass('active');
-            $('body').css({'overflow': 'inherit'});
+            $('body').css({ 'overflow': 'inherit' });
         });
 
         /*=========== Dashboard menu open ============*/
@@ -133,7 +133,7 @@ Author Email:   contact@techydevs.com
 
         dashboardMenuToggle.on('click', function () {
             $('.off--canvas-menu, .body-overlay').addClass('active');
-            $('body').css({'overflow': 'hidden'});
+            $('body').css({ 'overflow': 'hidden' });
         });
 
         /*=========== Dashboard menu close ============*/
@@ -141,20 +141,20 @@ Author Email:   contact@techydevs.com
 
         dashboardMenuClose.on('click', function () {
             $('.off--canvas-menu, .body-overlay').removeClass('active');
-            $('body').css({'overflow': 'inherit'});
+            $('body').css({ 'overflow': 'inherit' });
         });
 
         /*=========== Sub menu ============*/
         var dropdowmMenu = $('.off-canvas-menu-list .sub-menu');
 
-        dropdowmMenu.parent('li').children('a').append(function() {
+        dropdowmMenu.parent('li').children('a').append(function () {
             return '<button class="sub-nav-toggler" type="button"><i class="la la-angle-down"></i></button>';
         });
 
         /*=========== sub menu ============*/
         var dropMenuToggler = $('.sub-nav-toggler');
 
-        dropMenuToggler.on('click', function() {
+        dropMenuToggler.on('click', function () {
             var Self = $(this);
             Self.toggleClass('active');
             Self.parent().parent().siblings().children("a").find(".sub-nav-toggler").removeClass("active");
@@ -172,38 +172,38 @@ Author Email:   contact@techydevs.com
                 $('.header-menu-content').addClass("fixed-top");
                 // add padding top to show content behind header-menu-content
                 $('body').css('margin-top', $('.header-menu-content').outerHeight() + 'px');
-            }else{
+            } else {
                 $('.header-menu-content').removeClass("fixed-top");
                 // remove padding top from body
                 $('body').css('margin-top', '0');
             }
 
             //back to top button control
-            if($(this).scrollTop()>= 300){
+            if ($(this).scrollTop() >= 300) {
                 scrollTopBtn.show();
-            }else{
+            } else {
                 scrollTopBtn.hide();
             }
 
             // Animated skillbar
             var my_skill = '.skills .skill';
 
-            if ($(my_skill).length !== 0){
+            if ($(my_skill).length !== 0) {
                 spy_scroll(my_skill);
             }
         });
 
-        $document.on('click','#scroll-top', function () {
-            $($dom).animate({scrollTop:0},1000);
+        $document.on('click', '#scroll-top', function () {
+            $($dom).animate({ scrollTop: 0 }, 1000);
         });
         /*========= Anchor link scroll animation by click ========*/
         var pageScroll = $('.page-scroll');
-        pageScroll.on('click', function(e){
+        pageScroll.on('click', function (e) {
             e.preventDefault();
             var target = $(this.hash);
             $($dom).animate({
-                scrollTop: (target.offset().top -20)
-            },600);
+                scrollTop: (target.offset().top - 20)
+            }, 600);
         });
 
         /*==== Hero slider =====*/
@@ -230,11 +230,11 @@ Author Email:   contact@techydevs.com
                 autoplay: false,
                 margin: 30,
                 navText: ["<i class='la la-arrow-left'></i>", "<i class='la la-arrow-right'></i>"],
-                responsive:{
-                    320:{
+                responsive: {
+                    320: {
                         items: 1,
                     },
-                    992:{
+                    992: {
                         items: 3,
                     }
                 }
@@ -262,15 +262,15 @@ Author Email:   contact@techydevs.com
                 smartSpeed: 500,
                 autoplay: true,
                 margin: 15,
-                responsive:{
-                    320:{
-                        items:1,
+                responsive: {
+                    320: {
+                        items: 1,
                     },
-                    768:{
-                        items:2,
+                    768: {
+                        items: 2,
                     },
-                    992:{
-                        items:3,
+                    992: {
+                        items: 3,
                     }
                 }
             });
@@ -286,20 +286,20 @@ Author Email:   contact@techydevs.com
                 autoplay: false,
                 margin: 30,
                 autoHeight: true,
-                responsive:{
-                    320:{
+                responsive: {
+                    320: {
                         items: 1,
                     },
-                    767:{
+                    767: {
                         items: 2,
                     },
-                    992:{
+                    992: {
                         items: 3,
                     },
-                    1025:{
+                    1025: {
                         items: 4,
                     },
-                    1441:{
+                    1441: {
                         items: 5,
                     }
                 }
@@ -317,17 +317,17 @@ Author Email:   contact@techydevs.com
                 margin: 30,
                 autoHeight: true,
                 navText: ["<i class='la la-angle-left'></i>", "<i class='la la-angle-right'></i>"],
-                responsive:{
-                    320:{
-                        items:1,
+                responsive: {
+                    320: {
+                        items: 1,
                     },
-                    768:{
-                        items:2
+                    768: {
+                        items: 2
                     }
                 }
             });
         }
-         /*==== testimonial-carousel 3 =====*/
+        /*==== testimonial-carousel 3 =====*/
         if ($(testimonialCarouselThree).length) {
             $(testimonialCarouselThree).owlCarousel({
                 loop: true,
@@ -339,14 +339,14 @@ Author Email:   contact@techydevs.com
                 margin: 30,
                 autoHeight: true,
                 navText: ["<i class='la la-arrow-left'></i>", "<i class='la la-arrow-right'></i>"],
-                responsive:{
-                    320:{
+                responsive: {
+                    320: {
                         items: 1,
                     },
-                    768:{
+                    768: {
                         items: 2
                     },
-                    1025:{
+                    1025: {
                         items: 3
                     }
                 }
@@ -362,13 +362,13 @@ Author Email:   contact@techydevs.com
                 dots: false,
                 smartSpeed: 500,
                 autoplay: true,
-                responsive : {
+                responsive: {
                     // breakpoint from 0 up
-                    0 : {
+                    0: {
                         items: 2
                     },
                     // breakpoint from 481 up
-                    481 : {
+                    481: {
                         items: 3
                     },
                     // breakpoint from 768 up
@@ -376,14 +376,14 @@ Author Email:   contact@techydevs.com
                         items: 4
                     },
                     // breakpoint from 992 up
-                    992 : {
+                    992: {
                         items: 5
                     }
                 }
             });
         }
         /*==== blog-post-carousel =====*/
-        if($(blogPostCarousel).length) {
+        if ($(blogPostCarousel).length) {
             $(blogPostCarousel).owlCarousel({
                 loop: true,
                 items: 3,
@@ -392,12 +392,12 @@ Author Email:   contact@techydevs.com
                 smartSpeed: 500,
                 autoplay: false,
                 margin: 30,
-                responsive:{
-                    320:{
-                        items:1,
+                responsive: {
+                    320: {
+                        items: 1,
                     },
-                    992:{
-                        items:3,
+                    992: {
+                        items: 3,
                     }
                 }
             });
@@ -414,17 +414,17 @@ Author Email:   contact@techydevs.com
                 margin: 20,
                 autoHeight: true,
                 navText: ["<i class='la la-arrow-left'></i>", "<i class='la la-arrow-right'></i>"],
-                responsive:{
-                    320:{
+                responsive: {
+                    320: {
                         items: 1,
                     },
-                    480:{
+                    480: {
                         items: 2
                     },
-                    768:{
+                    768: {
                         items: 3
                     },
-                    992:{
+                    992: {
                         items: 5
                     }
                 }
@@ -456,14 +456,14 @@ Author Email:   contact@techydevs.com
                 margin: 20,
                 autoHeight: true,
                 navText: ["<i class='la la-arrow-left'></i>", "<i class='la la-arrow-right'></i>"],
-                responsive:{
-                    320:{
+                responsive: {
+                    320: {
                         items: 1,
                     },
-                    768:{
+                    768: {
                         items: 2
                     },
-                    992:{
+                    992: {
                         items: 3
                     }
                 }
@@ -475,8 +475,8 @@ Author Email:   contact@techydevs.com
 
         /*=========== Isotope ============*/
         // bind filter button click
-        $document.on( 'click', '.portfolio-filter li', function() {
-            var filterData = $( this ).attr('data-filter');
+        $document.on('click', '.portfolio-filter li', function () {
+            var filterData = $(this).attr('data-filter');
 
             // use filterFn if matches value
             $(isotopListItem).isotope({
@@ -515,20 +515,24 @@ Author Email:   contact@techydevs.com
             });
         }
         /*==== jqte text editor =====*/
-        if ($(userTextEditor).length) {
-            $(userTextEditor).jqte({
-                formats: [
-                    ["p","Paragraph"],
-                    ["h1","Heading 1"],
-                    ["h2","Heading 2"],
-                    ["h3","Heading 3"],
-                    ["h4","Heading 4"],
-                    ["h5","Heading 5"],
-                    ["h6","Heading 6"],
-                    ["pre","Preformatted"]
-                ]
-            });
-        }
+        jQuery(document).ready(function () {
+            var userTextEditor = '.user-text-editor';
+            if (jQuery(userTextEditor).length) {
+                jQuery(userTextEditor).jqte({
+                    formats: [
+                        ["p", "Paragraph"],
+                        ["h1", "Heading 1"],
+                        ["h2", "Heading 2"],
+                        ["h3", "Heading 3"],
+                        ["h4", "Heading 4"],
+                        ["h5", "Heading 5"],
+                        ["h6", "Heading 6"],
+                        ["pre", "Preformatted"]
+                    ]
+                });
+            }
+        });
+
         /*==== Date range picker =====*/
         if ($(dateDropperPicker).length) {
             $(dateDropperPicker).dateDropper({
@@ -564,9 +568,9 @@ Author Email:   contact@techydevs.com
             self.addClass('active');
             self.siblings().removeClass('active');
             // if li has active-resource class then this action will work
-            if(self.is('.active-resource')) {
+            if (self.is('.active-resource')) {
                 $('.lecture-viewer-text-wrap').addClass('active');
-            }else if (self.not('.active-resource')) {
+            } else if (self.not('.active-resource')) {
                 $('.lecture-viewer-text-wrap').removeClass('active');
             }
         });
@@ -591,7 +595,7 @@ Author Email:   contact@techydevs.com
             $('.new-question-wrap, .question-overview-result-wrap, .replay-question-wrap').removeClass('active');
         });
         /*==== Text Swapping =====*/
-        $document.on('click', '.swapping-btn', function() {
+        $document.on('click', '.swapping-btn', function () {
             var el = $(this);
             el.text() === el.data('text-swap')
                 ? el.text(el.data('text-original'))
@@ -611,9 +615,9 @@ Author Email:   contact@techydevs.com
             });
         }
         /*==== Share toggle =====*/
-        $document.on('click', '.share-toggle', function(){
+        $document.on('click', '.share-toggle', function () {
             var THIS = $(this);
-            THIS.parent().find( '.social-icons' ).toggleClass( 'social-active' );
+            THIS.parent().find('.social-icons').toggleClass('social-active');
             THIS.toggleClass('share-toggle-active');
         });
         /*====== Dropdown btn ======*/
@@ -623,9 +627,9 @@ Author Email:   contact@techydevs.com
             e.stopPropagation();
         });
         /*====== When you click on the out side of dropdown menu item then its will be hide ======*/
-        $document.on('click', function(event){
+        $document.on('click', function (event) {
             var $trigger = $('.dropdown');
-            if($trigger !== event.target && !$trigger.has(event.target).length){
+            if ($trigger !== event.target && !$trigger.has(event.target).length) {
                 $('.dropdown-menu-wrap').fadeOut(100);
             }
         });
@@ -640,7 +644,7 @@ Author Email:   contact@techydevs.com
                 } else {
                     // don't allow decrementing below zero
                     if (oldValue > 0) {
-                         newVal = parseFloat(oldValue) - 1;
+                        newVal = parseFloat(oldValue) - 1;
                     } else {
                         newVal = 0;
                     }
@@ -655,7 +659,7 @@ Author Email:   contact@techydevs.com
             radioBtn[i].addEventListener('change', expandAccordion);
         }
 
-        function expandAccordion (event) {
+        function expandAccordion(event) {
             var allTabs = document.querySelectorAll('.payment-tab');
             for (var i = 0; i < allTabs.length; i++) {
                 allTabs[i].classList.remove('is-active');
@@ -781,10 +785,10 @@ Author Email:   contact@techydevs.com
 
         /*==== Progress bar =====*/
         if ($(skillBar).length) {
-            $(skillBar).each(function(){
+            $(skillBar).each(function () {
                 $(this).find('.skillbar-bar').animate({
-                    width:$(this).attr('data-percent')
-                },6000);
+                    width: $(this).attr('data-percent')
+                }, 6000);
             });
         }
 

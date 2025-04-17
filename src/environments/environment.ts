@@ -1,4 +1,8 @@
 export const environment = {
+    apiUrl: 'http://localhost:8085/ElitGo',
+    production: false
+};
+
   production: false,
   apiUrl: 'http://localhost:8085/ElitGo',
   googleApi: {
