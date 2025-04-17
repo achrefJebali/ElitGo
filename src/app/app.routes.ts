@@ -9,6 +9,16 @@ import { DashboardProfileComponent } from './pages/dashboard-profile/dashboard-p
 import { DashboardSettingsComponent } from './pages/dashboard-settings/dashboard-settings.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { CoursesComponent } from './pages/courses/courses.component';
+
+import { ClubsComponent } from './pages/clubs/clubs.component';
+import { EventsComponent } from './pages/events/events.component';
+import { AddEventComponent } from './pages/allevents/add-event.component';
+import { ShoweventBACKComponent } from './pages/allevents/showevent-back/showevent-back.component';
+import { AddClubComponent } from './pages/clubs/add-club/add-club.component';
+import { ShowclubBackComponent } from './pages/clubs/showclub-back/showclub-back.component';
+
+
+
 import { RecoverComponent } from './pages/recover/recover.component';
 import { DashboardAdminComponent } from './pages/dashboard-admin/dashboard-admin.component';
 import { FormationDisplayComponent } from './pages/Formation/formation-display/formation-display.component';
@@ -38,12 +48,25 @@ import { Role } from './pages/models/user.model';
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
+
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: InscriptionComponent },
   { path: 'recover', component: RecoverComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'layout', component: LayoutComponent },
   { path: 'dashboard-profile', component: DashboardProfileComponent },
+
+  { path: 'dashboard-profile', component: DashboardProfileComponent },
+  { path: 'dashboard-settings', component: DashboardSettingsComponent },
+  { path: 'footer', component: FooterComponent },
+  { path: 'courses', component: CoursesComponent },
+  { path: 'events', component: EventsComponent},
+  { path: 'clubs', component: ClubsComponent },
+  { path: 'add-event', component: AddEventComponent },
+  { path: 'showevent-back', component: ShoweventBACKComponent },
+  { path: 'add-club', component: AddClubComponent },
+  { path: 'showclub-back', component: ShowclubBackComponent }
+
   { path: 'dashboard-settings', component: DashboardSettingsComponent },
   { path: 'footer', component: FooterComponent },
   { path: 'courses', component: CoursesComponent },
@@ -144,4 +167,5 @@ export const routes: Routes = [
 
   // Wildcard route for 404
   { path: '**', redirectTo: '/home' }
+
 ];

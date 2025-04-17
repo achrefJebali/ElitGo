@@ -1,0 +1,73 @@
+/* Style pour la carte Leaflet dans le formulaire d'ajout d'événement */
+
+.leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 300px;
+  z-index: 1;
+  border-radius: 8px;
+  margin-bottom: 0;
+}
+
+.custom-map-modal .modal-dialog {
+  max-width: 98vw;
+  width: 98vw;
+  margin: 0 auto;
+}
+.custom-map-modal .modal-content {
+  border-radius: 12px;
+  min-height: 80vh;
+  background: #fff;
+}
+.custom-map-modal .modal-body {
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-modal-outer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60vh;
+  min-height: 300px;
+  background: transparent;
+}
+.map-modal-inner {
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.map-modal-leaflet {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  border-radius: 12px;
+}
+@media (max-width: 600px) {
+  .map-modal-outer,
+  .map-modal-inner,
+  .map-modal-leaflet {
+    height: 45vh;
+    max-width: 99vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .custom-map-modal .modal-dialog {
+    max-width: 99vw;
+    width: 99vw;
+  }
+  .custom-map-modal .modal-body {
+    height: 60vh;
+  }
+}

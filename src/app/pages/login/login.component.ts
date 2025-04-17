@@ -1,15 +1,22 @@
 import { Component } from '@angular/core';
+
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
+
 import { FooterComponent } from '../footer/footer.component';
 import { LayoutComponent } from '../layout/layout.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
+
+  imports: [LayoutComponent,FooterComponent],
+
   imports: [CommonModule, FormsModule, LayoutComponent, FooterComponent],
+
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
