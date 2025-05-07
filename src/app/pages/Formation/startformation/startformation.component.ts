@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Ressource } from 'app/models/ressource';
-import { RessourceService } from 'app/services/ressource.service';
-import { FormationService } from 'app/services/formation.service';
-import { Formation } from 'app/models/formation';
+import { Ressource } from '../../../models/ressource';
+import { RessourceService } from '../../../services/ressource.service';
+import { FormationService } from '../../../services/formation.service';
+import { Formation } from '../../../models/formation';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ProgressService } from 'app/services/progress.service'; // Assuming ProgressService is defined in this file
-import { LayoutComponent } from 'app/pages/layout/layout.component';
+import { ProgressService } from '../../../services/progress.service'; // Assuming ProgressService is defined in this file
+import { LayoutComponent } from '../../layout/layout.component';
 
 @Component({
   selector: 'app-startformation',

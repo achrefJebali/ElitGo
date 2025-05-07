@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { DashboardHeaderComponent } from 'app/pages/dashboard/dashboard-header/dashboard-header.component';
+import { DashboardHeaderComponent } from '../../dashboard/dashboard-header/dashboard-header.component';
 import { CategoryService } from '../../../services/category.service';
 import { Category } from '../../../models/category';
 

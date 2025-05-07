@@ -1,67 +1,21 @@
-
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-
-import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { RouterModule } from '@angular/router';
 import { User } from '../../models/user.model';
 import { Interview } from '../../models/interview.model';
 import { Notification, NotificationType } from '../../models/notification.model';
 import { NotificationService } from '../../services/notification.service';
 import { Subscription } from 'rxjs';
 
-
 @Component({
   selector: 'app-dashboard-header',
   standalone: true,
-
-  imports: [
-    CommonModule,
-    RouterModule
-  ],
-
   imports: [CommonModule, RouterModule],
-
   templateUrl: './dashboard-header.component.html',
   styleUrls: ['./dashboard-header.component.css']
 })
-export class DashboardHeaderComponent implements OnInit {
-  isLoading: boolean = true;
-
-  constructor(private router: Router) {}
-
-  ngOnInit(): void {
-    // Force the loader to hide after 3 seconds maximum
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 2000);
-
-    // Hide loader when initial content is loaded
-    window.addEventListener('load', () => {
-      this.isLoading = false;
-    });
-  }
-
-  navigateTo(route: string, event: Event): void {
-    event.preventDefault();
-    this.isLoading = true;
-    
-    // Use setTimeout to simulate loading and prevent immediate navigation
-    setTimeout(() => {
-      this.router.navigate([route]).then(() => {
-        this.isLoading = false;
-      }).catch(() => {
-        this.isLoading = false;
-      });
-    }, 100);
-
 export class DashboardHeaderComponent implements OnInit, OnDestroy {
   username: string = '';
   email: string = '';
@@ -70,12 +24,12 @@ export class DashboardHeaderComponent implements OnInit, OnDestroy {
   userData: User | null = null;
   userRole: string = '';
   private loadingTimeout: any;
-  
+
   // Interview notification properties
   hasInterviewNotification: boolean = false;
   interviewNotification: Interview | null = null;
   private interviewSubscription: Subscription | null = null;
-  
+
   // Backend notifications
   notifications: Notification[] = [];
   unreadCount: number = 0;
@@ -85,7 +39,8 @@ export class DashboardHeaderComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService, 
     private jwtHelper: JwtHelperService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private router: Router
   ) {}
 
   logout(): void {
@@ -367,5 +322,17 @@ export class DashboardHeaderComponent implements OnInit, OnDestroy {
       default:
         return 'badge-info';
     }
+  }
+  
+  navigateTo(route: string, event: Event): void {
+    event.preventDefault();
+    this.isLoading = true;
+    setTimeout(() => {
+      this.router.navigate([route]).then(() => {
+        this.isLoading = false;
+      }).catch(() => {
+        this.isLoading = false;
+      });
+    }, 100);
   }
 }

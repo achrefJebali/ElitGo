@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CategoryService } from 'app/services/category.service';
-import { Category } from 'app/models/category';
+import { CategoryService } from '../../../services/category.service';
+import { Category } from '../../../models/category';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { DashboardHeaderComponent } from 'app/pages/dashboard/dashboard-header/dashboard-header.component';
+import { DashboardHeaderComponent } from '../../dashboard/dashboard-header/dashboard-header.component';
 import { Router } from '@angular/router';
 
 @Component({

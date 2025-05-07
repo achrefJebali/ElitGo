@@ -1,0 +1,138 @@
+<div class="container">
+    <h2>Prédiction de la Performance des Étudiants</h2>
+    <form [formGroup]="predictionForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="Hours_Studied">Heures d'étude</label>
+            <input type="number" formControlName="Hours_Studied" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="Attendance">Présence (%)</label>
+            <input type="number" formControlName="Attendance" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="Parental_Involvement">Implication parentale</label>
+            <select formControlName="Parental_Involvement" class="form-control">
+                <option value="Low">Faible</option>
+                <option value="Medium">Moyenne</option>
+                <option value="High">Élevée</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Access_to_Resources">Accès aux ressources</label>
+            <select formControlName="Access_to_Resources" class="form-control">
+                <option value="Low">Faible</option>
+                <option value="Medium">Moyen</option>
+                <option value="High">Élevé</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Extracurricular_Activities">Activités extrascolaires</label>
+            <select formControlName="Extracurricular_Activities" class="form-control">
+                <option value="Yes">Oui</option>
+                <option value="No">Non</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Sleep_Hours">Heures de sommeil</label>
+            <input type="number" formControlName="Sleep_Hours" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="Previous_Scores">Scores précédents</label>
+            <input type="number" formControlName="Previous_Scores" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="Motivation_Level">Niveau de motivation</label>
+            <select formControlName="Motivation_Level" class="form-control">
+                <option value="Low">Faible</option>
+                <option value="Medium">Moyen</option>
+                <option value="High">Élevé</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Internet_Access">Accès à Internet</label>
+            <select formControlName="Internet_Access" class="form-control">
+                <option value="Yes">Oui</option>
+                <option value="No">Non</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Tutoring_Sessions">Séances de tutorat</label>
+            <input type="number" formControlName="Tutoring_Sessions" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="Family_Income">Revenu familial</label>
+            <select formControlName="Family_Income" class="form-control">
+                <option value="Low">Faible</option>
+                <option value="Medium">Moyen</option>
+                <option value="High">Élevé</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Teacher_Quality">Qualité des enseignants</label>
+            <select formControlName="Teacher_Quality" class="form-control">
+                <option value="Low">Faible</option>
+                <option value="Medium">Moyenne</option>
+                <option value="High">Élevée</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="School_Type">Type d'école</label>
+            <select formControlName="School_Type" class="form-control">
+                <option value="Public">Publique</option>
+                <option value="Private">Privée</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Peer_Influence">Influence des pairs</label>
+            <select formControlName="Peer_Influence" class="form-control">
+                <option value="Positive">Positive</option>
+                <option value="Neutral">Neutre</option>
+                <option value="Negative">Négative</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Physical_Activity">Activité physique (heures/semaine)</label>
+            <input type="number" formControlName="Physical_Activity" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="Learning_Disabilities">Troubles d'apprentissage</label>
+            <select formControlName="Learning_Disabilities" class="form-control">
+                <option value="Yes">Oui</option>
+                <option value="No">Non</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Parental_Education_Level">Niveau d'éducation des parents</label>
+            <select formControlName="Parental_Education_Level" class="form-control">
+                <option value="High School">Lycée</option>
+                <option value="College">Collège</option>
+                <option value="Postgraduate">Postuniversitaire</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Distance_from_Home">Distance du domicile</label>
+            <select formControlName="Distance_from_Home" class="form-control">
+                <option value="Near">Proche</option>
+                <option value="Moderate">Modérée</option>
+                <option value="Far">Loin</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Gender">Genre</label>
+            <select formControlName="Gender" class="form-control">
+                <option value="Male">Masculin</option>
+                <option value="Female">Féminin</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Prédire</button>
+    </form>
+
+    <div *ngIf="predictionResult" class="result">
+        <h3>Résultat de la prédiction</h3>
+        <p>Prédiction : {{ predictionResult.prediction === 1 ? 'Réussite' : 'Échec' }}</p>
+        <p>Probabilité : {{ predictionResult.probability }}</p>
+    </div>
+    <div *ngIf="error" class="error">
+        <p>Erreur : {{ error }}</p>
+    </div>
+</div>

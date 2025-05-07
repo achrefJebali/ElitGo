@@ -17,8 +17,11 @@ import { DashboardHeaderComponent } from '../../dashboard/dashboard-header/dashb
     RouterModule,
     DashboardHeaderComponent
   ]
+
 })
+
 export class AddClubComponent {
+
   club: Club = {
     name: '',
     email: '',
@@ -28,17 +31,17 @@ export class AddClubComponent {
     image: '',
     events: []
   };
-  
+
   // Propriétés pour la gestion d'upload
   selectedFile: File | null = null;
   uploadError: string | null = null;
   isUploading: boolean = false;
-  
+
   // Propriétés pour la validation du formulaire
   formErrors: any = {};
   submitted: boolean = false;
 
-  constructor(private clubsService: ClubsService) {}
+  constructor(private clubsService: ClubsService) { }
 
   // Méthode pour gérer la sélection de fichier
   onFileSelected(event: any): void {
@@ -49,15 +52,15 @@ export class AddClubComponent {
       }
     }
   }
-  
+
   // Méthode pour valider le formulaire
   validateForm(): boolean {
     this.formErrors = {};
     this.submitted = true;
     let isValid = true;
-    
+
     console.log('Validation du formulaire du club...');
-    
+
     // Validation du nom
     if (!this.club.name || this.club.name.trim() === '') {
       this.formErrors['name'] = 'Le nom du club est obligatoire';
@@ -66,7 +69,7 @@ export class AddClubComponent {
       this.formErrors['name'] = 'Le nom doit contenir au moins 3 caractères';
       isValid = false;
     }
-    
+
     // Validation de la description
     if (!this.club.description || this.club.description.trim() === '') {
       this.formErrors['description'] = 'La description est obligatoire';
@@ -75,7 +78,7 @@ export class AddClubComponent {
       this.formErrors['description'] = 'La description doit contenir au moins 10 caractères';
       isValid = false;
     }
-    
+
     // Validation des objectifs
     if (!this.club.objectives || this.club.objectives.trim() === '') {
       this.formErrors['objectives'] = 'Les objectifs sont obligatoires';
@@ -84,7 +87,7 @@ export class AddClubComponent {
       this.formErrors['objectives'] = 'Les objectifs doivent contenir au moins 10 caractères';
       isValid = false;
     }
-    
+
     // Validation du thème
     if (!this.club.theme || this.club.theme.trim() === '') {
       this.formErrors['theme'] = 'Le thème est obligatoire';
@@ -93,7 +96,7 @@ export class AddClubComponent {
       this.formErrors['theme'] = 'Le thème doit contenir au moins 2 caractères';
       isValid = false;
     }
-    
+
     // Validation de l'email
     if (!this.club.email || this.club.email.trim() === '') {
       this.formErrors['email'] = 'L\'email est obligatoire';
@@ -106,16 +109,16 @@ export class AddClubComponent {
         isValid = false;
       }
     }
-    
+
     // Validation de l'image
     if (!this.selectedFile && !this.club.image) {
       this.formErrors['image'] = 'Une image est requise pour le club';
       isValid = false;
     }
-    
+
     console.log('Formulaire valide:', isValid);
     console.log('Erreurs:', this.formErrors);
-    
+
     return isValid;
   }
 
@@ -124,36 +127,36 @@ export class AddClubComponent {
       console.log('Formulaire invalide, soumission annulée');
       return;
     }
-    
+
     console.log('Soumission du club:', this.club);
-    
+
     // Ajouter d'abord le club pour obtenir son ID
     this.clubsService.addClub(this.club).subscribe({
       next: (createdClub) => {
         console.log('Club ajouté avec succès:', createdClub);
-        
+
         // Si un fichier a été sélectionné, uploader l'image
         if (this.selectedFile && createdClub.id) {
           this.isUploading = true;
           this.uploadError = null;
           console.log('Début de l\'upload de l\'image pour le club ID:', createdClub.id);
-          
+
           this.clubsService.uploadClubImage(createdClub.id, this.selectedFile).subscribe(
             (imagePath) => {
               this.isUploading = false;
               console.log('Image uploadée avec succès. Chemin reçu:', imagePath);
               console.log('Type de donnée du chemin:', typeof imagePath);
-              
+
               // S'assurer que l'image est une chaîne de caractères non vide
               if (imagePath && typeof imagePath === 'string') {
                 // Mettre à jour le club avec le chemin de l'image
-                const updatedClub = { 
-                  ...createdClub, 
+                const updatedClub = {
+                  ...createdClub,
                   image: imagePath.trim() // Assurez-vous qu'il n'y a pas d'espaces inutiles
                 };
-                
+
                 console.log('Club à mettre à jour avec l\'image:', updatedClub);
-                
+
                 this.clubsService.updateClub(updatedClub).subscribe(
                   (response) => {
                     console.log('Club mis à jour avec l\'image:', response);
@@ -197,7 +200,7 @@ export class AddClubComponent {
       }
     });
   }
-  
+
   // Méthode pour réinitialiser le formulaire
   resetForm(): void {
     this.club = {
@@ -213,4 +216,5 @@ export class AddClubComponent {
     this.uploadError = null;
     this.isUploading = false;
   }
+
 }

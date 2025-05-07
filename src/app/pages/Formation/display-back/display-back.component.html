@@ -15,7 +15,7 @@
         <ul class="generic-list-item off-canvas-menu-list off--canvas-menu-list pt-35px">
             <!-- Admin Dashboard -->
             <li class="page-active">
-                <a href="dashboard">
+                <a href="dashboard-admin">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none" />
                         <path
@@ -27,31 +27,52 @@
 
             <!-- My Profile -->
             <li>
-                <a href="dashboard-profile">
+                <a href="admin-profile">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none" />
                         <path
-                            d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z" />
+                            d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z" />
                     </svg>
                     My Profile
                 </a>
             </li>
-
-            <!-- Manage Announcements -->
-            <li>
-                <a href="dashboard-courses.html">
+            <!-- Interview Management -->
+            <li class="interview">
+                <a href="interview">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none" />
                         <path
-                            d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z" />
+                            d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17l-.59.59-.58.58V4h16v12z" />
                     </svg>
-                    Manage Announcements
+                    Interview Management
+                </a>
+            </li>
+
+            <!-- Manage  -->
+            <li>
+                <a href="add-club">
+                    <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
+                        <path d="M0 0h24v24H0V0z" fill="none" />
+                        <path
+                            d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h8v5h5v11z" />
+                    </svg>
+                    Manage clubs
+                </a>
+            </li>
+            <!-- Manage all users -->
+            <li>
+                <a href="all-users">
+                    <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
+                        <path d="M0 0h24v24H0V0z" fill="none" />
+                        <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" />
+                    </svg>
+                    Manage All Users
                 </a>
             </li>
 
             <!-- Manage Students -->
             <li>
-                <a href="dashboard-students.html">
+                <a href="all-students">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none" />
                         <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" />
@@ -62,11 +83,11 @@
 
             <!-- Manage Teachers -->
             <li>
-                <a href="dashboard-teachers.html">
+                <a href="all-teachers">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none" />
                         <path
-                            d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z" />
+                            d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                     </svg>
                     Manage Teachers
                 </a>
@@ -74,45 +95,23 @@
 
             <!-- Manage Courses -->
             <li>
-                <a href="dashboard-courses.html">
+                <a href="add-club">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none" />
                         <path
                             d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z" />
                     </svg>
-                    Manage Courses
+                    Manage Clubs
                 </a>
             </li>
-            <!-- Manage Formation -->
 
-            <li>
-                <a href="DisplayBack">
-                    <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
-                        <path d="M0 0h24v24H0V0z" fill="none" />
-                        <path
-                            d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z" />
-                    </svg>
-                    Manage Formation
-                </a>
-            </li>
-            <!-- Manage Category -->
-            <li>
-                <a href="category-list">
-                    <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
-                        <path d="M0 0h24v24H0V0z" fill="none" />
-                        <path
-                            d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z" />
-                    </svg>
-                    Manage Category
-                </a>
-            </li>
             <!-- Manage Events -->
             <li>
-                <a href="dashboard-events.html">
+                <a href="add-event">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none" />
                         <path
-                            d="M17 13h-5v5h5v-5zM16 2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-1V2h-2zm3 18H5V9h14v11z" />
+                            d="M17 13h-5v5h5v-5zM16 2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-1V2h-2zm3 18H5V9h14v11z" />
                     </svg>
                     Manage Events
                     <span class="badge badge-info p-1 ml-2">2</span>
@@ -121,26 +120,48 @@
 
             <!-- Manage Schedules -->
             <li>
-                <a href="dashboard-schedules.html">
+                <a href="DisplayBack">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none" />
                         <path
                             d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
                     </svg>
-                    Manage Schedules
+                    Manage Formations
                 </a>
             </li>
-
-            <!-- Settings -->
+            <!-- Manage Schedules -->
             <li>
-                <a href="dashboard-settings">
+                <a href="ressourcelist">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                         <path d="M0 0h24v24H0V0z" fill="none" />
                         <path
-                            d="M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.09-.16-.26-.25-.44-.25-.06 0-.12.01-.17.03l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49 1c-.06-.02-.12-.03-.18-.03-.17 0-.34.09-.43.25l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.09.16.26.25.44.25.06 0 .12-.01.17-.03l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49-1c.06.02.12.03.18.03.17 0 .34-.09.43-.25l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zm-1.98-1.71c.04.31.05.52.05.73 0 .21-.02.43-.05.73l-.14 1.13.89.7 1.08.84-.7 1.21-1.27-.51-1.04-.42-.9.68c-.43.32-.84.56-1.25.73l-1.06.43-.16 1.13-.2 1.35h-1.4l-.19-1.35-.16-1.13-1.06-.43c-.43-.18-.83-.41-1.23-.71l-.91-.7-1.06.43-1.27-.51-.7-1.21 1.08-.84.89-.7-.14-1.13c-.03-.31-.05-.54-.05-.74s.02-.43.05-.73l.14-1.13-.89-.7-1.08-.84.7-1.21 1.27.51 1.04.42.9-.68c.43-.32.84-.56 1.25-.73l1.06-.43.16-1.13.2-1.35h1.39l.19 1.35.16 1.13 1.06.43c.43.18.83.41 1.23.71l.91.7 1.06-.43 1.27-.51.7 1.21-1.07.85-.89.7.14 1.13zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
-                </svg>
-                Settings
-            </a>
+                            d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+                    </svg>
+                    Manage Ressources
+                </a>
+            </li>
+            <li>
+                <a href="category-list">
+                    <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
+                        <path d="M0 0h24v24H0V0z" fill="none" />
+                        <path
+                            d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+                    </svg>
+                    Manage Categories
+                </a>
+            </li>
+
+
+            <!-- Settings -->
+            <li>
+                <a href="admin-settings">
+                    <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
+                        <path d="M0 0h24v24H0V0z" fill="none" />
+                        <path
+                            d="M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.09-.16-.26-.25-.44-.25-.06 0-.12.01-.17.03l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49 1c-.06-.02-.12-.03-.18-.03-.17 0-.34.09-.43.25l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.09.16.26.25.44.25.06 0 .12-.01.17-.03l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49-1c.06.02.12.03.18.03.17 0 .34-.09.43-.25l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zm-1.98-1.71c.04.31.05.52.05.73 0 .21-.02.43-.05.73l-.14 1.13.89.7 1.08.84-.7 1.21-1.27-.51-1.04-.42-.9.68c-.43.32-.84.56-1.25.73l-1.06.43-.16 1.13-.2 1.35h-1.4l-.19-1.35-.16-1.13-1.06-.43c-.43-.18-.83-.41-1.23-.71l-.91-.7-1.06.43-1.27.51-.7-1.21 1.08-.84.89-.7-.14-1.13c-.03-.31-.05-.54-.05-.74s.02-.43.05-.73l.14-1.13-.89-.7-1.08-.84.7-1.21 1.27.51 1.04.42.9-.68c.43-.32.84-.56 1.25-.73l1.06-.43.16-1.13.2-1.35h1.39l.19 1.35.16 1.13 1.06.43c.43.18.83.41 1.23.71l.91.7 1.06-.43 1.27-.51.7 1.21-1.07.85-.89.7.14 1.13zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
+                    </svg>
+                    Settings
+                </a>
             </li>
 
             <!-- Logout -->
@@ -209,10 +230,12 @@
                                                 <td>{{ formation.duration }}</td>
                                                 <td>{{ formation.discount }}%</td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-primary mr-2" (click)="editFormation(formation)">
+                                                    <button class="btn btn-sm btn-primary mr-2"
+                                                        (click)="editFormation(formation)">
                                                         <i class="la la-edit mr-1"></i>Edit
                                                     </button>
-                                                    <button class="btn btn-sm btn-warning mr-2" (click)="openDiscountModal(formation)">
+                                                    <button class="btn btn-sm btn-warning mr-2"
+                                                        (click)="openDiscountModal(formation)">
                                                         <i class="la la-percent mr-1"></i>Add Discount
                                                     </button>
                                                     <button class="btn btn-sm btn-danger"
@@ -294,29 +317,29 @@
             background-color: #0056b3;
         }
     </style>
-<div class="text-center py-3">
-    <nav aria-label="Page navigation example" class="pagination-box">
-        <ul class="pagination justify-content-center">
-            <li class="page-item" [class.disabled]="currentPage === 1">
-                <a class="page-link" href="#" (click)="previousPage(); $event.preventDefault()"
-                    aria-label="Previous">
-                    <span aria-hidden="true"><i class="la la-arrow-left"></i></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-            </li>
-            <li class="page-item" *ngFor="let page of getPageNumbers()" [class.active]="currentPage === page">
-                <a class="page-link" href="#" (click)="goToPage(page); $event.preventDefault()">{{ page }}</a>
-            </li>
-            <li class="page-item" [class.disabled]="currentPage === totalPages">
-                <a class="page-link" href="#" (click)="nextPage(); $event.preventDefault()" aria-label="Next">
-                    <span aria-hidden="true"><i class="la la-arrow-right"></i></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <p class="fs-14 pt-2">{{ getShowingText() }}</p>
-</div>
+    <div class="text-center py-3">
+        <nav aria-label="Page navigation example" class="pagination-box">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                    <a class="page-link" href="#" (click)="previousPage(); $event.preventDefault()"
+                        aria-label="Previous">
+                        <span aria-hidden="true"><i class="la la-arrow-left"></i></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li class="page-item" *ngFor="let page of getPageNumbers()" [class.active]="currentPage === page">
+                    <a class="page-link" href="#" (click)="goToPage(page); $event.preventDefault()">{{ page }}</a>
+                </li>
+                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                    <a class="page-link" href="#" (click)="nextPage(); $event.preventDefault()" aria-label="Next">
+                        <span aria-hidden="true"><i class="la la-arrow-right"></i></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <p class="fs-14 pt-2">{{ getShowingText() }}</p>
+    </div>
     <div class="row align-items-center dashboard-copyright-content pb-4">
         <div class="col-lg-6">
             <ul class="generic-list-item d-flex flex-wrap align-items-center fs-14 justify-content-end">
@@ -375,28 +398,31 @@
 </div><!-- end modal -->
 
 <!-- Discount Modal -->
-<div class="modal fade" id="discountModal" tabindex="-1" role="dialog" aria-labelledby="discountModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <form (ngSubmit)="submitDiscount()">
-        <div class="modal-header">
-          <h5 class="modal-title" id="discountModalLabel">Add Discount</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeDiscountModal()">
-            <span aria-hidden="true">&times;</span>
-          </button>
+<div class="modal fade" id="discountModal" tabindex="-1" role="dialog" aria-labelledby="discountModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form (ngSubmit)="submitDiscount()">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="discountModalLabel">Add Discount</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        (click)="closeDiscountModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label>Discount (%)</label>
+                    <input type="number" class="form-control" [(ngModel)]="selectedDiscount" name="discount" min="0"
+                        max="90" step="1" required>
+                    <div *ngIf="discountError" class="text-danger mt-2">{{ discountError }}</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="closeDiscountModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Apply</button>
+                </div>
+            </form>
         </div>
-        <div class="modal-body">
-          <label>Discount (%)</label>
-          <input type="number" class="form-control" [(ngModel)]="selectedDiscount" name="discount" min="0" max="90" step="1" required>
-          <div *ngIf="discountError" class="text-danger mt-2">{{ discountError }}</div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="closeDiscountModal()">Cancel</button>
-          <button type="submit" class="btn btn-primary">Apply</button>
-        </div>
-      </form>
     </div>
-  </div>
 </div>
 
 <!-- template js files -->

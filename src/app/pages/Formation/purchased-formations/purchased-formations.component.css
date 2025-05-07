@@ -130,10 +130,7 @@
     object-fit: cover;
 }
 
-.lazy {
-    background: #f8f9fa url('assets/images/img-loading.png') no-repeat center center;
-    background-size: cover;
-}
+
 
 .play-button {
     position: absolute;

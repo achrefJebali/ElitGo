@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { LayoutComponent } from 'app/pages/layout/layout.component';
-import { Formation } from 'app/models/formation';
-import { PaymentService } from 'app/services/payment.service';
+import { LayoutComponent } from '../../layout/layout.component';
+import { Formation } from '../../../models/formation';
+import { PaymentService } from '../../../services/payment.service';
 import { CommonModule } from '@angular/common';
-import { Review } from 'app/models/review';
-import { FormationService } from 'app/services/formation.service';
+import { Review } from '../../../models/review';
+import { FormationService } from '../../../services/formation.service';
 import { RouterModule } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { catchError, map, Observable } from 'rxjs';
@@ -24,7 +24,7 @@ export class DetailsFormationComponent implements OnInit {
   reviews: Review[] = [];
   studentEmail: string = 'skanderlghmardi@gmail.com';
   userId: number = 1;
-errorMessage: string | null = null;
+  errorMessage: string | null = null;
   successMessage: string | null = null;
   imageUrl: Observable<SafeUrl> | null = null;
   private readonly PLACEHOLDER_IMAGE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
@@ -142,11 +142,11 @@ errorMessage: string | null = null;
       sessionStorage.setItem('formationId', this.formation.id.toString());
       this.paymentService.initiatePayment(this.formation.id, this.studentEmail, this.userId).subscribe({
         next: (paymentUrl: string) => {
-       this.sendPurchaseEmail(
-         this.studentEmail,
-         'Student', // Use a real student name if available
-         this.formation?.title || 'Course'
-       );
+          this.sendPurchaseEmail(
+            this.studentEmail,
+            'Student', // Use a real student name if available
+            this.formation?.title || 'Course'
+          );
           window.location.href = paymentUrl;
         },
         error: (error) => {

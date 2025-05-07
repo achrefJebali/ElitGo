@@ -1,8 +1,3 @@
-
-import { Component } from '@angular/core';
-import { DashboardHeaderComponent } from '../dashboard/dashboard-header/dashboard-header.component';
-
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -12,19 +7,10 @@ import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 
-
 @Component({
   selector: 'app-dashboard-settings',
   standalone: true,
-
-  imports: [DashboardHeaderComponent],
-  templateUrl: './dashboard-settings.component.html',
-  styleUrl: './dashboard-settings.component.css'
-})
-export class DashboardSettingsComponent {
-
-
-  imports: [DashboardHeaderComponent, FormsModule, CommonModule],
+  imports: [CommonModule, FormsModule, DashboardHeaderComponent],
   templateUrl: './dashboard-settings.component.html',
   styleUrls: ['./dashboard-settings.component.css']
 })
@@ -73,25 +59,12 @@ export class DashboardSettingsComponent implements OnInit {
 
   getPhotoUrl(): string {
     if (!this.user?.photo) {
-      // Utiliser une image par défaut qui existe dans le projet
-      return '/assets/images/small-avatar-1.jpg'; // Image existante avec un slash au début
+      return '/assets/images/small-avatar-1.jpg';
     }
-  
     if (this.user.photo.startsWith('http')) {
       return this.user.photo;
     }
-  
-    if (this.user.photo.startsWith('data:image')) {
-      return this.user.photo;
-    }
-    
-    // Assurer que nous utilisons le bon format de chemin pour le backend
-    // Fix: Éviter les doubles slashes dans l'URL
-    const basePath = 'http://localhost:8085/ElitGo';
-    const photoPath = this.user.photo.startsWith('/') ? this.user.photo : '/' + this.user.photo;
-    
-    console.log('Dashboard photo path used:', basePath + photoPath); // Log pour débogage
-    return basePath + photoPath;
+    return `http://localhost:8085/ElitGo${this.user.photo}`;
   }
 
   saveChanges(): void {
@@ -279,5 +252,4 @@ export class DashboardSettingsComponent implements OnInit {
       }
     });
   }
-
 }
