@@ -191,8 +191,8 @@
                         <p class="font-medium">Recommended Cluster:
                             <span class="text-blue-600">{{ recommendation.cluster }}</span>
                         </p>
-                        <p class="mt-2 text-gray-600">
-                            {{ recommendation.message }}
+                        <p class="mt-2 text-gray-600" *ngIf="recommendation.recommendation">
+                            {{ recommendation.recommendation }} <!-- Changed from message to recommendation -->
                         </p>
                     </div>
                 </div>

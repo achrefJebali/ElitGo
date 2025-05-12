@@ -15,14 +15,15 @@ export class RecommendationComponent {
   constructor(private recommendationService: RecommendationService) { }
 
   // Update your component to handle the message
-  recommendation: { cluster: number, message: string } | null = null;
+  recommendation: { cluster: number, recommendation: string } | null = null;
 
   onSubmit(data: any) {
     this.recommendationService.getRecommendation(data).subscribe(
       (response: any) => {
         this.recommendation = {
           cluster: response.cluster,
-          message: response.message
+          recommendation: response.recommendation  // Match backend property name
+
         };
       },
       (error) => {
