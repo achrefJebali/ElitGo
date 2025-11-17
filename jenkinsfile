@@ -12,6 +12,7 @@ pipeline{
        final_TAG = "${DOCKERHUB_USERNAME}/elite-app:v1.0.0-final"
        PROD_TAG = "${DOCKERHUB_USERNAME}/elite-app:v1.0.0-prod"
   }
+  
      parameters {
        string(name: 'BRANCH_NAME', defaultValue: "${scm.branches[0].name}", description: 'Git branch name')
        string(name: 'CHANGE_ID', defaultValue: '', description: 'Git change ID for merge requests')
