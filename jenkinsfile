@@ -1,0 +1,126 @@
+def getGitBranchName() {
+                return scm.branches[0].name
+            }
+def branchName
+def targetBranch
+
+pipeline{
+    agent any
+    environment {
+       DOCKERHUB_USERNAME = "taharejeb97"
+       DEV_TAG = "${DOCKERHUB_USERNAME}/elite-app:v1.0.0-dev"
+       final_TAG = "${DOCKERHUB_USERNAME}/elite-app:v1.0.0-final"
+       PROD_TAG = "${DOCKERHUB_USERNAME}/elite-app:v1.0.0-prod"
+  }
+     parameters {
+       string(name: 'BRANCH_NAME', defaultValue: "${scm.branches[0].name}", description: 'Git branch name')
+       string(name: 'CHANGE_ID', defaultValue: '', description: 'Git change ID for merge requests')
+       string(name: 'CHANGE_TARGET', defaultValue: '', description: 'Git change ID for the target merge requests')
+  }
+    stages{
+
+      stage('branch name') {
+      steps {
+        script {
+          branchName = params.BRANCH_NAME
+          echo "Current branch name: ${branchName}"
+        }
+      }
+    }
+
+    stage('target branch') {
+      steps {
+        script {
+          targetBranch = branchName
+          echo "Target branch name: ${targetBranch}"
+        }
+      }
+    }
+        stage('Git Checkout'){
+            steps{
+                git branch: 'final', credentialsId: 'Git', url: 'https://github.com/achrefJebali/ElitGo.git'            }
+        }
+
+      stage('Build Docker') {
+    when {
+        expression {
+            (params.CHANGE_ID != null) && ((targetBranch == 'develop') || (targetBranch == 'main') || (targetBranch == 'final') || (targetBranch == 'elite-app-prod'))
+        }
+    }
+    steps {
+        script {
+            if (targetBranch == 'final') {
+                sh "docker build -t ${PROD_TAG} ."
+            } else if (targetBranch == 'final') {
+                sh "docker build -t ${PROD_TAG} ."
+            } else if (targetBranch == 'final') {
+                sh "docker build -t ${PROD_TAG} ."
+            } else if (targetBranch == 'final') {
+                sh "docker build -t ${PROD_TAG} ."
+        }
+    }
+}
+      }
+
+
+        stage('Docker Login'){
+          when {
+        expression {
+          (params.CHANGE_ID != null) && ((targetBranch == 'develop') || (targetBranch == 'main') || (targetBranch == 'final') || (targetBranch == 'elite-app-prod'))
+        }
+      }
+        steps{
+            withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+            sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
+            }
+        }
+        }
+        stage('Docker Push'){
+          when {
+        expression {
+          (params.CHANGE_ID != null) && ((targetBranch == 'develop') || (targetBranch == 'main') || (targetBranch == 'final') || (targetBranch == 'elite-app-prod'))
+        }
+          }
+            steps{
+              sh "docker push $DOCKERHUB_USERNAME/elite-app --all-tags"
+            }
+        }
+
+      stage('Remove Containers') {
+		when {
+        expression {
+          (params.CHANGE_ID != null) && ((targetBranch == 'develop') || (targetBranch == 'main') || (targetBranch == 'final') || (targetBranch == 'elite-app-prod'))
+        }
+    }
+    steps {
+        sh '''
+        container_ids=$(docker ps -q --filter "publish=4047/tcp")
+        if [ -n "$container_ids" ]; then
+            echo "Stopping and removing containers..."
+            docker stop $container_ids
+            docker rm $container_ids
+        else
+            echo "No containers found using port 4047."
+        fi
+        '''
+    }
+}
+
+	    stage('Deploy to Prod') {
+            when {
+                expression {
+			(params.CHANGE_ID != null)  && (targetBranch == 'final')
+		}
+            }
+           steps {
+		  // sh "docker pull ${PROD_TAG}"
+   		   //sh "docker run -d --name ordearfrontadmin-prod -p 4047:3000 ${PROD_TAG}"
+		   sh "sudo ansible-playbook ansible/k8s.yml -i ansible/inventory/host.yml"
+	   }
+	}
+
+
+
+
+	}
+}

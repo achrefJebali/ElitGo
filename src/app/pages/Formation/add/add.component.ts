@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractContro
 import { FormationService } from '../../../services/formation.service';
 import { Formation } from '../../../models/formation';
 import { Router } from '@angular/router';
-import { DashboardHeaderComponent } from 'app/pages/dashboard/dashboard-header/dashboard-header.component';
+import { DashboardHeaderComponent } from '../../dashboard/dashboard-header/dashboard-header.component';
 import { Category } from '../../../models/category';
 import { CategoryService } from '../../../services/category.service';
 import { HttpErrorResponse } from '@angular/common/http';

@@ -19,9 +19,11 @@
 
 <section class="course-area section-padding">
     <div class="container">
-        <!-- Dynamic Search Input (No Button) -->
-        <div class="filter-bar mb-4 d-flex align-items-center flex-wrap bg-white shadow rounded-3 px-4 py-3" style="gap: 2rem; justify-content: flex-start;">
-            <div class="fs-15 font-weight-semi-bold d-flex align-items-center mb-2 mb-md-0" style="font-size: 1.1rem; color: #222;">
+        <!-- Dynamic Search Input with Buttons -->
+        <div class="filter-bar mb-4 d-flex align-items-center flex-wrap bg-white shadow rounded-3 px-4 py-3"
+            style="gap: 2rem; justify-content: flex-start;">
+            <div class="fs-15 font-weight-semi-bold d-flex align-items-center mb-2 mb-md-0"
+                style="font-size: 1.1rem; color: #222;">
                 <i class="la la-info-circle me-2" style="font-size: 1.5rem;"></i>
                 We found <span class="fw-bold mx-1">{{ totalItems }}</span> formation available for you
             </div>
@@ -29,8 +31,18 @@
                 <div class="pt-2 position-relative">
                     <input class="form-control form--control form--control-gray pl-5 rounded-pill shadow-sm" type="text"
                         [(ngModel)]="searchQuery" (input)="onSearch()" placeholder="Search by formation title...">
-                    <i class="la la-search position-absolute" style="left: 18px; top: 50%; transform: translateY(-50%); color: #aaa; font-size: 1.2rem;"></i>
+                    <i class="la la-search position-absolute"
+                        style="left: 18px; top: 50%; transform: translateY(-50%); color: #aaa; font-size: 1.2rem;"></i>
                 </div>
+            </div>
+            <!-- Added Buttons Container -->
+            <div class="d-flex gap-2">
+                <a href="prediction" class="btn btn-primary rounded-pill shadow-sm px-4 btn-hover">
+                    <i class="la la-chart-line me-2"></i>Prediction
+                </a>
+                <a href="recommend" class="btn btn-success rounded-pill shadow-sm px-4 btn-hover">
+                    <i class="la la-lightbulb me-2"></i>Recommendation
+                </a>
             </div>
         </div>
 
@@ -73,26 +85,36 @@
                             <span class="rating-total pl-1">({{ getTotalReviews(formation.id) | number }})</span>
                         </div>
                         <div class="d-flex align-items-center mt-2">
-                          <span *ngIf="formation.discountedPrice && formation.discountedPrice < formation.price" class="text-muted text-decoration-line-through me-2" style="font-size: 1.1rem;">
-                            {{ formation.price | currency:'USD':'symbol':'1.2-2' }}
-                          </span>
-                          <span class="fw-bold text-success" style="font-size: 1.2rem;">
-                            {{ (formation.discountedPrice && formation.discountedPrice < formation.price) ? (formation.discountedPrice | currency:'USD':'symbol':'1.2-2') : (formation.price | currency:'USD':'symbol':'1.2-2') }}
-                          </span>
+                            <span *ngIf="formation.discountedPrice && formation.discountedPrice < formation.price"
+                                class="text-muted text-decoration-line-through me-2" style="font-size: 1.1rem;">
+                                {{ formation.price | currency:'USD':'symbol':'1.2-2' }}
+                            </span>
+                            <span class="fw-bold text-success" style="font-size: 1.2rem;">
+                                {{ (formation.discountedPrice && formation.discountedPrice < formation.price) ?
+                                    (formation.discountedPrice | currency:'USD':'symbol':'1.2-2') : (formation.price |
+                                    currency:'USD':'symbol':'1.2-2') }} </span>
                         </div>
                     </div>
                     <!-- Modern Tooltip Card on Hover -->
-                    <div class="formation-tooltip-card bg-white shadow rounded-3 p-3 animate__animated animate__fadeIn position-absolute" style="top: 10px; left: 10px; min-width: 280px; z-index: 1000; display: none;" (click)="$event.stopPropagation()">
+                    <div class="formation-tooltip-card bg-white shadow rounded-3 p-3 animate__animated animate__fadeIn position-absolute"
+                        style="top: 10px; left: 10px; min-width: 280px; z-index: 1000; display: none;"
+                        (click)="$event.stopPropagation()">
                         <h5 class="card-title pb-1 mb-2"><a>{{ formation.title }}</a></h5>
                         <div class="d-flex align-items-center pb-1">
                             <h6 class="ribbon fs-14 mr-2 mb-0" *ngIf="formation.label">{{ formation.label }}</h6>
                             <span class="badge bg-primary ms-2" *ngIf="formation.highestRated">Highest rated</span>
                         </div>
-                        <div class="mb-2 text-muted fs-14">Discount: <span *ngIf="formation.discount && (+formation.discount) > 0">-{{ formation.discount }}%</span><span *ngIf="!formation.discount || (+formation.discount) === 0">None</span></div>
+                        <div class="mb-2 text-muted fs-14">Discount: <span
+                                *ngIf="formation.discount && (+formation.discount) > 0">-{{ formation.discount
+                                }}%</span><span *ngIf="!formation.discount || (+formation.discount) === 0">None</span>
+                        </div>
                         <p class="card-text fs-14 lh-22 mb-2">{{ formation.description }}</p>
                         <div class="d-flex justify-content-between align-items-center mt-3">
-                            <button class="btn theme-btn flex-grow-1 me-2"><i class="la la-shopping-cart mr-1 fs-18"></i> Add to Cart</button>
-                            <div class="icon-element icon-element-sm shadow-sm cursor-pointer" title="Add to Wishlist"><i class="la la-heart-o"></i></div>
+                            <button class="btn theme-btn flex-grow-1 me-2"><i
+                                    class="la la-shopping-cart mr-1 fs-18"></i> Add to Cart</button>
+                            <div class="icon-element icon-element-sm shadow-sm cursor-pointer" title="Add to Wishlist">
+                                <i class="la la-heart-o"></i>
+                            </div>
                         </div>
                     </div>
                 </div>

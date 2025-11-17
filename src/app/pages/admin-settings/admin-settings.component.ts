@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LayoutComponent } from '../layout/layout.component';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
@@ -10,7 +9,7 @@ import { DashboardHeaderComponent } from '../dashboard/dashboard-header/dashboar
 @Component({
   selector: 'app-admin-settings',
   standalone: true,
-  imports: [CommonModule, FormsModule, LayoutComponent, DashboardHeaderComponent],
+  imports: [CommonModule, FormsModule, DashboardHeaderComponent],
   templateUrl: './admin-settings.component.html',
   styleUrls: ['./admin-settings.component.css']
 })
@@ -58,25 +57,23 @@ export class AdminSettingsComponent implements OnInit {
   getPhotoUrl(): string {
     if (!this.user?.photo) {
       // Utiliser une image par défaut qui existe dans le projet
-      return "/assets/images/small-avatar-1.jpg"; // Ajouter un slash au début
+      return "assets/images/small-avatar-1.jpg";
     }
     
-    // Handle différent photo URL formats
-    if (this.user.photo.startsWith('http')) {
+    // Si c'est déjà une URL complète ou une data URL
+    if (this.user.photo.startsWith('http') || this.user.photo.startsWith('data:image')) {
       return this.user.photo;
     }
     
-    if (this.user.photo.startsWith('data:image')) {
+    // Si l'image commence par 'assets/', c'est une ressource locale d'Angular
+    if (this.user.photo.startsWith('assets/')) {
       return this.user.photo;
     }
     
-    // Make sure we're using the correct path format for the backend
-    // Fix: Éviter les doubles slashes dans l'URL
-    const basePath = 'http://localhost:8085/ElitGo';
-    const photoPath = this.user.photo.startsWith('/') ? this.user.photo : '/' + this.user.photo;
-    
-    console.log('Photo path used:', basePath + photoPath); // Log pour débogage
-    return basePath + photoPath;
+    // Pour les chemins provenant du backend
+    // Le backend attend un format spécifique, nous ajoutons le préfixe de l'API
+    // Ici nous suivons la même logique que dans le UserService.getPhotoUrl
+    return `http://localhost:8085${this.user.photo.startsWith('/') ? this.user.photo : '/' + this.user.photo}`;
   }
   
 

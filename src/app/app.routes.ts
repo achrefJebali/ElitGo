@@ -44,9 +44,11 @@ import { AllTeachersComponent } from './pages/all-teachers/all-teachers.componen
 import { InterviewViewComponent } from './pages/interview-view/interview-view.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { Role } from './pages/models/user.model';
+import { PredictionComponent } from './AI/prediction/prediction.component';
+import { RecommendationComponent } from './AI/recommendation/recommendation.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+
   { path: 'home', component: HomeComponent },
 
   { path: 'login', component: LoginComponent },
@@ -60,15 +62,14 @@ export const routes: Routes = [
   { path: 'dashboard-settings', component: DashboardSettingsComponent },
   { path: 'footer', component: FooterComponent },
   { path: 'courses', component: CoursesComponent },
-  { path: 'events', component: EventsComponent},
+  { path: 'events', component: EventsComponent },
   { path: 'clubs', component: ClubsComponent },
   { path: 'add-event', component: AddEventComponent },
   { path: 'showevent-back', component: ShoweventBACKComponent },
   { path: 'add-club', component: AddClubComponent },
-  { path: 'showclub-back', component: ShowclubBackComponent }
+  { path: 'showclub-back', component: ShowclubBackComponent },
 
   { path: 'dashboard-settings', component: DashboardSettingsComponent },
-  { path: 'footer', component: FooterComponent },
   { path: 'courses', component: CoursesComponent },
   { path: 'recover', component: RecoverComponent },
   { path: 'dashboard-admin', component: DashboardAdminComponent },
@@ -85,85 +86,86 @@ export const routes: Routes = [
   { path: 'purchased-formations', component: PurchasedFormationsComponent },
   { path: 'startformation/:id', component: StartFormationComponent },
   { path: 'ressourcelist', component: DisplayRessourceComponent },
-  { path: '**', redirectTo: '' }
-  { path: 'footer', component: FooterComponent },
-  
-  // Protected User Routes
-  { 
-    path: 'dashboard', 
+  { path: 'prediction', component: PredictionComponent },
+  { path: 'recommend', component: RecommendationComponent }
+
+
+
+  , {
+    path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
     data: { roles: [Role.STUDENT, Role.TEACHER] }
   },
-  { 
-    path: 'dashboard-profile', 
+  {
+    path: 'dashboard-profile',
     component: DashboardProfileComponent,
     canActivate: [AuthGuard],
     data: { roles: [Role.STUDENT, Role.TEACHER] }
   },
-  { 
-    path: 'dashboard-settings', 
+  {
+    path: 'dashboard-settings',
     component: DashboardSettingsComponent,
     canActivate: [AuthGuard],
     data: { roles: [Role.STUDENT, Role.TEACHER] }
   },
-  { 
-    path: 'courses', 
+  {
+    path: 'courses',
     component: CoursesComponent,
     canActivate: [AuthGuard],
     data: { roles: [Role.STUDENT, Role.TEACHER] }
   },
-  { 
-    path: 'interview', 
+  {
+    path: 'interview',
     component: InterviewComponent,
     canActivate: [AuthGuard],
     data: { roles: [Role.ADMIN] }
   },
-  { 
-    path: 'my-interviews', 
+  {
+    path: 'my-interviews',
     component: InterviewViewComponent,
     canActivate: [AuthGuard],
     data: { roles: [Role.STUDENT, Role.TEACHER] }
   },
 
   // Protected Admin Routes
-  { 
-    path: 'dashboard-admin', 
+  {
+    path: 'dashboard-admin',
     component: DashboardAdminComponent,
     canActivate: [AuthGuard],
     data: { roles: [Role.ADMIN] }
   },
-  { 
-    path: 'admin-profile', 
+  {
+    path: 'admin-profile',
     component: AdminProfileComponent,
     canActivate: [AuthGuard],
     data: { roles: [Role.ADMIN] }
   },
-  { 
-    path: 'admin-settings', 
+  {
+    path: 'admin-settings',
     component: AdminSettingsComponent,
     canActivate: [AuthGuard],
     data: { roles: [Role.ADMIN] }
   },
-  { 
-    path: 'all-users', 
+  {
+    path: 'all-users',
     component: AllUsersComponent,
     canActivate: [AuthGuard],
     data: { roles: [Role.ADMIN] }
   },
-  { 
-    path: 'all-students', 
+  {
+    path: 'all-students',
     component: AllStudentsComponent,
     canActivate: [AuthGuard],
     data: { roles: [Role.ADMIN] }
   },
-  { 
-    path: 'all-teachers', 
+  {
+    path: 'all-teachers',
     component: AllTeachersComponent,
     canActivate: [AuthGuard],
     data: { roles: [Role.ADMIN] }
   },
- 
+
 
   // Wildcard route for 404
   { path: '**', redirectTo: '/home' }

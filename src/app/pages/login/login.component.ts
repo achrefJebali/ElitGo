@@ -13,7 +13,6 @@ import { LayoutComponent } from '../layout/layout.component';
   selector: 'app-login',
   standalone: true,
 
-  imports: [LayoutComponent,FooterComponent],
 
   imports: [CommonModule, FormsModule, LayoutComponent, FooterComponent],
 

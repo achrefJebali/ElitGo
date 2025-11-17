@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../services/user.service';
-import { LayoutComponent } from '../layout/layout.component';
 import { FooterComponent } from '../footer/footer.component';
 import { DashboardHeaderComponent } from '../dashboard/dashboard-header/dashboard-header.component';
 import { User, Role } from '../models/user.model';
@@ -12,7 +11,6 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [
     CommonModule, 
-    LayoutComponent, 
     FooterComponent, 
     DashboardHeaderComponent, 
     RouterModule

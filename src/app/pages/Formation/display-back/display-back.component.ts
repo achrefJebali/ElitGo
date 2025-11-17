@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Formation } from '../../../models/formation';
 import { FormationService } from '../../../services/formation.service';
-import { DashboardHeaderComponent } from 'app/pages/dashboard/dashboard-header/dashboard-header.component';
+import { DashboardHeaderComponent } from '../../dashboard/dashboard-header/dashboard-header.component';
 import { FormsModule } from '@angular/forms';
 
 declare var $: any;
@@ -49,12 +49,12 @@ export class DisplayBackComponent implements OnInit {
 
   loadFormations(): void {
     this.formationService.getFormations(this.currentPage - 1, this.pageSize).subscribe({
-      next: (response) => {
+      next: (response: { formations: Formation[]; totalItems: number }) => {
         this.formations = response.formations;
         this.totalItems = response.totalItems;
         this.totalPages = Math.ceil(this.totalItems / this.pageSize);
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error loading formations:', error);
         this.errorMessage = 'Failed to load formations';
       }
@@ -72,26 +72,28 @@ export class DisplayBackComponent implements OnInit {
       this.currentPage - 1,
       this.pageSize
     ).subscribe({
-      next: (response) => {
+      next: (response: { formations: Formation[]; totalItems: number }) => {
         this.formations = response.formations;
         this.totalItems = response.totalItems;
         this.totalPages = Math.ceil(this.totalItems / this.pageSize);
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error fetching formations:', err);
         this.errorMessage = 'Failed to search formations';
       }
     });
   }
 
-  navigateToEditFormation(id: number, event: Event): void {
-    event.preventDefault();
-    event.stopPropagation();
+  navigateToEditFormation(id: number, event?: Event): void {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
     this.router.navigate(['/formation-edit', id]);
   }
 
-  editFormation(formation: Formation) {
-    this.navigateToEditFormation(formation.id, undefined as any as Event);
+  editFormation(formation: Formation): void {
+    this.navigateToEditFormation(formation.id);
   }
 
   deleteFormation(id: number, event: Event): void {
@@ -109,7 +111,7 @@ export class DisplayBackComponent implements OnInit {
             this.loadFormations();
           }
         },
-        error: (error) => {
+        error: (error: any) => {
           console.error('Error deleting formation:', error);
           this.errorMessage = 'Failed to delete formation';
         }
@@ -122,20 +124,20 @@ export class DisplayBackComponent implements OnInit {
     this.router.navigate(['/formation-add']);
   }
 
-  openDiscountModal(formation: Formation) {
+  openDiscountModal(formation: Formation): void {
     this.selectedFormation = formation;
-    this.selectedDiscount = formation.discount || 0;
+    this.selectedDiscount = (typeof formation.discount === 'number') ? formation.discount : 0;
     ($('#discountModal') as any).modal('show');
   }
 
-  closeDiscountModal() {
+  closeDiscountModal(): void {
     this.discountError = '';
     this.selectedFormation = null;
     this.selectedDiscount = 0;
     ($('#discountModal') as any).modal('hide');
   }
 
-  submitDiscount() {
+  submitDiscount(): void {
     if (this.selectedDiscount > 90) {
       this.discountError = 'Discount cannot be more than 90%.';
       return;
@@ -147,11 +149,17 @@ export class DisplayBackComponent implements OnInit {
     this.discountError = '';
     if (this.selectedFormation && this.selectedDiscount >= 0) {
       this.formationService.updateDiscount(this.selectedFormation.id, this.selectedDiscount)
-        .subscribe((updated: Formation) => {
-          if (this.selectedFormation) {
-            Object.assign(this.selectedFormation as object, updated);
+        .subscribe({
+          next: (updated: Formation) => {
+            if (this.selectedFormation) {
+              Object.assign(this.selectedFormation as object, updated);
+            }
+            this.closeDiscountModal();
+          },
+          error: (error: any) => {
+            this.discountError = 'Failed to update discount';
+            console.error('Discount error:', error);
           }
-          this.closeDiscountModal();
         });
     }
   }

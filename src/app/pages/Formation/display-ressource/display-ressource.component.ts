@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Ressource } from '../../../models/ressource';
 import { RessourceService } from '../../../services/ressource.service';
-import { DashboardHeaderComponent } from 'app/pages/dashboard/dashboard-header/dashboard-header.component';
+import { DashboardHeaderComponent } from '../../dashboard/dashboard-header/dashboard-header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Formation } from 'app/models/formation';
-import { FormationService } from 'app/services/formation.service';
+import { Formation } from '../../../models/formation';
+import { FormationService } from '../../../services/formation.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({

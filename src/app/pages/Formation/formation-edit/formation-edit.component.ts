@@ -6,7 +6,7 @@ import { Formation } from '../../../models/formation';
 import { Category } from '../../../models/category';
 import { FormationService } from '../../../services/formation.service';
 import { CategoryService } from '../../../services/category.service';
-import { DashboardHeaderComponent } from 'app/pages/dashboard/dashboard-header/dashboard-header.component';
+import { DashboardHeaderComponent } from '../../dashboard/dashboard-header/dashboard-header.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { catchError, map, Observable, throwError } from 'rxjs';

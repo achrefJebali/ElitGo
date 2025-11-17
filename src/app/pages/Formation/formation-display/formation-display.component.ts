@@ -10,7 +10,6 @@ import { RouterModule } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { catchError, map, Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { Review } from 'app/models/review';
 
 @Component({
   selector: 'app-formation-display',

@@ -13,11 +13,11 @@ export class UserService {
   private apiUrl = 'http://localhost:8085/ElitGo/User';
   private authUrl = 'http://localhost:8085/ElitGo/api/auth';
   private interviewApiUrl = 'http://localhost:8085/ElitGo/Interview';
-  
+
   // Observable for current user's interview notification
   private interviewNotificationSubject = new BehaviorSubject<Interview | null>(null);
   public interviewNotification$ = this.interviewNotificationSubject.asObservable();
-  
+
   // Error handling helper
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An error occurred';
@@ -32,9 +32,9 @@ export class UserService {
     return throwError(() => new Error(errorMessage));
   }
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
- 
+
 
   // Enhanced login method with better error handling and type safety
   login(username: string, password: string): Observable<{ token: string }> {
@@ -61,7 +61,7 @@ export class UserService {
             }
             localStorage.setItem('userRole', user.role);
             localStorage.setItem('userId', user.id?.toString() || '');
-            
+
             // If user is a student, check for interviews
             if (user.role === Role.STUDENT && user.id) {
               this.checkStudentInterviews(user.id);
@@ -77,7 +77,7 @@ export class UserService {
   // GET: Retrieve all users with CORS handling
   getUser(): Observable<User[]> {
     console.log('Fetching users with CORS handling');
-    
+
     const options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ export class UserService {
       }),
       withCredentials: false // Disable credentials for simpler CORS
     };
-    
+
     // Try with updated URL and options
     return this.http.get<User[]>(this.apiUrl + '/retrieve-all-users', options)
       .pipe(
@@ -105,7 +105,7 @@ export class UserService {
         }),
         catchError(error => {
           console.error('Error fetching users, trying alternative URL:', error);
-          
+
           // Try alternative URL (sometimes context path is different)
           return this.http.get<User[]>('http://localhost:8085/User/retrieve-all-users', options)
             .pipe(
@@ -122,7 +122,7 @@ export class UserService {
   // GET: Retrieve all students with robust error handling
   getStudents(): Observable<User[]> {
     console.log('Fetching students with improved error handling');
-    
+
     const options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ export class UserService {
       }),
       withCredentials: false // Disable credentials for simpler CORS
     };
-    
+
     // Try with primary URL first
     return this.http.get<User[]>(`${this.apiUrl}/students`, options)
       .pipe(
@@ -150,14 +150,14 @@ export class UserService {
         }),
         catchError(error => {
           console.error('Error fetching students, trying direct URL:', error);
-          
+
           // Try alternative direct URL
           return this.http.get<User[]>('http://localhost:8085/User/students', options)
             .pipe(
               tap(students => console.log('Direct URL success:', students)),
               catchError(alt_error => {
                 console.error('All student URLs failed:', alt_error);
-                
+
                 // Fall back to mock data if all else fails
                 console.log('Using mock student data as fallback');
                 return of([
@@ -170,7 +170,7 @@ export class UserService {
                   },
                   {
                     id: 3,
-                    name: 'Sample Student 2', 
+                    name: 'Sample Student 2',
                     email: 'student2@example.com',
                     username: 'student2',
                     role: Role.STUDENT
@@ -185,7 +185,7 @@ export class UserService {
   // GET: Retrieve all teachers with robust error handling
   getTeachers(): Observable<User[]> {
     console.log('Fetching teachers with improved error handling');
-    
+
     const options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -193,7 +193,7 @@ export class UserService {
       }),
       withCredentials: false // Disable credentials for simpler CORS
     };
-    
+
     // Try with primary URL first
     return this.http.get<User[]>(`${this.apiUrl}/teachers`, options)
       .pipe(
@@ -213,14 +213,14 @@ export class UserService {
         }),
         catchError(error => {
           console.error('Error fetching teachers, trying direct URL:', error);
-          
+
           // Try alternative direct URL
           return this.http.get<User[]>('http://localhost:8085/User/teachers', options)
             .pipe(
               tap(teachers => console.log('Direct URL success:', teachers)),
               catchError(alt_error => {
                 console.error('All teacher URLs failed:', alt_error);
-                
+
                 // Fall back to mock data if all else fails
                 console.log('Using mock teacher data as fallback');
                 return of([
@@ -236,7 +236,7 @@ export class UserService {
                     name: 'Sample Teacher 2',
                     email: 'teacher2@example.com',
                     username: 'teacher2',
-                    role: Role.TEACHER 
+                    role: Role.TEACHER
                   }
                 ]);
               })
@@ -306,16 +306,16 @@ export class UserService {
     localStorage.clear(); // Clear all stored data
     this.router.navigate(['/home']);
   }
-  
+
   // Add a new user (registration)
   addUser(user: User): Observable<User> {
     console.log('Registering new user:', user);
-    
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     });
-    
+
     // Use the registration endpoint
     return this.http.post<User>(`${this.apiUrl}/add-user`, user, { headers }).pipe(
       tap(response => {
@@ -459,7 +459,7 @@ export class UserService {
     if (!token) {
       return throwError(() => new Error('No authentication token found'));
     }
-  
+
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<any>(`${this.apiUrl}/${userId}/get-photo`, { headers }).pipe(
       map(response => {
@@ -471,14 +471,14 @@ export class UserService {
       catchError(this.handleError)
     );
   }
-  
+
   // Check if a student has an assigned interview
   checkStudentInterviews(studentId: number): void {
     console.log('Checking for student interviews for ID:', studentId);
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json');
-      
+
     // Get interviews for the specific student
     this.http.get<Interview[]>(`${this.interviewApiUrl}/student/${studentId}`, { headers }).pipe(
       catchError(error => {
@@ -492,7 +492,7 @@ export class UserService {
         const upcomingInterviews = interviews
           .filter(interview => new Date(interview.date) > new Date())
           .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-          
+
         if (upcomingInterviews.length > 0) {
           const nextInterview = upcomingInterviews[0];
           console.log('Found upcoming interview:', nextInterview);
@@ -509,7 +509,7 @@ export class UserService {
       }
     });
   }
-  
+
   // Get any saved interview notification (for persistence across page loads)
   getStoredInterviewNotification(): Interview | null {
     const storedNotification = localStorage.getItem('interviewNotification');
@@ -528,7 +528,7 @@ export class UserService {
     }
     return null;
   }
-  
+
   // Clear the interview notification
   clearInterviewNotification(): void {
     this.interviewNotificationSubject.next(null);

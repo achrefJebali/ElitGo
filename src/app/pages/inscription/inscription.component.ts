@@ -1,7 +1,3 @@
-
-import { Component } from '@angular/core';
-import { FooterComponent } from '../footer/footer.component';
-
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -11,7 +7,6 @@ import { Observable, of, timer, Subject } from 'rxjs';
 import { map, switchMap, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
-
 import { LayoutComponent } from '../layout/layout.component';
 import { FooterComponent } from '../footer/footer.component';
 import { OpenStreetMapService } from '../services/open-street-map.service';
@@ -23,13 +18,9 @@ interface RegistrationForm extends Omit<User, 'id' | 'token'> {
 @Component({
   selector: 'app-inscription',
   standalone: true,
-
-  imports: [LayoutComponent,FooterComponent],
-
   imports: [ReactiveFormsModule, CommonModule, HttpClientModule, LayoutComponent, FooterComponent],
-
   templateUrl: './inscription.component.html',
-  styleUrls: ['./inscription.component.css'],
+  styleUrls: ['./inscription.component.css']
 })
 export class InscriptionComponent implements OnInit, AfterViewInit {
   registrationForm!: FormGroup;

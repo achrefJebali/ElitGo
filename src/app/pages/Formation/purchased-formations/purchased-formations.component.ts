@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Formation } from 'app/models/formation';
-import { FooterComponent } from 'app/pages/footer/footer.component';
-import { LayoutComponent } from 'app/pages/layout/layout.component';
-import { FormationService } from 'app/services/formation.service';
+import { Formation } from '../../../models/formation';
+import { FooterComponent } from '../../footer/footer.component';
+import { LayoutComponent } from '../../layout/layout.component';
+import { FormationService } from '../../../services/formation.service';
 import { ProgressComponent } from '../progress/progress.component';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { catchError, map, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ReviewService } from 'app/services/review.service';
-import { Review } from 'app/models/review';
+import { ReviewService } from '../../../services/review.service';
+import { Review } from '../../../models/review';
 
 @Component({
   selector: 'app-purchased-formations',

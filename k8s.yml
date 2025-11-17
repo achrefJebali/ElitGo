@@ -1,0 +1,59 @@
+---
+- name: Deploy application on Kubernetes
+  hosts: all
+  gather_facts: false
+  become: yes
+  tasks:
+    - name: Set KUBECONFIG environment variable for K3s
+      ansible.builtin.set_fact:
+        ansible_env:
+          KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+    - name: Create deployment
+      k8s:
+        api_version: apps/v1
+        kind: Deployment
+        name: elite-deployment
+        namespace: chatbot
+        definition:
+          metadata:
+            labels:
+              app: elite-app
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: elite-app
+            template:
+              metadata:
+                labels:
+                  app: elite-app
+              spec:
+                containers:
+                  - name: elite
+                    image: taharejeb97/elite:v1.0.0-prod
+                    imagePullPolicy: Always
+                    ports:
+                      - containerPort: 4200
+        verify_ssl: false
+
+    - name: Create service
+      k8s:
+        api_version: v1
+        kind: Service
+        name: elite-service
+        namespace: chatbot
+        definition:
+          metadata:
+            labels:
+              app: elite-app
+          spec:
+            selector:
+              app: elite-app
+            ports:
+              - protocol: TCP
+                port: 4200
+                targetPort: 4200
+                nodePort: 31500
+            type: NodePort
+        verify_ssl: false
