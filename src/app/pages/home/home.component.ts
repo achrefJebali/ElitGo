@@ -6,8 +6,7 @@ import { LayoutComponent } from '../layout/layout.component';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [LayoutComponent,FooterComponent],
-  templateUrl: './home.component.html',
+   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {

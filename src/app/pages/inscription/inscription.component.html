@@ -114,7 +114,7 @@
        END CONTACT AREA
 ================================= -->
 <app-footer></app-footer>
-
+<section class="contact-area section--padding position-relative">
   <span class="ring-shape ring-shape-1"></span>
   <span class="ring-shape ring-shape-2"></span>
   <span class="ring-shape ring-shape-3"></span>
@@ -225,11 +225,11 @@
                   <small class="form-text text-muted">
                     <i class="la la-info-circle"></i> Start typing for address suggestions
                   </small>
-                  
+
                   <!-- Address suggestions dropdown -->
                   <div class="address-suggestions" *ngIf="showAddressSuggestions">
                     <ul class="list-group">
-                      <li class="list-group-item" *ngFor="let address of addressSuggestions" 
+                      <li class="list-group-item" *ngFor="let address of addressSuggestions"
                           (click)="selectAddressSuggestion(address)">
                         {{ address }}
                       </li>
@@ -269,7 +269,7 @@
                     <input
                       formControlName="confirmPassword"
                       class="form-control form--control"
-                      [class.is-invalid]="(submitted || f['confirmPassword'].touched) && 
+                      [class.is-invalid]="(submitted || f['confirmPassword'].touched) &&
                         (f['confirmPassword'].errors || registrationForm.errors?.['passwordMismatch'])"
                       [type]="showConfirmPassword ? 'text' : 'password'"
                       placeholder="Confirm password"
@@ -279,7 +279,7 @@
                       <i [class]="showConfirmPassword ? 'la la-eye-slash' : 'la la-eye'"></i>
                     </button>
                   </div>
-                  <div class="invalid-feedback" *ngIf="(submitted || f['confirmPassword'].touched) && 
+                  <div class="invalid-feedback" *ngIf="(submitted || f['confirmPassword'].touched) &&
                     (f['confirmPassword'].errors || registrationForm.errors?.['passwordMismatch'])">
                     {{ f['confirmPassword'].errors ? getErrorMessage('confirmPassword') : 'Passwords do not match' }}
                   </div>

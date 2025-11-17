@@ -1,6 +1,4 @@
 
-import { Component } from '@angular/core';
-import { FooterComponent } from '../footer/footer.component';
 
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -24,7 +22,6 @@ interface RegistrationForm extends Omit<User, 'id' | 'token'> {
   selector: 'app-inscription',
   standalone: true,
 
-  imports: [LayoutComponent,FooterComponent],
 
   imports: [ReactiveFormsModule, CommonModule, HttpClientModule, LayoutComponent, FooterComponent],
 
@@ -36,7 +33,7 @@ export class InscriptionComponent implements OnInit, AfterViewInit {
   submitted = false;
   showPassword = false;
   showConfirmPassword = false;
-  
+
   @ViewChild('addressInput') addressInput!: ElementRef<HTMLInputElement>;
   addressSuggestions: string[] = [];
   showAddressSuggestions = false;
@@ -44,7 +41,7 @@ export class InscriptionComponent implements OnInit, AfterViewInit {
   private destroy$ = new Subject<void>();
 
   constructor(
-    private userService: UserService, 
+    private userService: UserService,
     private router: Router,
     private fb: FormBuilder,
     private openStreetMapService: OpenStreetMapService
@@ -54,15 +51,15 @@ export class InscriptionComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     // Form is already initialized in constructor
-    
+
     // Set up address search with OpenStreetMap
     this.setupAddressAutocomplete();
   }
-  
+
   ngAfterViewInit() {
     // Nothing needed here since we're using reactive approach
   }
-  
+
   // Set up address autocomplete with OpenStreetMap
   private setupAddressAutocomplete(): void {
     // Listen for changes to the address input
@@ -76,13 +73,13 @@ export class InscriptionComponent implements OnInit, AfterViewInit {
       this.showAddressSuggestions = suggestions.length > 0;
     });
   }
-  
+
   // Handle address input changes
   onAddressInputChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.addressInputChanged.next(input.value);
   }
-  
+
   // Select an address suggestion
   selectAddressSuggestion(address: string): void {
     this.registrationForm.patchValue({ address });
@@ -118,27 +115,27 @@ export class InscriptionComponent implements OnInit, AfterViewInit {
   private initForm(): void {
     this.registrationForm = this.fb.group({
       name: ['', [
-        Validators.required, 
+        Validators.required,
         Validators.minLength(2),
         Validators.pattern(/^[A-Za-z\s]+$/) // Only letters and spaces allowed
       ]],
-      username: ['', 
+      username: ['',
         [
-          Validators.required, 
+          Validators.required,
           Validators.minLength(4)
         ],
         [this.createUsernameValidator()]
       ],
-      email: ['', 
+      email: ['',
         [
-          Validators.required, 
+          Validators.required,
           Validators.email,
           Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
         ],
         [this.createEmailValidator()]
       ],
       phone: ['', [
-        Validators.required, 
+        Validators.required,
         Validators.pattern(/^\+?[0-9]{8,15}$/)
       ]],
       address: ['', Validators.required],
@@ -212,14 +209,14 @@ export class InscriptionComponent implements OnInit, AfterViewInit {
   private passwordMatchValidator(fg: FormGroup) {
     const password = fg.get('password');
     const confirmPassword = fg.get('confirmPassword');
-    
+
     if (!password || !confirmPassword) return null;
-    
+
     return password.value === confirmPassword.value ? null : { passwordMismatch: true };
   }
 
-  get f() { 
-    return this.registrationForm.controls; 
+  get f() {
+    return this.registrationForm.controls;
   }
 
   togglePasswordVisibility(field: 'password' | 'confirmPassword') {
